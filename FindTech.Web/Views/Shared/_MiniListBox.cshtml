@@ -1,0 +1,26 @@
+﻿@model FindTech.Web.Models.ArticleListViewModel
+@{
+    var articles = Model.Articles;
+}
+
+<aside class="widget articles col-sm-6 col-md-12" id="@Model.ClientId">
+    <div class="title-box">
+        <span class="@Model.TitleStyleClass"></span><h2 class="title">@Model.Title</h2>
+    </div>
+    <ul>
+        @foreach (var article in articles)
+        {
+            Html.RenderPartial("_ListItemArticleBox", article);
+        }
+        @if (Model.ClientId == "pinnedArticles")
+        {
+            <li class="pinTips">Bấm <span class="fa fa-thumb-tack"></span> để ghim bài viết</li>
+        }
+        <li class="action" >
+            <a href="#" class="view-all ">View all<span class="fa fa-arrow-right"></span></a>
+        </li>
+    </ul>
+</aside><!-- .specials-->
+
+
+

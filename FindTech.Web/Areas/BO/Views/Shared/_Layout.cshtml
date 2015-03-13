@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - iFind Data Management</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="~/img/favicon.ico">
+
+    <!-- Font -->
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic'>
+    @Styles.Render("~/bo/progressive/css")
+    @Styles.Render("~/bo/kendoui/css")
+    @Styles.Render("~/bo/validation/css")
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <link rel='stylesheet' href="css/ie/ie8.css">
+    <![endif]-->
+    @*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>*@
+    @Scripts.Render("~/bo/kendoui/js")
+</head>
+    <body class="fixed-header">
+        <div class="loading">
+            <div id="circularG">
+            <div id="circularG_1" class="circularG">
+            </div>
+            <div id="circularG_2" class="circularG">
+            </div>
+            <div id="circularG_3" class="circularG">
+            </div>
+            <div id="circularG_4" class="circularG">
+            </div>
+            <div id="circularG_5" class="circularG">
+            </div>
+            <div id="circularG_6" class="circularG">
+            </div>
+            <div id="circularG_7" class="circularG">
+            </div>
+            <div id="circularG_8" class="circularG">
+            </div>
+        </div> 
+            </div>
+        <div class="page-box">
+            <div class="page-box-content">
+                <header class="header">
+                    <div class="header-wrapper">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xs-6 col-md-2 col-lg-1 logo-box">
+                                    <div class="logo">
+                                        <a href="~/">
+                                            <img src="~/img/logo.png" class="logo-img" alt="" height="40">
+                                        </a>
+                                    </div>
+                                </div><!-- .logo-box -->
+
+                                <div class="col-xs-6 col-md-10 col-lg-9 right-box">
+                                    <div class="right-box-wrapper">
+                                        <div class="primary">
+                                            <div class="navbar navbar-default" role="navigation">
+                                                <button type="button" class="navbar-toggle btn-navbar collapsed" data-toggle="collapse" data-target=".primary .navbar-collapse">
+                                                    <span class="text">Menu</span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                    <span class="icon-bar"></span>
+                                                </button>
+
+                                                <nav class="collapse collapsing navbar-collapse">
+                                                    <ul class="nav navbar-nav navbar-center">
+                                                        <li class="parent">
+                                                            <a href="@Url.Action("Index", "ArticleBO")">Article</a>
+                                                            <ul class="sub">
+                                                                <li><a href="@Url.Action("Index", "ArticleBO")">List Article</a></li>
+                                                                <li><a href="@Url.Action("Create", "ArticleBO")">Create Article</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="parent">
+                                                            <a href="@Url.Action("Index", "ArticleCategoryBO")">Article Category</a>
+                                                            <ul class="sub">
+                                                                <li><a href="@Url.Action("Index", "ArticleCategoryBO")">List Article Category</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="parent">
+                                                            <a href="@Url.Action("Index", "SourceBO")">Source</a>
+                                                            <ul class="sub">
+                                                                <li><a href="@Url.Action("Index", "SourceBO")">List Source</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="parent">
+                                                            <a href="@Url.Action("Index", "DeviceBO")">Device</a>
+                                                            <ul class="sub">
+                                                                <li><a href="@Url.Action("Index", "DeviceBO")">List Device</a></li>
+                                                                <li><a href="@Url.Action("Create", "DeviceBO")">Create Device</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="parent">
+                                                            <a href="@Url.Action("Index", "BrandBO")">Brand</a>
+                                                            <ul class="sub">
+                                                                <li><a href="@Url.Action("Index", "BrandBO")">List Brand</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="parent">
+                                                            <a href="@Url.Action("Index", "SpecBO")">Spec</a>
+                                                            <ul class="sub">
+                                                                <li><a href="@Url.Action("Index", "SpecBO")">List Spec</a></li>
+                                                            </ul>
+                                                        </li>
+                                                        <li class="parent">
+                                                            <a href="@Url.Action("Index", "SpecGroupBO")">Spec Group</a>
+                                                            <ul class="sub">
+                                                                <li><a href="@Url.Action("Index", "SpecGroupBO")">List Spec Group</a></li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div><!-- .primary -->
+                                    </div>
+                                </div>
+                            </div><!--.row -->
+                        </div>
+                    </div><!-- .header-wrapper -->
+                </header><!-- .header -->
+                @RenderBody()
+            </div><!-- .page-box-content -->
+        </div><!-- .page-box -->
+        <div id="imgWindow">
+            <div id="imgBrowser"></div>
+        </div>
+        <footer id="footer">
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="copyright col-xs-12 col-sm-3 col-md-3">
+                            Copyright © ifind.vn, 2014
+                        </div>
+
+                        <div class="phone col-xs-6 col-sm-3 col-md-3">
+                            <div class="footer-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                                    <path fill="#c6c6c6" d="M11.001,0H5C3.896,0,3,0.896,3,2c0,0.273,0,11.727,0,12c0,1.104,0.896,2,2,2h6c1.104,0,2-0.896,2-2
+			   c0-0.273,0-11.727,0-12C13.001,0.896,12.105,0,11.001,0z M8,15c-0.552,0-1-0.447-1-1s0.448-1,1-1s1,0.447,1,1S8.553,15,8,15z
+				M11.001,12H5V2h6V12z"></path>
+                                </svg>
+                            </div>
+                            <strong class="title">Call Us:</strong> +84 (986) 111-680 <br>
+                            <strong class="title">Email:</strong> hi@ifind.vn
+                        </div>
+
+                        <div class="address col-xs-6 col-sm-3 col-md-3">
+                            <div class="footer-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                                    <g>
+                                        <g>
+                                            <path fill="#c6c6c6" d="M8,16c-0.256,0-0.512-0.098-0.707-0.293C7.077,15.491,2,10.364,2,6c0-3.309,2.691-6,6-6
+					c3.309,0,6,2.691,6,6c0,4.364-5.077,9.491-5.293,9.707C8.512,15.902,8.256,16,8,16z M8,2C5.795,2,4,3.794,4,6
+					c0,2.496,2.459,5.799,4,7.536c1.541-1.737,4-5.04,4-7.536C12.001,3.794,10.206,2,8,2z"></path>
+                                        </g>
+                                        <g>
+                                            <circle fill="#c6c6c6" cx="8.001" cy="6" r="2"></circle>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </div>
+                            26/41/39 Võ Văn Vân, Phường Tân Tạo, Quận Bình Tân<br> TPHCM, VN
+                        </div>
+
+                        <div class="col-xs-12 col-sm-3 col-md-3">
+                            <a href="#" class="up">
+                                <span class="glyphicon glyphicon-arrow-up"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .footer-bottom -->
+        </footer>
+        <div class="clearfix"></div>
+        @Scripts.Render("~/bo/progressive/js")
+        @Scripts.Render("~/bo/validation/js")
+        @RenderSection("scripts", required: false)
+        <script>
+            $(document).ready(function () {
+                var window = $("#imgWindow");
+                if (!window.data("kendoWindow")) {
+                    window.kendoWindow({
+                        width: "800px",
+                        title: "Image Management",
+                        apply: function () {
+                            window.data("kendoWindow").close();
+                        }
+                    });
+                }
+                window.data("kendoWindow").close();
+            });
+
+            function applyImageBrowser(button, sendSelectedImage) {
+                var window = $("#imgWindow");
+                button.bind("click", function () {
+                    var thisButton = $(this);
+                    $('#imgBrowser').remove();
+                    window.append('<div id="imgBrowser"></div>');
+                    window.data("kendoWindow").open();
+                    window.data("kendoWindow").center();
+
+                    $("#imgBrowser").kendoImageBrowser({
+                        transport: {
+                            read: "/ImageBO/Read",
+                            destroy: {
+                                url: "/ImageBO/Destroy",
+                                type: "POST"
+                            },
+                            create: {
+                                url: "/ImageBO/Create",
+                                type: "POST"
+                            },
+                            thumbnailUrl: "/ImageBO/Thumbnail",
+                            uploadUrl: "/ImageBO/Upload",
+                            imageUrl: "/ImageBO/Image?path={0}"
+                        },
+                        apply: function () {
+                            var imageName = $("#imgBrowser .k-state-selected strong").text();
+                            var imageUrl = "/ImageBO/Image?path=" + $("#imgBrowser input[data-role='breadcrumbs']").val() + $("#imgBrowser .k-state-selected strong").text();
+                            var thumbnailUrl = "/ImageBO/Thumbnail?path=" + $("#imgBrowser input[data-role='breadcrumbs']").val() + $("#imgBrowser .k-state-selected strong").text();
+                            sendSelectedImage(imageName, imageUrl, thumbnailUrl, thisButton);
+                            window.data("kendoWindow").close();
+                        }
+                    });
+                });
+            }
+        </script>
+    </body>
+</html>

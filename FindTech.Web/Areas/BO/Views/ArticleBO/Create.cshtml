@@ -1,0 +1,743 @@
+﻿@using FindTech.Entities.Models.Enums
+@using FindTech.Web.Areas.BO.Controllers
+@using FindTech.Web.Areas.BO.Models
+@model ArticleBOViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/BO/Views/Shared/_Layout.cshtml";
+    var contentSections = (List<ContentSectionBOViewModel>)ViewBag.ContentSections;
+    var boxSize = (int) Model.BoxSize;
+    var articleType = (int) Model.ArticleType;
+    var contentSectionIds = String.Join(",", contentSections.Select(a => a.ContentSectionId));
+}
+<div class="breadcrumb-box">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="@Url.Action("Index", "ArticleBO")">BO</a> </li>
+            <li><a href="@Url.Action("Index", "ArticleBO")">Article</a></li>
+            <li class="active">Create</li>
+        </ul>
+    </div>
+</div>
+<div class="clearfix"></div>
+<section id="main">
+    <div class="container">
+        <div class="content">
+            <div id="rootwizard">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <ul>
+                                <li><a href="#tab1" data-toggle="tab">Article</a></li>
+                                <li><a href="#tab2" data-toggle="tab">Sections</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane" id="tab1">
+                        <form id="articleForm" role="form" method="POST" action="@Url.Action("CreateOrUpdate", "ArticleBO")">
+                            <div class="row">
+                                <input type="hidden" id="articleId" name="ArticleId" value="@Model.ArticleId" />
+                                <div class="col-xs-6 col-md-3">
+                                    <div class="row">
+                                        <a href="#" class="thumbnail" id="avatar">
+                                            <img data-src="holder.js/100%x300" alt="100%x300" id="imgAvatar" src="@Model.Avatar" />
+                                        </a>
+                                        <input type="hidden" id="avatarHidden" name="Avatar" value="@Model.Avatar" />
+                                        <input type="hidden" id="squareAvatarHidden" name="squareAvatar" value="@Model.SquareAvatar"/>
+                                        <input type="hidden" id="rectangleAvatarHidden" name="rectangleAvatar" value="@Model.RectangleAvatar"/>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-md-9">
+                                    <div class="form-group">
+                                        <label for="title">Title</label>
+                                        <input type="text" class="form-control" id="title" name="Title" placeholder="Input Title" value="@Model.Title">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="title">Seo Title</label>
+                                        <input type="text" class="form-control" id="seoTitle" name="SeoTitle" placeholder="Input Title" value="@Model.SeoTitle">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea class="form-control" id="description" name="Description" placeholder="Input Description">@Model.Description</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="tags">Tags</label>
+                                        <input type="text" class="form-control" maxlength="100" id="tags" name="Tags" data-role="tagsinput" placeholder="Input Tags" value="@Model.Tags">
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-12">
+                                    <div class="form-group">
+                                        <label for="title">Content</label>
+                                        <textarea class="editor" name="Content" rows="10" cols="30" style="width:100%;height:400px">@Html.Raw(Model.Content)</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6 col-md-6">
+                                    <div class="form-group">
+                                        <label for="title">Article Type</label>
+                                        <input type="text" class="form-control" id="articleType" name="ArticleType" placeholder="Article Type" value="@articleType" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="category">Category</label>
+                                        <input type="text" class="form-control" id="category" name="ArticleCategoryId" value="@Model.ArticleCategoryId" placeholder="Category">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="source">Source</label>
+                                        <input type="text" class="form-control" id="source" name="SourceId" value="@Model.SourceId" placeholder="Source">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="title">Box size</label>
+                                        <input type="text" class="form-control" id="boxSize" name="BoxSize" placeholder="Box size" value="@boxSize" />
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-6 col-md-6">
+                                    <div class="form-group">
+                                        <label for="tags">Published Date</label>
+                                        <input type='text' id="datetimepicker" name="PublishedDate" placeholder="Date create" value="@Model.PublishedDate" readonly="readonly" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="title">Priority</label>
+                                        <input type="text" class="form-control" id="priority" name="Priority" placeholder="Input Priority" data-fv-integer="true"
+                                               data-fv-integer-message="The value is not an integer" value="@Model.Priority" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="title">Author</label>
+                                        <input type="text" class="form-control" id="author" name="Author" placeholder="Input Author" value="@Model.Author" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-md-12 text-right">
+                                    <span class="checkbox">
+                                        <label>
+                                            <input type="checkbox" id="isActive" name="IsActived" @(Model.IsActived == "True" ? "checked" : "")> Actived
+                                        </label>
+                                    </span>
+                                    <button type="button" id="submit" class="btn btn-primary">@(Model.ArticleId == 0 ? "Create" : "Update")</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" id="tab2">
+                        <div class="panel-group" id="accordion">
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12 text-right">
+                                <button type="button" class="btn btn-primary" id="addNewContentSection">Add New Content Section</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- .content -->
+    </div>
+    <div class="modal fade" id="imgCroper" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                
+                <div class="modal-body" style="padding-top:20px">
+                    
+                    <div id="tabcropimg">
+                        <div class="tab-content">
+                            <div class="tab-pane" id="tabsquare">
+                                <div class='frame'>
+                                    <img id='imgCrop_sq' />
+                                </div>
+
+                                <div id='controls'>
+                                    <button id='zoom_out_sq' type='button' title='Zoom out'> - </button>
+
+                                    <button id='zoom_in_sq' type='button' title='Zoom in'> + </button>
+                                    @*<button id='cropimg' type='button' title='Crop' style="float:right" onclick="getcropimgdata()"> Crop </button>*@
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabrectangle">
+                                <div class='frame'>
+                                    <img id='imgCrop_rec' />
+                                </div>
+
+                                <div id='controls'>
+                                    <button id='zoom_out_rec' type='button' title='Zoom out'> - </button>
+
+                                    <button id='zoom_in_rec' type='button' title='Zoom in'> + </button>
+                                    @*<button id='cropimg' type='button' title='Crop' style="float:right" onclick="getcropimgdata()"> Crop </button>*@
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="nav nav-pills">
+                            <li><a href="#tabsquare" data-toggle="tab"><img id="thumbnail_square" style="width:30px; height:30px"/></a></li>
+                            <li><a href="#tabrectangle" data-toggle="tab"><img id="thumbnail_rectangle" style="width:45px; height:30px" /></a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="btn_cropimg" onclick="getcropimgdata()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- #main -->
+<div class="alert alert-success" id="contentSectionAlert">Save success!</div>
+@*kendoui edtitor for content html of article*@
+<script>
+    jQuery(function () {
+        var picture = $('#imgCrop_sq');
+        var picture2 = $('#imgCrop_rec');
+        picture.on('load', function () {
+            // Initialize plugin (with custom event)
+            picture.guillotine({ eventOnChange: 'guillotinechange', width: 576, height: 576, });
+            picture.guillotine('fit');
+
+            // Display inital data
+            var data = picture.guillotine('getData');
+            for (var key in data) { $('#' + key).html(data[key]); }
+
+            // Bind button actions
+            
+            $('#zoom_in_sq').click(function () { picture.guillotine('zoomIn'); });
+            $('#zoom_out_sq').click(function () { picture.guillotine('zoomOut'); });
+            
+
+            // Update data on change
+            picture.on('guillotinechange', function (ev, data, action) {
+                data.scale = parseFloat(data.scale.toFixed(4));
+                for (var k in data) { $('#' + k).html(data[k]); }
+            });
+        });
+
+        picture2.on('load', function () {
+            // Initialize plugin (with custom event)
+            picture2.guillotine({ eventOnChange: 'guillotinechange', width: 600, height: 400, });
+            picture2.guillotine('fit');
+
+            // Display inital data
+            var data = picture2.guillotine('getData');
+            for (var key in data) { $('#' + key).html(data[key]); }
+
+            // Bind button actions
+
+            $('#zoom_in_rec').click(function () { picture2.guillotine('zoomIn'); });
+            $('#zoom_out_rec').click(function () { picture2.guillotine('zoomOut'); });
+
+
+            // Update data on change
+            picture2.on('guillotinechange', function (ev, data, action) {
+                data.scale = parseFloat(data.scale.toFixed(4));
+                for (var k in data) { $('#' + k).html(data[k]); }
+            });
+        });
+    });
+    $(document).ready(function () {
+        $('#tabcropimg').bootstrapWizard({ 'tabClass': 'nav nav-pills' });
+        $('#rootwizard').bootstrapWizard({
+            onTabShow: function (tab, navigation, index) {
+                if (index == 1) {
+                    var contentSectionIds = '@contentSectionIds'.split(',');
+                    contentSectionIds.forEach(function (contentSectionId) {
+                        $.ajax({
+                            url: '@Url.Action("_ContentSectionForm", "ContentSectionBO")?articleId=' + $("#articleId").val() + '&contentSectionId=' + contentSectionId,
+                            success: function (data) {
+                                $('#accordion').append(data);
+                                @*window.applyImageBrowser($('#add-image-' + contentSectionId), function (imageName, imageUrl, thumbnailUrl, button) {
+                                    $.post('@Url.Action("AddImage", "ContentSectionBO")', { ImageName: imageName, Url: imageUrl, Thumbnail: thumbnailUrl, contentSectionId: button.closest('form').find('input[name="ContentSectionId"]').val() }, function (imageId) {
+                                        var imageBox = '<div class="col-sm-4 col-md-2" id="image-box-' + imageId + '">' +
+                                                '<a class="gallery-images" rel="fancybox" href="' + imageUrl + '">' +
+                                                    '<img src="' + thumbnailUrl + '" width="270" height="135" alt="">' +
+                                                    '<span class="bg-images"></span>' +
+                                                '</a>' +
+                                                '<i class="fa fa-times-circle" onclick="deleteImage(' + imageId + ', ' + button.closest('form').find('input[name="ContentSectionId"]').val() + ')"></i>' +
+                                            '</div>';
+                                        button.closest('.row').find('.carousel').prepend(imageBox);
+                                        carousel();
+                                    });
+                                });*@
+                            },
+                            async: false
+                        });
+                        @*$.get('@Url.Action("_ContentSectionForm", "ContentSectionBO")?articleId=' + $("#articleId").val() + '&contentSectionId=' + contentSectionId, function (data) {
+                            $('#accordion').append(data);
+                            accordions();
+                            carousel();
+                            window.applyImageBrowser($('#add-image-' + contentSectionId), function (imageName, imageUrl, thumbnailUrl, button) {
+                                $.post('@Url.Action("AddImage", "ContentSectionBO")', { ImageName: imageName, Url: imageUrl, Thumbnail: thumbnailUrl, contentSectionId: button.closest('form').find('input[name="ContentSectionId"]').val() }, function (imageId) {
+                                    var imageBox = '<div class="col-sm-4 col-md-2" id="image-box-' + imageId + '">' +
+                                            '<a class="gallery-images" rel="fancybox" href="' + imageUrl + '">' +
+                                                '<img src="' + thumbnailUrl + '" width="270" height="135" alt="">' +
+                                                '<span class="bg-images"></span>' +
+                                            '</a>' +
+                                            '<i class="fa fa-times-circle" onclick="deleteImage(' + imageId + ', ' + button.closest('form').find('input[name="ContentSectionId"]').val() + ')"></i>' +
+                                        '</div>';
+                                    button.closest('.row').find('.carousel').prepend(imageBox);
+                                    carousel();
+                                });
+                            });
+                        });*@
+                    });
+                }
+            }
+        });
+
+        $("#addNewContentSection").click(function () {
+            $.get('@Url.Action("_ContentSectionForm", "ContentSectionBO")?articleId=' + $("#articleId").val(), function (data) {
+                $('#accordion').append(data);
+                accordions();
+            });
+        });
+        if ($("#articleId").val() == 0) {
+            $('#rootwizard').bootstrapWizard('disable', 1);
+        }
+        window.applyImageBrowser($('#avatar'), function (imageName, imageUrl, thumbnailUrl, button) {
+            $('#imgCroper').modal({ backdrop: 'static' });
+            document.getElementById("imgCrop_sq").src = imageUrl;
+            document.getElementById("imgCrop_rec").src = imageUrl;
+            document.getElementById("thumbnail_square").src = imageUrl;
+            document.getElementById("thumbnail_rectangle").src = imageUrl;
+        });
+        var tags = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            remote: '/ArticleBO/GetTags?tag=%QUERY'
+        });
+        tags.initialize();
+        $('#tags').tagsinput({
+            typeaheadjs: {
+                name: 'tags',
+                displayKey: 'name',
+                valueKey: 'name',
+                source: tags.ttAdapter()
+            }
+        });
+
+        $('#tags').on('itemRemoved', function (event) {
+            checkValidateTags();
+        });
+        $('#tags').on('itemAdded', function (event) {
+            checkValidateTags();
+        });
+
+        function checkValidateTags() {
+            if ($('#tags').val() == '') {
+                $('#tags').parent().removeClass('has-success').addClass("has-error-tags");
+                $('#tags').parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-ok').addClass('glyphicon glyphicon-remove');
+                return false;
+            } else {
+                $('#tags').parent().removeClass('has-error-tags').addClass("has-success");
+                $('#tags').parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-remove').addClass('glyphicon glyphicon-ok');
+                return true;
+            }
+        };
+
+        $('.tt-input').on("focus", function (e) {
+            $(this).parent().parent().removeClass('focus').addClass('focus');
+        });
+
+
+        $(".editor").kendoEditor({
+            tools: [
+                "bold",
+                "italic",
+                "underline",
+                "strikethrough",
+                "justifyLeft",
+                "justifyCenter",
+                "justifyRight",
+                "justifyFull",
+                "insertUnorderedList",
+                "insertOrderedList",
+                "indent",
+                "outdent",
+                "createLink",
+                "unlink",
+                "insertImage",
+                "insertFile",
+                "subscript",
+                "superscript",
+                "createTable",
+                "addRowAbove",
+                "addRowBelow",
+                "addColumnLeft",
+                "addColumnRight",
+                "deleteRow",
+                "deleteColumn",
+                "viewHtml",
+                "formatting",
+                "cleanFormatting",
+                "fontName",
+                "fontSize",
+                "foreColor",
+                "backColor"
+            ],
+            imageBrowser: {
+                messages: {
+                    dropFilesHere: "Drop files here"
+                },
+                transport: {
+                    read: "/ImageBO/Read",
+                    destroy: {
+                        url: "/ImageBO/Destroy",
+                        type: "POST"
+                    },
+                    create: {
+                        url: "/ImageBO/Create",
+                        type: "POST"
+                    },
+                    thumbnailUrl: "/ImageBO/Thumbnail",
+                    uploadUrl: "/ImageBO/Upload",
+                    imageUrl: "/ImageBO/Image?path={0}"
+                }
+            }
+        });
+
+        $('#datetimepicker').kendoDateTimePicker({
+            format: "dd-MMM-yy h:mm:ss tt"
+        });
+        var newDate = $("#datetimepicker").data("kendoDateTimePicker").value() == null || $("#datetimepicker").data("kendoDateTimePicker").value().getYear() == 101 ? new Date() : new Date($("#datetimepicker").data("kendoDateTimePicker").value());
+        $("#datetimepicker").data("kendoDateTimePicker").value(newDate);
+
+        $("#category").kendoDropDownList({
+            optionLabel: "Select Category",
+            dataTextField: "ArticleCategoryName",
+            dataValueField: "ArticleCategoryId",
+            dataSource: {
+                transport: {
+                    read: {
+                        dataType: "json",
+                        url: "../ArticleCategoryBO/GetArticleCategories",
+                    }
+                }
+            },
+            change: onChangeCategory
+        });
+
+
+        $("#source").kendoDropDownList({
+            optionLabel: "Select Source",
+            dataTextField: "SourceName",
+            dataValueField: "SourceId",
+            dataSource: {
+                transport: {
+                    read: {
+                        dataType: "json",
+                        url: "../SourceBO/GetSources",
+                    }
+                }
+            },
+            change: onChangeSource
+        });
+
+        $("#articleType").kendoDropDownList({
+            optionLabel: "Select Article Type",
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: [
+              { text: "News", value: "1" },
+              { text: "Review", value: "2" }
+            ],
+            change: onChangeArticleType
+        });
+
+        $("#boxSize").kendoDropDownList({
+            optionLabel: "Select Box Size",
+            dataTextField: "text",
+            dataValueField: "value",
+            dataSource: [
+              { text: "Box1", value: "1" },
+              { text: "Box2", value: "2" },
+              { text: "Box3", value: "3" }
+            ],
+            change: onChangeBoxSize
+        });
+
+
+        // Validate valid of DropDownlist
+        function onChangeArticleType() {
+            if ($('#articleType').val() == '') {
+                $('#articleType').parent().parent().removeClass('has-feedback').removeClass('has-success').addClass('has-error-dropdown');
+                return false;
+            } else {
+                $('#articleType').parent().parent().removeClass('has-error-dropdown').removeClass('has-feedback').addClass('has-success');
+                return true;
+            }
+        };
+
+        function onChangeCategory() {
+            if ($('#category').val() == '') {
+                $('#category').parent().parent().removeClass('has-feedback').removeClass('has-success').addClass('has-error-dropdown');
+                return false;
+            } else {
+                $('#category').parent().parent().removeClass('has-error-dropdown').removeClass('has-feedback').addClass('has-success');
+                return true;
+            }
+
+        };
+
+        function onChangeBoxSize() {
+            if ($('#boxSize').val() == '') {
+                $('#boxSize').parent().parent().removeClass('has-feedback').removeClass('has-success').addClass('has-error-dropdown');
+                return false;
+            } else {
+                $('#boxSize').parent().parent().removeClass('has-error-dropdown').removeClass('has-feedback').addClass('has-success');
+                return true;
+            }
+
+        };
+
+        function onChangeSource() {
+            if ($('#source').val() == '') {
+                $('#source').parent().parent().removeClass('has-feedback').removeClass('has-success').addClass('has-error-dropdown');
+                return false;
+            } else {
+                $('#source').parent().parent().removeClass('has-error-dropdown').removeClass('has-feedback').addClass('has-success');
+                return true;
+            }
+        };
+
+
+        $('#submit').click(function () {
+            $('#articleForm').data('formValidation').validate();
+            var checkTextField = $('#articleForm').data('formValidation').isValid();
+            var checkTags = checkValidateTags();
+            var checkArticleType = onChangeArticleType();
+            var checkCategory = onChangeCategory();
+            var checkSource = onChangeSource();
+            var checkBoxSize = onChangeBoxSize();
+            var final = checkTextField && checkTags && checkArticleType && checkCategory && checkSource && checkBoxSize;
+            if (final == true) {
+                $.post($('#articleForm').attr('action'), $("#articleForm").serialize(), function (url) {
+                    window.location.href = url;
+                });
+            }
+        });
+
+        //validate plugin
+
+        $('#articleForm').formValidation({
+            message: 'This value is not valid',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                Title: {
+                    message: 'The title is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The title is required and can\'t be empty'
+                        },
+                        stringLength: {
+                            min: 10,
+                            max: 100,
+                            message: 'The title must be more than 10 and less than 100 characters long'
+                        },
+                    }
+                },
+                Description: {
+                    message: 'The description is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The username is required and can\'t be empty'
+                        }
+                    }
+                },
+                ArticleType: {
+                    message: 'The Article Type is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The Article type is required and can\'t be empty'
+                        }
+                    }
+                },
+                ArticleCategoryId: {
+                    message: 'The Article category is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The Article Category is required and can\'t be empty'
+                        }
+                    }
+                },
+                SourceId: {
+                    message: 'The Source is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The Source is required and can\'t be empty'
+                        }
+                    }
+                },
+                BoxSize: {
+                    message: 'The BoxSize is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The BoxSize is required and can\'t be empty'
+                        }
+                    }
+                },
+                Priority: {
+                    message: 'The Priority is not valid, this is a number greater 0',
+                    validators: {
+                        notEmpty: {
+                            message: 'The Priority is required and can\'t be empty'
+                        },
+                        integer: {
+                            message: 'The value is not an integer'
+                        }
+                    }
+                },
+                Author: {
+                    message: 'The Author is not valid',
+                    validators: {
+                        notEmpty: {
+                            message: 'The Author is required and can\'t be empty'
+                        }
+                    }
+                }
+            }
+        });
+
+    });
+
+    function submitContentSection(form) {
+        $.post(form.attr('action'), form.serialize(), function (data) {
+            //form.find('input[name="ContentSectionId"]').val(data.ContentSectionId);
+            //form.closest('.panel').find('.panel-title a').text(data.SectionTitle);
+            $('#contentSectionAlert').html('<strong>Saved success!</strong>');
+            $('#contentSectionAlert').show(0).delay(3000).hide(0);
+            var contentSectionId = form.find('input[name=ContentSectionId]').val();
+            if ($('#panel-' + contentSectionId).length > 0) {
+                $('#panel-' + contentSectionId).remove();
+                $('#accordion').append(data);
+            }
+        });
+    };
+
+    function deleteContentSection(form) {
+        if (confirm("Are you sure to delete this content section!")) {
+            var contentSectionId = form.find('input[name="ContentSectionId"]').val();
+            if (contentSectionId > 0) {
+                $.post('@Url.Action("Destroy", "ContentSectionBO")', { contentSectionId: contentSectionId }, function (data) {
+                    form.closest('.panel').remove();
+                    $('#contentSectionAlert').html('<strong>Deleted success!</strong>');
+                    $('#contentSectionAlert').show(0).delay(3000).hide(0);
+                });
+            } else {
+                form.closest('.panel').remove();
+            }
+        }
+    };
+
+    function deleteImage(imageId, contentSectionId) {
+        $.post('@Url.Action("DeleteImage", "ContentSectionBO")', { imageId: imageId, contentSectionId: contentSectionId }, function (data) {
+            $('#image-box-' + imageId).remove();
+            carousel();
+        });
+    };
+
+    function getcropimgdata() {
+        var datas = $('#imgCrop_sq').guillotine('getData');
+        var datar = $('#imgCrop_rec').guillotine('getData');
+        var data = {};
+        //square data
+        data.scales = datas.scale;
+        data.ws = datas.w;
+        data.hs = datas.h;
+        data.xs = datas.x;
+        data.ys = datas.y;
+        //rectangle data
+        data.scaler = datar.scale;
+        data.wr = datar.w;
+        data.hr = datar.h;
+        data.xr = datar.x;
+        data.yr = datar.y;
+
+        var imagePath = $("#imgCrop_sq").attr("src");
+        imagePath = imagePath.split('/ImageBO/Image?path=')[1];
+        data.imagePath = imagePath;
+
+        $.ajax({
+            url: '/ImageBO/CropImage',
+            type: 'POST',
+            data: data,
+            success: function (data) {
+                $('#imgCroper').modal('hide');
+                //document.getElementById("imgAvatar").src = '/ImageBO/Image?path=' + data;
+                //document.getElementById("avatarHidden").value = '/ImageBO/Image?path=' + data;
+                //var result = JSON.parse(data);
+
+                document.getElementById("imgAvatar").src = data.avatar;
+                document.getElementById("avatarHidden").value = data.avatar;
+                document.getElementById("squareAvatarHidden").value = data.squareAvatar;
+                document.getElementById("rectangleAvatarHidden").value = data.rectangleAvatar;
+
+            },
+            error: function (data) { }
+        });
+    };
+
+    //var imageCropWidth = 0;
+    //var imageCropHeight = 0;
+    //var cropPointX = 0;
+    //var cropPointY = 0;
+
+    //$("#hl-crop-image").on("click", function (e) {
+    //    e.preventDefault();
+    //    cropImage();
+    //});
+
+    //function initCrop() {
+    //    $('#imgCrop').Jcrop({
+    //        onChange: setCoordsAndImgSize,
+    //        aspectRatio: 1
+    //    });
+    //}
+
+    //function setCoordsAndImgSize(e) {
+
+    //    imageCropWidth = e.w;
+    //    imageCropHeight = e.h;
+
+    //    cropPointX = e.x;
+    //    cropPointY = e.y;
+    //}
+
+    //function cropImage() {
+
+    //    if (imageCropWidth == 0 && imageCropHeight == 0) {
+    //        alert("Please select crop area.");
+    //        return;
+    //    }
+
+    //    $.ajax({
+    //        url: 'BO/ArticleBO/CropImage',
+    //        type: 'POST',
+    //        data: {
+    //            imagePath: $("#imgCrop").attr("src"),
+    //            cropPointX: cropPointX,
+    //            cropPointY: cropPointY,
+    //            imageCropWidth: imageCropWidth,
+    //            imageCropHeight: imageCropHeight
+    //        },
+    //        success: function (data) {
+
+    //        },
+    //        error: function (data) { }
+    //    });
+    //}
+
+
+</script>
+
+<script src="~/Areas/BO/UIFramework/Guillotine/js/jquery.guillotine.min.js"></script>
+<link rel="stylesheet" href="~/Areas/BO/UIFramework/Guillotine/css/jquery.guillotine.css" type="text/css" />

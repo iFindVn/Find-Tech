@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/BO/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumb-box">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="@Url.Action("Index", "ArticleBO")">BO</a> </li>
+            <li class="active">Benchmark Group </li>
+        </ul>
+    </div>
+</div>
+<div class="clearfix"></div>
+<section id="main">
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div id="benchmarkGroupGrid"></div>
+            </div>
+        </div><!-- .content -->
+    </div>
+</section><!-- #main -->
+<script>
+    $(document).ready(function () {
+        var benchmarkGroupUrl = "/BenchmarkGroupBO",
+            dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: benchmarkGroupUrl + "/GetBenchmarkGroups",
+                        dataType: "json"
+                    },
+                    update: {
+                        url: benchmarkGroupUrl + "/Update",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    destroy: {
+                        url: benchmarkGroupUrl + "/Destroy",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    create: {
+                        url: benchmarkGroupUrl + "/Create",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation !== "read" && options.models) {
+                            return { models: kendo.stringify(options.models) };
+                        }
+                    }
+                },
+                batch: true,
+                pageSize: 20,
+                schema: {
+                    model: {
+                        id: "BenchmarkGroupId",
+                        fields: {
+                            BenchmarkGroupId: { editable: false, defaultValue: 0 },
+                            BenchmarkGroupName: { validation: { required: true } },
+                            Avatar: { type: "string" },
+                            Description: { type: "string" },
+                            Priority: { type: "number" },
+                            Parent: { defaultValue: { BenchmarkGroupId: 0, BenchmarkGroupName: "Root" } }
+                        }
+                    }
+                }
+            });
+
+        $("#benchmarkGroupGrid").kendoGrid({
+            dataSource: dataSource,
+            navigatable: true,
+            pageable: true,
+            height: 550,
+            toolbar: ["create", "save", "cancel"],
+            columns: [
+                { field: "BenchmarkGroupId", title: "Id", width: 50 },
+                { field: "BenchmarkGroupName", title: "BenchmarkGroupName", width: 120 },
+                { field: "Avatar", title: "Avatar", width: 120 },
+                { field: "Description", title: "Description", width: 140 },
+                { field: "Priority", title: "Priority", width: 70 },
+                { field: "Parent", title: "Parent", width: 80, editor: benchmarkParentGroupDropDownEditor, template: "#=Parent.BenchmarkGroupName#" },
+                { command: "destroy", title: "&nbsp;", width: 100 }],
+            editable: true
+        });
+    });
+
+    function benchmarkParentGroupDropDownEditor(container, options) {
+        $('<input data-text-field="BenchmarkGroupName" data-value-field="BenchmarkGroupId" data-bind="value:' + options.field + '"/>')
+            .appendTo(container)
+            .kendoDropDownList({
+                optionLabel: "Select parent...",
+                autoBind: false,
+                dataSource: {
+                    transport: {
+                        read: {
+                            url: "/BenchmarkGroupBO/GetBenchmarkGroups",
+                            dataType: "json"
+                        }
+                    }
+                }
+            });
+    }
+</script>
+
+

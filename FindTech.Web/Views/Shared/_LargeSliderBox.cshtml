@@ -1,0 +1,33 @@
+﻿@model FindTech.Web.Models.ArticleListViewModel
+@{
+    var articles = Model.Articles;
+}
+<article class="content">
+    <div class="carousel-box bottom-padding bottom-padding-mid load overflow">
+        <div class="title-box no-margin">
+            <a class="next" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
+                <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="1,0.001 0,1.001 7,8 0,14.999 1,15.999 9,8 "></polygon>
+                                        </svg>
+            </a>
+            <a class="prev" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
+                <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="8,15.999 9,14.999 2,8 9,1.001 8,0.001 0,8 "></polygon>
+                                        </svg>
+            </a>
+            <h2 class="title">@Model.Title</h2>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="carousel articles">
+                @foreach (var article in articles)
+                {
+                    Html.RenderPartial("_ReviewBox", article);
+                }
+            </div>
+        </div>
+    </div><!-- .carousel-box -->
+</article>
+

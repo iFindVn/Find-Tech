@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewBag.Title = "CreateArticleCategoryBO";
+    Layout = "~/Areas/BO/Views/Shared/_Layout.cshtml";
+}
+
+<div class="breadcrumb-box">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="@Url.Action("Index", "ArticleCategoryBO")">BO</a> </li>
+            <li><a href="@Url.Action("Index", "ArticleCategoryBO")">ArticleCategory</a></li>
+            <li class="active">Create</li>
+        </ul>
+    </div>
+</div>
+<div class="clearfix"></div>
+<section id="main">
+    <div class="container">
+        <div class="content">
+            <form role="form" method="POST" action="CreateArticleCategory">
+                <div class="row">
+
+                    <div class="col-xs-6 col-md-9">
+
+                        <div class="form-group">
+                            <label for="articleCategoryName">Tên danh mục</label>
+                            <input type="text" class="form-control" id="articleCategoryName" name="ArticleCategoryName" placeholder="Nhập tên danh mục"/>
+                        </div>
+                      
+                        <div class="form-group">
+                            <label for="priority">Độ ưu tiên</label>
+                            <input type="text" class="form-control" id="priority" name="Priority" placeholder="Độ ưu tiên" />
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <label for="color">Màu sắc</label>
+                            <input type="text" class="form-control" id="color" name="Color" placeholder="Mã màu" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="datetimepicker">Ngày</label>
+                            <input type='text' class="form-control" id="datetimepicker" name="CreatedDate" placeholder="Ngày tạo" />
+                        </div>
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="isMenu" name="IsMenu" value="true"> Chọn làm menu ?
+                                </label>
+                            </div>
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="isActive" name="IsActived" value="true"> Kích hoạt
+                                </label>
+                            </div>
+
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="isDeleted" name="IsDeleted" value="true"> Cho phép xóa
+                                </label>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+               
+                <div class="row">
+                    <div class="col-xs-3 col-md-12">
+                        <button type="submit" class="btn btn-primary">Click để tạo danh mục</button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div><!-- .content -->
+    </div>
+</section><!-- #main -->
+@*kendoui edtitor for content html of article*@
+<script>
+    $(document).ready(function () {
+   
+        $('#datetimepicker').datepicker({
+            language: 'en'
+        });
+
+    });
+</script>

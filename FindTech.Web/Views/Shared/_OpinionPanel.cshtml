@@ -1,0 +1,16 @@
+﻿@using FindTech.Entities.Models.Enums
+@model IEnumerable<FindTech.Web.Models.OpinionViewModel>
+@{
+    var bad = Model.FirstOrDefault(a => a.OpinionLevel == OpinionLevel.Bad);
+    var badCount = bad != null ? bad.OpinionCount : 0;
+    var average = Model.FirstOrDefault(a => a.OpinionLevel == OpinionLevel.Average);
+    var averageCount = average != null ? average.OpinionCount : 0;
+    var good = Model.FirstOrDefault(a => a.OpinionLevel == OpinionLevel.Good);
+    var goodCount = good != null ? good.OpinionCount : 0;
+    var excellent = Model.FirstOrDefault(a => a.OpinionLevel == OpinionLevel.Excellent);
+    var excellentCount = excellent != null ? excellent.OpinionCount : 0;          
+}
+<span class="background-danger opinion-level">Tuyệt<span class="count">@excellentCount</span></span>
+<span class="background-warning opinion-level">Hay<span class="count">@goodCount</span></span>
+<span class="background-info opinion-level">Tạm<span class="count">@averageCount</span></span>
+<span class="background-success opinion-level">Dở<span class="count">@badCount</span></span>

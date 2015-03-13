@@ -1,0 +1,9 @@
+﻿@model FindTech.Web.Models.ArticleListViewModel
+@{
+    Layout = null;
+    var articles = Model.Articles;        
+}
+@foreach (var article in articles)
+{
+    Html.RenderPartial("_NewsBox", article);
+}

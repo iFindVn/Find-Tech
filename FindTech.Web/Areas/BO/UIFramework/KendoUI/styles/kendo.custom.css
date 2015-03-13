@@ -1,0 +1,26 @@
+﻿.selectBox-dropdown {
+    display: none !important;
+}
+.form-control .k-input, .form-control .k-select {
+    line-height: 22px;
+    padding: 8px 12px;
+}
+.form-group .k-dropdown{
+    width: 100%;
+    display: block;
+}
+.form-group .k-datetimepicker {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+.form-group .k-datetimepicker .k-picker-wrap {
+    height: 40px;
+}
+.form-group .k-datetimepicker .k-picker-wrap input {
+    height: 35px;
+}
+.form-group .k-datetimepicker .k-picker-wrap .k-select {
+    line-height: 40px;
+}
+

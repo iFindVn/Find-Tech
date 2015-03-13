@@ -1,0 +1,90 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindTech.Web", "FindTech.Web\FindTech.Web.csproj", "{39D785DF-5C36-4F5D-B6DD-7C2B9694229F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{2AE1C917-8B02-45CD-B782-D6D24358C682}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Pattern", "Framework\Repository.Pattern\Repository.Pattern.csproj", "{6E682A14-C872-4813-B620-76E108DEA683}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository.Pattern.Ef6", "Framework\Repository.Pattern.Ef6\Repository.Pattern.Ef6.csproj", "{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Pattern", "Framework\Service.Pattern\Service.Pattern.csproj", "{86F86650-EE3C-4372-8FEC-40C2FE015022}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindTech.Entities", "FindTech.Entities\FindTech.Entities.csproj", "{2C673343-C3AE-47F7-8ADB-1A739108B305}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindTech.Services", "FindTech.Services\FindTech.Services.csproj", "{F22B6BD7-3BC9-4720-8F03-43C2BDAB4A57}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{5072A272-4D30-4190-8FC2-159F391935C3}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindTech.Repository", "FindTech.Repository\FindTech.Repository.csproj", "{5F24F6C2-1B2C-4AF6-8815-B8708E363825}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{39D785DF-5C36-4F5D-B6DD-7C2B9694229F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39D785DF-5C36-4F5D-B6DD-7C2B9694229F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39D785DF-5C36-4F5D-B6DD-7C2B9694229F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{39D785DF-5C36-4F5D-B6DD-7C2B9694229F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39D785DF-5C36-4F5D-B6DD-7C2B9694229F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39D785DF-5C36-4F5D-B6DD-7C2B9694229F}.Release|x86.ActiveCfg = Release|Any CPU
+		{6E682A14-C872-4813-B620-76E108DEA683}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E682A14-C872-4813-B620-76E108DEA683}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E682A14-C872-4813-B620-76E108DEA683}.Debug|x86.ActiveCfg = Debug|x86
+		{6E682A14-C872-4813-B620-76E108DEA683}.Debug|x86.Build.0 = Debug|x86
+		{6E682A14-C872-4813-B620-76E108DEA683}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E682A14-C872-4813-B620-76E108DEA683}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E682A14-C872-4813-B620-76E108DEA683}.Release|x86.ActiveCfg = Release|x86
+		{6E682A14-C872-4813-B620-76E108DEA683}.Release|x86.Build.0 = Release|x86
+		{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C}.Release|x86.ActiveCfg = Release|Any CPU
+		{86F86650-EE3C-4372-8FEC-40C2FE015022}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86F86650-EE3C-4372-8FEC-40C2FE015022}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86F86650-EE3C-4372-8FEC-40C2FE015022}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{86F86650-EE3C-4372-8FEC-40C2FE015022}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86F86650-EE3C-4372-8FEC-40C2FE015022}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86F86650-EE3C-4372-8FEC-40C2FE015022}.Release|x86.ActiveCfg = Release|Any CPU
+		{2C673343-C3AE-47F7-8ADB-1A739108B305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C673343-C3AE-47F7-8ADB-1A739108B305}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C673343-C3AE-47F7-8ADB-1A739108B305}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2C673343-C3AE-47F7-8ADB-1A739108B305}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C673343-C3AE-47F7-8ADB-1A739108B305}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C673343-C3AE-47F7-8ADB-1A739108B305}.Release|x86.ActiveCfg = Release|Any CPU
+		{F22B6BD7-3BC9-4720-8F03-43C2BDAB4A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F22B6BD7-3BC9-4720-8F03-43C2BDAB4A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F22B6BD7-3BC9-4720-8F03-43C2BDAB4A57}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F22B6BD7-3BC9-4720-8F03-43C2BDAB4A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F22B6BD7-3BC9-4720-8F03-43C2BDAB4A57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F22B6BD7-3BC9-4720-8F03-43C2BDAB4A57}.Release|x86.ActiveCfg = Release|Any CPU
+		{5F24F6C2-1B2C-4AF6-8815-B8708E363825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F24F6C2-1B2C-4AF6-8815-B8708E363825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F24F6C2-1B2C-4AF6-8815-B8708E363825}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5F24F6C2-1B2C-4AF6-8815-B8708E363825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F24F6C2-1B2C-4AF6-8815-B8708E363825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F24F6C2-1B2C-4AF6-8815-B8708E363825}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6E682A14-C872-4813-B620-76E108DEA683} = {2AE1C917-8B02-45CD-B782-D6D24358C682}
+		{F68A1D19-93FB-47C1-A22B-42BEA3E4FD8C} = {2AE1C917-8B02-45CD-B782-D6D24358C682}
+		{86F86650-EE3C-4372-8FEC-40C2FE015022} = {2AE1C917-8B02-45CD-B782-D6D24358C682}
+	EndGlobalSection
+EndGlobal

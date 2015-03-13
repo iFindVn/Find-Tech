@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/BO/Views/Shared/_Layout.cshtml";
+}
+
+<section id="main">
+    <div class="container">
+        <div class="content">
+            <form role="form" method="POST" action="">
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="#" class="thumbnail" id="avatar">
+                            <img data-src="holder.js/100%x300" alt="100%x300" id="imgAvatar" src="" />
+                        </a>
+                        <input type="hidden" name="Avatar" value="" />
+                    </div>
+
+                    <div class="col-xs-6 col-md-9">
+
+                        <div class="form-group">
+                            <label for="lbDeviceName">Device Name</label>
+                            <input type="text" class="form-control" id="txtDeviceName" name="deviceName" placeholder="Device Name" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lbBrand">Brand</label>
+                            <input type="text" class="form-control" id="txtBrand" name="Brand" placeholder="Brand" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lbDescription">Description</label>
+                            <textarea class="form-control" id="txtDescription" name="Description" placeholder="Description"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label for="lbSpecifications">Specifications</label>
+                        <div id="specGrid"></div>
+                    </div>
+                    
+                </div>
+
+                <script>
+                    $(document).ready(function () {
+
+                        var specDetailBOUrl = "/SpecDetailBO",
+            dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: specDetailBOUrl + "/GetSpecDetails",
+                        dataType: "json"
+                    },
+                    update: {
+                        url: specDetailBOUrl + "/UpdateSpec",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    destroy: {
+                        url: specDetailBOUrl + "/DestroySpec",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    create: {
+                        url: specDetailBOUrl + "/CreateSpec",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation !== "read" && options.models) {
+                            return { models: kendo.stringify(options.models) };
+                        }
+                    }
+                },
+                batch: true,
+                pageSize: 20,
+                schema: {
+                    model: {
+                        id: "SpecDetailId",
+                        fields: {
+                            SpecName: { validation: { required: true } },
+                            Value: {validation:{required:true}},
+                            Hightlight: { type: "boolean" },
+                            CreatedDate: { type: "string" }
+                        }
+                    }
+                }
+            });
+
+                    $("#specGrid").kendoGrid({
+                        navigatable: true,
+                        pageable: true,
+                        height: 550,
+                        toolbar: ["create", "save", "cancel"],
+                        columns: [
+                            { field: "SpecName", title: "Spec Name", width: 120, editor: specDropDownEditor },
+                            { field: "Hightlight", title: "Hightlight", width: 70 },
+                            { field: "CreatedDate", title: "Created Date", width: 70 },
+                            { command: "destroy", title: "&nbsp;", width: 100 }],
+                        editable: true
+                    });
+
+                    $("#txtBrand").kendoDropDownList({
+                        optionLabel: "Select Brand",
+                        dataTextField: "text",
+                        dataValueField: "value",
+                        dataSource: {
+                            transport: {
+                                read: {
+                                    dataType: "json",
+                                    url: "../BrandBO/GetBrands",
+                                }
+                            }
+                        }
+                    });
+                    });
+
+                    function specDropDownEditor(container, options) {
+                        $('<input required data-text-field="SpecName" data-value-field="SpecId" />')
+                            .appendTo(container)
+                            .kendoDropDownList({
+                                optionLabel: "Select spec...",
+                                autoBind: false,
+                                dataSource: {
+                                    transport: {
+                                        read: {
+                                            url: "/SpecBO/GetSpecs",
+                                            dataType: "json"
+                                        }
+                                    }
+                                }
+                            });
+                    }
+                </script>
+
+            </form>
+        </div><!-- .content -->
+    </div>
+</section>
+

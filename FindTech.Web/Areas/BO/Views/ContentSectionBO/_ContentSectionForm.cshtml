@@ -1,0 +1,167 @@
+﻿@model FindTech.Web.Areas.BO.Models.ContentSectionBOViewModel
+@{
+    var collapseId = DateTime.Now.Ticks;
+    Layout = null;
+}
+<div class="panel panel-info active" id="panel-@Model.ContentSectionId">
+    <div class="panel-heading" role="tab" id="heading-@collapseId">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse-@collapseId">
+                @(string.IsNullOrEmpty(Model.SectionTitle) ? "New Content Section" : Model.SectionTitle)
+            </a>
+        </h4>
+    </div>
+    <div id="collapse-@collapseId" class="panel-collapse collapse in">
+        <div class="panel-body">
+            <form role="form" method="POST" action="@Url.Action("Create", "ContentSectionBO")">
+                <input type="hidden" name="ArticleId" value="@Model.ArticleId" />
+                <input type="hidden" name="ContentSectionId" value="@Model.ContentSectionId" />
+                <div class="row">
+                    <div class="col-xs-12 col-md-4">
+                        <div class="form-group">
+                            <label for="SectionTitle">Section Title</label>
+                            <input type="text" class="form-control" name="SectionTitle" placeholder="Nhập tiêu đề" value="@Model.SectionTitle">
+                        </div>
+                        <div class="form-group">
+                            <label for="SectionDescription">Section Description</label>
+                            <textarea class="form-control" name="SectionDescription" style="height:110px" placeholder="Mô tả ngắn">@Model.SectionDescription</textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="BenchmarkGroupId">Benchmark Group</label>
+                                    <input type="text" class="form-control" id="benchmark-group-@Model.ContentSectionId" name="BenchmarkGroupId" placeholder="Benchmark Group" value="@Model.BenchmarkGroupId" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="PageNumber">Page No.</label>
+                                    <input type="text" class="form-control" id="page-number-@Model.ContentSectionId" name="PageNumber" placeholder="Page Number" value="@Model.PageNumber" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-8">
+                        <div class="form-group">
+                            <label for="SectionContent">Nội dung bài viết</label>
+                            <textarea id="section-content-@Model.ContentSectionId" name="SectionContent" rows="10" cols="30" style="width:100%;height:286px">@Html.Raw(Model.SectionContent)</textarea>
+                        </div>
+                    </div>
+                    @if (Model.ContentSectionId > 0)
+                    {
+                        <div class="col-xs-12 col-md-12" id="images-@Model.ContentSectionId">
+                            <div class="carousel-box load overflow" data-carousel-height="100">
+                                <div class="title-box">
+                                    <a class="next" href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
+                                        <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="1,0.001 0,1.001 7,8 0,14.999 1,15.999 9,8 "></polygon>
+                                    </svg>
+                                    </a>
+                                    <a class="prev" href="#">
+                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
+                                        <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="8,15.999 9,14.999 2,8 9,1.001 8,0.001 0,8 "></polygon>
+                                    </svg>
+                                    </a>
+                                    <h2 class="title">Images</h2>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <div class="row">
+                                    <div class="carousel gallery">
+                                        @foreach (var image in Model.Images)
+                                        {
+                                            <div class="col-sm-4 col-md-2" id="image-box-@image.ImageId">
+                                                <a class="gallery-images" rel="fancybox" href="@image.Url">
+                                                    <img src="@image.Thumbnail" width="270" height="135" alt="">
+                                                    <span class="bg-images"></span>
+                                                </a>
+                                                <i class="fa fa-times-circle" onclick="deleteImage(@image.ImageId, @Model.ContentSectionId); return false;"></i>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="col-xs-12 col-md-12 text-right">
+                        @if (Model.ContentSectionId > 0)
+                        {
+                            <button type="button" class="btn btn-success" id="add-image-@Model.ContentSectionId">Upload Image</button>
+                        }
+                        <button type="button" class="btn btn-primary" onclick="submitContentSection($(this).closest('form'))">Save</button>
+                        <button type="button" class="btn btn-danger" onclick="deleteContentSection($(this).closest('form'))">Delete</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#benchmark-group-@Model.ContentSectionId").kendoDropDownList({
+            optionLabel: "Select Benchmark Group",
+            dataTextField: "BenchmarkGroupName",
+            dataValueField: "BenchmarkGroupId",
+            dataSource: {
+                transport: {
+                    read: {
+                        dataType: "json",
+                        url: "/BO/BenchmarkGroupBO/GetBenchmarkGroups",
+                    }
+                }
+            }
+        });
+        window.applyImageBrowser($('#add-image-@Model.ContentSectionId'), function (imageName, imageUrl, thumbnailUrl, button) {
+            $.post('@Url.Action("AddImage", "ContentSectionBO")', { ImageName: imageName, Url: imageUrl, Thumbnail: thumbnailUrl, contentSectionId: @Model.ContentSectionId }, function (imageId) {
+                var imageBox = '<div class="col-sm-4 col-md-2" id="image-box-' + imageId + '">' +
+                        '<a class="gallery-images" rel="fancybox" href="' + imageUrl + '">' +
+                            '<img src="' + thumbnailUrl + '" width="270" height="135" alt="">' +
+                            '<span class="bg-images"></span>' +
+                        '</a>' +
+                        '<i class="fa fa-times-circle" onclick="deleteImage(' + imageId + ', ' + @Model.ContentSectionId + ')"></i>' +
+                    '</div>';
+                $('#panel-@Model.ContentSectionId').find('.carousel').prepend(imageBox);
+                carousel();
+            });
+        });
+        accordions();
+        carousel();
+        $("#section-content-@Model.ContentSectionId").kendoEditor({
+            tools: [
+                "bold",
+                "italic",
+                "underline",
+                "strikethrough",
+                "justifyLeft",
+                "justifyCenter",
+                "justifyRight",
+                "justifyFull",
+                "insertUnorderedList",
+                "insertOrderedList",
+                "indent",
+                "outdent",
+                "createLink",
+                "unlink",
+                "insertImage",
+                "insertFile",
+                "subscript",
+                "superscript",
+                "createTable",
+                "addRowAbove",
+                "addRowBelow",
+                "addColumnLeft",
+                "addColumnRight",
+                "deleteRow",
+                "deleteColumn",
+                "viewHtml",
+                "formatting",
+                "cleanFormatting",
+                "fontName",
+                "fontSize",
+                "foreColor",
+                "backColor"
+            ]
+        });
+    });
+</script>

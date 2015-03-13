@@ -1,0 +1,205 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/BO/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumb-box">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="@Url.Action("Index", "ArticleBO")">BO</a> </li>
+            <li class="active">Article</li>
+        </ul>
+    </div>
+</div>
+<div class="clearfix"></div>
+<section id="main">
+    <div class="container" id="container">
+        <div class="content">
+            <div class="row">
+                
+
+                <div id="articleToolbar"></div>
+                <div id="articleGrid"></div>
+                <button type="button" class="btn btn-primary btn-lg" id="undo">
+                    Upload Image
+                </button>
+            </div>
+        </div><!-- .content -->
+    </div>
+
+    <div class="modal fade" id="waitDialog" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">
+        <div class="modal-dialog modal-m">
+            <div class="modal-content">
+                <div class="modal-header"><h3 style="margin:0;">Please wait ...</h3></div>
+                <div class="modal-body">
+                    <div class="progress progress-striped active" style="margin-bottom:0;"><div class="progress-bar" style="width: 100%"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- #main -->
+<script type="text/x-kendo-template" id="articleToolbarTemplate">
+    <div class="toolbar">
+        <button class="k-button k-grid-save-changes">Save</button>
+        <button class="k-button k-grid-cancel-changes">Cancel</button>
+        <button id="active" class="k-button">Active</button>
+        <button id="viewDetail" class="k-button">View Detail</button>
+        <button id="readRss" class="k-button pull-right">Read Rss</button>
+    </div>
+</script>
+<script>
+    $(document).ready(function () {
+        var articleUrl = "/BO/ArticleBO",
+            dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: articleUrl + "/GetArticles",
+                        dataType: "json"
+                    },
+                    update: {
+                        url: articleUrl + "/Update",
+                        dataType: "json",
+                        type: "post"
+                    },
+                    destroy: {
+                        url: articleUrl + "/Destroy",
+                        dataType: "json",
+                        type: "post"
+                    },
+                    create: {
+                        url: articleUrl + "/Create",
+                        dataType: "json",
+                        type: "post"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation !== "read" && options) {
+                            return { models: kendo.stringify(options) };
+                        } else {
+                            return {skip: options.skip, take: options.take, filter: kendo.stringify(options.filter)};
+                        }
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "ArticleId",
+                        fields: {
+                            ArticleId: { editable: false, nullable: true },
+                            Title: { validation: { required: true } },
+                            Author: { type: "string" },
+                            Source: { type: "string" },
+                            IsActived: { type: "boolean" },
+                            IsHot: {type: "boolean"}
+                        }
+                    },
+                    data: "articles",
+                    total: "totalCount"
+                },
+                pageSize: 10,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            });
+
+        $("#articleGrid").kendoGrid({
+            dataSource: dataSource,
+            navigatable: true,
+            pageable: true,
+            filterable: true,
+            height: 550,
+            selectable: "multiple",
+            toolbar: kendo.template($("#articleToolbarTemplate").html()),
+            columns: [
+                { field: "ArticleId", title: "Id", width: 50 },
+                { field: "Title", title: "Title" },
+                { field: "Author", title: "Author", width: 120 },
+                { field: "ArticleType", title: "ArticleType", width: 120, editor: articleTypeDropDownEditor, template: "#=ArticleType.ArticleTypeName#" },
+                { field: "BoxSize", title: "Box Size", width: 80, editor: boxSizeDropDownEditor, template: "#=BoxSize.BoxSizeName#" },
+                { field: "IsActived", title: "IsActived", width: 80 },
+                { field: "IsHot", title: "IsHot", width: 80 },
+                { command: [{ text: "Details", click: showDetails}, "destroy"], title: "&nbsp;", width: 186 }],
+            editable: true
+        });
+
+
+        function articleTypeDropDownEditor(container, options) {
+            $('<input required data-text-field="ArticleTypeName" data-value-field="ArticleTypeId" data-bind="value:' + options.field + '"/>')
+                .appendTo(container)
+                .kendoDropDownList({
+                    autoBind: false,
+                    dataSource: [
+                      { ArticleTypeName: "News", ArticleTypeId: "1" },
+                      { ArticleTypeName: "Review", ArticleTypeId: "2" }
+                    ]
+                });
+        }
+
+        function boxSizeDropDownEditor(container, options) {
+            $('<input required data-text-field="BoxSizeName" data-value-field="BoxSizeId" data-bind="value:' + options.field + '"/>')
+                .appendTo(container)
+                .kendoDropDownList({
+                    autoBind: false,
+                    dataSource: [
+                      { BoxSizeName: "Box1", BoxSizeId: "1" },
+                      { BoxSizeName: "Box2", BoxSizeId: "2" },
+                      { BoxSizeName: "Box3", BoxSizeId: "3" }
+                    ]
+                });
+        }
+
+
+
+
+
+        $("#readRss").click(function () {
+            $('.loading').show();
+            $.ajax({
+                url: '/ArticleBO/ReadRss',
+                type: "POST",
+                data: { url: '' },
+                dataType: "json",
+                success: function (result) {
+                    if (result) {
+                        $('.loading').hide();
+                        $('#articleGrid').data("kendoGrid").dataSource.read();
+                    }
+                }
+            });
+        });
+
+        $("#active").click(function () {
+            var grid = $("#articleGrid").data("kendoGrid");
+            var ids = [];
+            grid.select().each(function () {
+                var dataItem = grid.dataItem($(this));
+                if (dataItem.ArticleId) {
+                    ids.push(dataItem.ArticleId);
+                }
+            });
+
+            $.post('@Url.Action("ActiveArticle", "ArticleBO")', { articleIds: ids.join(',') }, function (data) {
+                grid.dataSource.read();
+            });
+        });
+
+        $("#viewDetail").click(function () {
+            var grid = $("#articleGrid").data("kendoGrid");
+            var ids = [];
+            grid.select().each(function () {
+                var dataItem = grid.dataItem($(this));
+                if (dataItem.ArticleId) {
+                    ids.push(dataItem.ArticleId);
+
+                }
+            });
+
+            for (var i = 0; i < ids.length; i++) {
+                setTimeout(window.open('@Url.Action("Create","ArticleBO")?articleId=' + ids[i], '_blank'), (i + 1) * 200);
+            }
+        });
+ 
+    });
+    function showDetails(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        window.open('@Url.Action("Create","ArticleBO")?articleId=' + dataItem.ArticleId, '_blank');
+    }
+</script>

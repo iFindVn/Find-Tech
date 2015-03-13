@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/BO/Views/Shared/_Layout.cshtml";
+}
+<div class="breadcrumb-box">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="@Url.Action("Index", "ArticleBO")">BO</a> </li>
+            <li class="active">Source</li>
+        </ul>
+    </div>
+</div>
+<div class="clearfix"></div>
+<section id="main">
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div id="sourceGrid"></div>
+            </div>
+        </div><!-- .content -->
+    </div>
+</section><!-- #main -->
+<script>
+    $(document).ready(function () {
+        var sourceUrl = "/SourceBO",
+            dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: sourceUrl + "/GetSources",
+                        dataType: "json"
+                    },
+                    update: {
+                        url: sourceUrl + "/Update",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    destroy: {
+                        url: sourceUrl + "/Destroy",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    create: {
+                        url: sourceUrl + "/Create",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation !== "read" && options.models) {
+                            return { models: kendo.stringify(options.models) };
+                        }
+                    }
+                },
+                batch: true,
+                pageSize: 20,
+                schema: {
+                    model: {
+                        id: "SourceId",
+                        fields: {
+                            SourceId: { editable: false, defaultValue: 0 },
+                            SourceName: { validation: { required: true } },
+                            Logo: { type: "string" },
+                            Link: { type: "string" }
+                        }
+                    }
+                }
+            });
+
+        $("#sourceGrid").kendoGrid({
+            dataSource: dataSource,
+            navigatable: true,
+            pageable: true,
+            height: 550,
+            detailInit: xpathInit,
+            toolbar: ["create", "save", "cancel"],
+            columns: [
+                { field: "SourceId", title: "Id", width: 50 },
+                { field: "SourceName", title: "SourceName", width: 120 },
+                { field: "Logo", title: "Logo", width: 120 },
+                { field: "Link", title: "Link", width: 120 },
+                { command: "destroy", title: "&nbsp;", width: 100 }],
+            editable: true
+        });
+    });
+
+    function xpathInit(e) {
+        var xpathUrl = "/XpathBO",
+            dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: xpathUrl + "/GetXpaths",
+                        dataType: "json"
+                    },
+                    update: {
+                        url: xpathUrl + "/Update",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    destroy: {
+                        url: xpathUrl + "/Destroy",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    create: {
+                        url: xpathUrl + "/Create",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation !== "read" && options.models) {
+                            return { models: kendo.stringify(options.models), sourceId: e.data.SourceId };
+                        } else {
+                            return { sourceId: e.data.SourceId }
+                        }
+                    }
+                },
+                batch: true,
+                pageSize: 20,
+                filter: { field: "SourceId", operator: "eq", value: e.data.SourceId },
+                schema: {
+                    model: {
+                        id: "XpathId",
+                        fields: {
+                            XpathId: { editable: false, defaultValue: 0 },
+                            XpathString: { validation: { required: true } },
+                            ArticleField: { type: "number", defaultValue: 0 },
+                            SourceId: { type: "number" }
+                        }
+                    }
+                }
+            });
+
+        $("<div/>").appendTo(e.detailCell).kendoGrid({
+            dataSource: dataSource,
+            navigatable: true,
+            pageable: true,
+            height: 550,
+            toolbar: ["create"],
+            columns: [
+                { field: "XpathId", title: "Id", width: 50 },
+                { field: "XpathString", title: "XpathString", width: 120 },
+                { field: "ArticleField", title: "ArticleField", editor: articleFieldDropDownEditor, template: "#=ArticleField#", width: 70 },
+                { command: ["edit", "destroy"], title: "&nbsp;", width: 80 }],
+            editable: "popup"
+        });
+    }
+
+    function articleFieldDropDownEditor(container, options) {
+        $('<input required data-text-field="Name" data-value-field="Value" data-bind="value:' + options.field + '"/>')
+            .appendTo(container)
+            .kendoDropDownList({
+                autoBind: false,
+                dataSource: [
+                    { Name: "Content", Value: 0 },
+                    { Name: "Author", Value: 1 }
+                ]
+            });
+    }
+</script>
+
+
