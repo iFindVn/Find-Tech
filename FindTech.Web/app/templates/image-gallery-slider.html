@@ -1,0 +1,43 @@
+﻿<!-- Jssor Slider Begin -->
+<div ng-attr-id="slider{{model.ContentSectionId}}_container" class="jssor_slider_containers" style="position: relative;
+                top: 0px; left: 0px; width: 870px; height: 500px; background: none top center no-repeat;">
+    <!-- Loading Screen -->
+    <div u="loading" style="position: absolute; top: 0px; left: 0px;">
+        <div style="filter: alpha(opacity=70); opacity: 0.7; position: absolute; display: block;
+                        top: 0px; left: 0px; width: 100%; height: 100%;">
+        </div>
+        <div style="position: absolute; display: block; background: url(/UIFramework/Progressive/css/layerslider/skins/carousel/loading.gif) no-repeat center center;
+                        top: 0px; left: 0px; width: 100%; height: 100%;">
+        </div>
+    </div>
+    <!-- Slides Container -->
+    <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 870px;
+                    height: 500px; overflow: hidden;" ng-repeat="image in model.Images">
+        <div>
+            <img ng-src="image.Url" style="position: absolute; top: 0; left: 0; width: 870px; height: 400px;" />
+            <img u="thumb" ng-src="image.Thumbnail" />
+        </div>
+    </div>
+    <!-- Arrow Navigator Skin Begin -->
+    <!-- Arrow Left -->
+    <span u="arrowleft" class="jssora05l fa fa-chevron-left" style="font-size: 24px; top: 188px; left: 15px; width: 17px; height: 24px;">
+    </span>
+    <!-- Arrow Right -->
+    <span u="arrowright" class="jssora05r  fa fa-chevron-right" style="font-size: 24px; top: 188px; right: 15px; width: 17px; height: 24px;">
+    </span>
+    <!-- Arrow Navigator Skin End -->
+    <!-- Thumbnail Navigator Skin Begin -->
+    <div u="thumbnavigator" class="jssort01" style="position: absolute; width: 870px; height: 100px; left:0px; bottom: 0px;">
+        <!-- Thumbnail Item Skin Begin -->
+        <div u="slides" style="cursor: move;">
+            <div u="prototype" class="p" style="position: absolute; width: 72px; height: 72px; top: 0; left: 0;">
+                <div class=w><div u="thumbnailtemplate" style=" width: 100%; height: 100%; border: none;position:absolute; top: 0; left: 0;"></div></div>
+                <div class=c>
+                </div>
+            </div>
+        </div>
+        <!-- Thumbnail Item Skin End -->
+    </div>
+    <!-- Thumbnail Navigator Skin End -->
+</div>
+<!-- Jssor Slider End -->

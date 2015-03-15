@@ -1,0 +1,232 @@
+﻿@using System.Activities.Statements
+@using System.Globalization
+@using AutoMapper
+@using FindTech.Entities.Models.Enums
+@using FindTech.Web.Models
+@model ArticleViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var article = Model;
+    var contentSectionPages = (List<ContentSectionPageViewModel>) ViewBag.ContentSectionPages;
+    var currentPage = contentSectionPages.FirstOrDefault(p => p.IsCurrentPage);
+    var nextPage = currentPage != null ? contentSectionPages.FirstOrDefault(a => a.PageNumber == currentPage.PageNumber + 1) : null;
+    var minPageNumber = contentSectionPages.Count > 0 ? contentSectionPages.Min(a => a.PageNumber) : 0;
+    var articles = (IEnumerable<ArticleViewModel>)ViewBag.Articles;
+    ViewBag.Title = article.Title;
+    ViewBag.Discription = article.Description;
+}
+@Styles.Render("~/fo/article/detail/css")
+<div class="container">
+    <div class="breadcrumb-box">
+        <ul class="breadcrumb">
+            <li><a href="/">Home</a> </li>
+            <li><a href="/@article.ArticleCategorySeoName">@article.ArticleCategoryName</a> </li>
+            <li class="active">@article.Title</li>
+        </ul>
+    </div><!-- .breadcrumb-box -->
+</div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-51a2fc0f2f4412f7" async="async"></script>
+<section id="article" ng-controller="ArticleDetailCtrl">
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div class="col-sm-12 col-md-9">
+                    <header class="page-header">
+                        <div class="container-fluid">
+                            <div class="row">
+                                @if (article != null)
+                                {
+                                    <h1 class="title">@article.Title</h1>
+                                    <div class="entry-meta">
+                                        <div class="posted-info"><span class="blurry-text">Đăng:</span><strong> @article.PublishedDate.ToString("dd MMM yy HH:mm:ss", new CultureInfo("vi-VN"))<span class="separator">|</span><span class="blurry-text">Bởi:</span> @article.CreatedUserDisplayName</strong></div>
+                                        <span class="meta btn-icon tags">
+                                            <span class="blurry-text">Nhãn:</span>
+                                            @if (article.Tags != null)
+                                            {
+                                                foreach (var tag in article.Tags.Split(','))
+                                                {
+                                                    <a href="#">@tag</a>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                foreach (var tag in article.SeoTitle.Split('-'))
+                                                {
+                                                    <a href="#">@tag</a>
+                                                }
+                                            }
+                                        </span>
+                                        @if (contentSectionPages.Count > 0)
+                                        {
+                                            <div class="go-to-page pull-right">
+                                                <i class="fa fa-bars"></i>Đi đến trang
+                                                <div class="list-group">
+                                                    @foreach (var contentSectionPage in contentSectionPages)
+                                                    {
+                                                        if (contentSectionPage.IsCurrentPage)
+                                                        {
+                                                            <span class="list-group-item"><i class="fa fa-chevron-circle-right"></i>@contentSectionPage.PageName</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="@Url.Action("Detail", "Article", new { categorySeoName = article.ArticleCategorySeoName, seoTitle = article.SeoTitle, page = contentSectionPage.PageNumber }, this.Request.Url.Scheme)" class="list-group-item"><i class="fa fa-chevron-circle-right"></i>@contentSectionPage.PageName</a>
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                                else
+                                {
+                                    <h1 class="title">Không tìm thấy bài viết</h1>
+                                }
+                            </div>
+                        </div>
+                    </header>
+                    <div class="content blog blog-post">
+                        <article class="post">
+                            <div class="entry-content">
+                                @if (currentPage == null || currentPage.PageNumber == minPageNumber)
+                                {
+                                    @Html.Raw(article.Content);
+                                }
+                                @foreach (var contentSection in article.ContentSections)
+                                {
+                                    <section class="content-section">
+                                        <h4 class="title">@contentSection.SectionTitle</h4>
+                                        <i class="description">@Html.Raw(contentSection.SectionDescription)</i>
+                                        <span class="content">@Html.Raw(contentSection.SectionContent)</span>
+                                        @if (contentSection.Images.Count > 0)
+                                        {
+                                            Html.RenderPartial("_ImageGallerySlider", new ImageListViewModel { Images = contentSection.Images, ContentSectionId = contentSection.ContentSectionId });
+                                        }
+                                    </section>
+                                }
+                            </div>
+                            @if (contentSectionPages.Count > 0)
+                            {
+                                <div class="article-paging">
+                                    @if (nextPage != null)
+                                    {
+                                        <a href="@Url.Action("Detail", "Article", new { categorySeoName = article.ArticleCategorySeoName, seoTitle = article.SeoTitle, page = nextPage.PageNumber }, this.Request.Url.Scheme)" class="next-page"><strong>Trang kế</strong> <i class="fa fa-chevron-right"></i> @nextPage.PageName</a>
+                                    }
+                                    <div class="pagination-box pull-right">
+                                        <ul class="pagination">
+                                            @*<li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>*@
+                                            @foreach (var contentSectionPage in contentSectionPages)
+                                            {
+                                                var activeClass = contentSectionPage.IsCurrentPage ? "active" : "";
+                                                <li class="@activeClass">
+                                                    @if (contentSectionPage.IsCurrentPage)
+                                                    {
+                                                        <span>@contentSectionPage.PageNumber</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@Url.Action("Detail", "Article", new { categorySeoName = article.ArticleCategorySeoName, seoTitle = article.SeoTitle, page = contentSectionPage.PageNumber }, this.Request.Url.Scheme)">@contentSectionPage.PageNumber</a>
+                                                    }
+                                                </li>
+                                            }
+                                            @*<li><a href="#"><i class="fa fa-angle-right"></i></a></li>*@
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+                            <div class="opinion">
+                                <span class="title">Đánh giá bài viết: </span>
+                                @if (Session["RatedOpinion"] != null)
+                                {
+                                    Html.RenderPartial("_OpinionPanel", article.Opinions.Select(Mapper.Map<OpinionViewModel>));
+                                }
+                                else
+                                {
+                                    <a href="#" onclick="rateOpinion(@article.ArticleId, 4); return false;" class="background-danger-hover">Tuyệt</a>
+                                    <a href="#" onclick="rateOpinion(@article.ArticleId, 3); return false;" class="background-warning-hover">Hay</a>
+                                    <a href="#" onclick="rateOpinion(@article.ArticleId, 2); return false;" class="background-info-hover">Tạm</a>
+                                    <a href="#" onclick="rateOpinion(@article.ArticleId, 1); return false;" class="background-success-hover">Dở</a>
+                                }
+                            </div>
+                            <div class="article-footer">
+                                <div class="addthis_sharing_toolbox"></div>
+                                <div class="social">
+                                    <a class="fa fa-share-alt" id="zclip" href="@Url.Action("Detail", "Article", new { categorySeoName = article.ArticleCategorySeoName, seoTitle = article.SeoTitle }, this.Request.Url.Scheme)"></a>
+                                </div>
+                                <div class="link">
+                                    <input type="text" readonly="readonly" placeholder="Link" onclick="$(this).select();" value="@Url.Action("Detail", "Article", new { categorySeoName = article.ArticleCategorySeoName, seoTitle = article.SeoTitle }, this.Request.Url.Scheme)">
+                                </div>
+                                <div class="addthis_native_toolbox"></div>
+                                <div class="source">
+                                    <span class="blurry-text">Tác giả: </span><strong>@article.Author</strong><br />
+                                    <span class="blurry-text">Nguồn: </span><strong>@article.SourceName</strong>
+                                </div>
+                            </div>
+                            <hr class="shadow">
+                        </article><!-- .post -->
+                        @{Html.RenderPartial("_MiniSliderBox", new ArticleListViewModel { Articles = articles, Title = "Thủ thuật" });}
+                        <h4 class="title slim">{{comments.length}} Bình luận</h4>
+                        <ul class="commentlist" ng-repeat="comment in comments">
+                            <li>
+                                <div class="comment">
+                                    <img class="avatar" width="84" height="84" src="img/avatar.png" alt="">
+                                    <div class="meta">
+                                        <span>{{comment.CommentatorEmail}}</span>,
+                                        <span class="time">03.11.2013, 10:45:</span>
+                                        <span class="like-count">{{comment.LikeCount}} <i class="fa fa-thumbs-up"></i></span>
+                                        <span class="button-list">
+                                            <a href="#" class="btn btn-xs"><i class="fa fa-mail-reply"></i> Trả lời</a>
+                                            <a href="#" class="btn btn-xs"><i class="fa fa-thumbs-up"></i> Thích</a>
+                                            <a href="#" class="btn btn-xs"><i class="fa fa-bell"></i> Báo xấu</a>
+                                        </span>
+                                    </div>
+                                    <p class="description">
+                                        {{comment.Content}}
+                                    </p>
+                                </div>
+                                <ul class="commentlist" ng-repeat="reply in comment.Replies">
+                                    <li>
+                                        <div class="comment">
+                                            <img class="avatar" width="84" height="84" src="img/avatar.png" alt="">
+                                            <div class="meta">
+                                                <span>{{reply.CommentatorEmail}}</span>,
+                                                <span class="time">03.11.2013, 10:45:</span>
+                                                <span class="like-count">{{reply.LikeCount}} <i class="fa fa-thumbs-up"></i></span>
+                                                <span class="button-list">
+                                                    <a href="#" class="btn btn-xs"><i class="fa fa-mail-reply"></i> Trả lời</a>
+                                                    <a href="#" class="btn btn-xs"><i class="fa fa-thumbs-up"></i> Thích</a>
+                                                    <a href="#" class="btn btn-xs"><i class="fa fa-bell"></i> Báo xấu</a>
+                                                </span>
+                                            </div>
+                                            <p class="description">
+                                                {{reply.Content}}
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h4 class="title slim">Bình luận của bạn</h4>
+
+                        <form class="comments-form">
+                            <div class="row">
+                                <div class="comment-box col-sm-12 col-md-12">
+                                    <textarea class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="button-set">
+                                <button class="btn btn-default">Gửi</button>
+                            </div>
+                        </form>
+                    </div><!-- .content -->
+                </div>
+                <div class="sidebar col-sm-3 col-md-3">
+                    @{Html.RenderPartial("_MiniListBox", new ArticleListViewModel { Articles = articles, Title = "Bài viết mới nhất", TitleStyleClass = "fa fa-eye background-00ade0" });}
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</section><!-- #main -->
+@Scripts.Render("~/fo/article/detail/js")

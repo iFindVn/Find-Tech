@@ -1,0 +1,12 @@
+﻿<aside class="widget articles col-sm-6 col-md-12" ng-attr-id="{{model.ClientId}}">
+    <div class="title-box">
+        <span ng-class="model.TitleStyleClass"></span><h2 class="title">{{model.Title}}</h2>
+    </div>
+    <ul>
+        <mini-list-item ng-repeat-start="article in model.Articles" ng-repeat-end model="article"></mini-list-item>
+        <li class="pinTips" ng-if="model.ClientId == 'pinnedArticles'">Bấm <span class="fa fa-thumb-tack"></span> để ghim bài viết</li>
+        <li class="action" ng-if="model.Articles.length > 4">
+            <a href="#" class="view-all ">View all<span class="fa fa-arrow-right"></span></a>
+        </li>
+    </ul>
+</aside><!-- .specials-->

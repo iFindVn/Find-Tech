@@ -39,18 +39,69 @@ namespace FindTech.Web.Controllers
 
         public ActionResult Detail(string seoTitle, int page = 1)
         {
+            ViewBag.CurrentPage = page;
+            ViewBag.SeoTitle = seoTitle;
+            return View();
+        }
+
+        public ActionResult GetArticleDetail(string seoTitle, int page = 1)
+        {
             var article = articleService.GetArticleDetail(seoTitle);
             if (article == null) return null;
             article.ContentSections = contentSectionService.GetContentSections(article.ArticleId, page).ToList();
-            var articleViewModel = Mapper.Map<ArticleViewModel>(article);
-            var contentSectionPages = contentSectionService.GetContentSectionPages(article.ArticleId, page);
-            ViewBag.ContentSectionPages = contentSectionPages.Select(a => new ContentSectionPageViewModel { IsCurrentPage = (bool)a.GetType().GetProperty("IsCurrentPage").GetValue(a), PageName = (string)a.GetType().GetProperty("PageName").GetValue(a), PageNumber = (int)a.GetType().GetProperty("PageNumber").GetValue(a) }).ToList();
-            var articles = articleService.GetLatestReviews(0, 4);
-            ViewBag.Articles = articles.Select(Mapper.Map<ArticleViewModel>).ToList();
             article.ViewCount++;
             articleService.Update(article);
             unitOfWork.SaveChangesAsync();
-            return View(articleViewModel);
+            return Json(Mapper.Map<ArticleViewModel>(article), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetContentSectionPages(int articleId, int page)
+        {
+            var contentSectionPages = contentSectionService.GetContentSectionPages(articleId, page).Select(
+                        a =>
+                            new ContentSectionPageViewModel
+                            {
+                                IsCurrentPage = (bool) a.GetType().GetProperty("IsCurrentPage").GetValue(a),
+                                PageName = (string) a.GetType().GetProperty("PageName").GetValue(a),
+                                PageNumber = (int) a.GetType().GetProperty("PageNumber").GetValue(a)
+                            }).ToList();
+            var currentPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page);
+            var nextPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page + 1);
+            var minPageNumber = contentSectionPages.Min(a => a.PageNumber);
+            return
+                Json(
+                    new {contentSectionPages, currentPage, nextPage, minPageNumber}, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetLatestReviews()
+        {
+            var articles = articleService.GetLatestReviews(0, 4).Select(Mapper.Map<ArticleViewModel>).ToList();
+            return
+                Json(
+                    new ArticleListViewModel
+                    {
+                        Articles = articles,
+                        Title = "Bài viết mới nhất",
+                        TitleStyleClass = "fa fa-eye background-00ade0"
+                    }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetPinnedArticles()
+        {
+            if (Session["Pinned"] == null)
+            {
+                Session["Pinned"] = new List<ArticleViewModel>();
+            }
+            return
+                Json(
+                    new ArticleListViewModel
+                    {
+                        WidgetType = WidgetType.MiniList,
+                        Title = "Đã ghim",
+                        TitleStyleClass = "fa fa-thumb-tack background-warning",
+                        ClientId = "pinnedArticles",
+                        Articles = (List<ArticleViewModel>)Session["Pinned"]
+                    }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _NewsBoxs(int skip = 0, int take = 20)

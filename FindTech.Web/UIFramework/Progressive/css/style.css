@@ -11904,7 +11904,7 @@ padding-bottom: 20px;
     position: absolute;
 }
 
-.sidebar .widget {
+.sidebar .widget, .sidebar .widget:last-child {
     margin: 0px 0px 60px;
 }
 
@@ -12007,7 +12007,7 @@ padding-bottom: 20px;
     display: inline-block;
     text-decoration: none;
     line-height: 13px;
-    margin-top: 5px;
+    margin: 5px 2px 0 0;
 }
 
 .tags a:hover {
@@ -12190,6 +12190,7 @@ border-bottom: 1px solid #e1e1e1;
 
 .article-paging {
     margin-bottom: 25px;
+  min-height: 38px;
 }
 
 .blog-post .post {
