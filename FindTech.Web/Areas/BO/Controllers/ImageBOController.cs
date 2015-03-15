@@ -17,18 +17,18 @@ namespace FindTech.Web.Areas.BO.Controllers
     public class ImageBOController : Controller
     {
         private const string contentFolderRoot = "~/Areas/BO/Upload/Admin";
-        private const string prettyName = "Images/";        
+        private const string prettyName = "Images/";
         private const string DefaultFilter = "*.png,*.gif,*.jpg,*.jpeg";
 
         private const int ThumbnailHeight = 80;
         private const int ThumbnailWidth = 80;
 
-        private readonly DirectoryBrowser directoryBrowser;        
+        private readonly DirectoryBrowser directoryBrowser;
         private readonly ThumbnailCreator thumbnailCreator;
         private readonly Cloudinary cloudinary;
         public ImageBOController()
         {
-            directoryBrowser = new DirectoryBrowser();       
+            directoryBrowser = new DirectoryBrowser();
             thumbnailCreator = new ThumbnailCreator();
 
             Account account = new Account(
@@ -89,9 +89,10 @@ namespace FindTech.Web.Areas.BO.Controllers
                 Context = true,
                 Moderations = true,
                 Type = "upload",
-                MaxResults = 100
+                MaxResults = 100,
             };
-            var listResource = cloudinary.ListResources(listResourceParams).Resources;
+            //var listResource = cloudinary.ListResources(listResourceParams).Resources;
+            var listResource = cloudinary.ListResourcesByTag("user_upload").Resources;
 
             var result = listResource.Select(f => new
             {
@@ -101,6 +102,8 @@ namespace FindTech.Web.Areas.BO.Controllers
             });
 
             return Json(result, JsonRequestBehavior.AllowGet);
+
+
 
             //path = NormalizePath(path);
 
@@ -144,12 +147,12 @@ namespace FindTech.Web.Areas.BO.Controllers
             string url = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(80).Height(80).Crop("pad")).BuildUrl(path);
             if (url != null)
             {
-                //HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-                //// Sends the HttpWebRequest and waits for the response.			
-                //HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
-                //// Gets the stream associated with the response.
-                //Stream receiveStream = myHttpWebResponse.GetResponseStream();
-                //return new FileStreamResult(receiveStream, "image/jpg");
+                HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+                // Sends the HttpWebRequest and waits for the response.			
+                HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+                // Gets the stream associated with the response.
+                Stream receiveStream = myHttpWebResponse.GetResponseStream();
+                return new FileStreamResult(receiveStream, "image/jpg");
             }
             return Json(false);
             //return new File("http://res.cloudinary.com/ifind-vn/image/upload/c_pad,h_80,w_80/v1425529303/el05mkztm6ztgrwl0mne.jpg");
@@ -311,7 +314,8 @@ namespace FindTech.Web.Areas.BO.Controllers
                 var imageUploadParams = new ImageUploadParams()
                 {
                     File = new FileDescription(file.FileName, file.InputStream),
-                    PublicId = Path.GetFileNameWithoutExtension(file.FileName)
+                    PublicId = Path.GetFileNameWithoutExtension(file.FileName),
+                    Tags = "user_upload"
                 };
                 var result = cloudinary.Upload(imageUploadParams);
 
@@ -381,16 +385,16 @@ namespace FindTech.Web.Areas.BO.Controllers
             yr = (int)Math.Round((yr / scaler), 0);
 
             string urls = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(ws).Height(hs).Crop("crop").X(xs).Y(ys)
-                .Chain().Width(300).Height(300).Crop("fill"))
+                .Chain().Width(270).Crop("fill"))
                 .BuildUrl(imagePath);
             string urlr = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(wr).Height(hr).Crop("crop").X(xr).Y(yr)
-                .Chain().Width(150).Height(100).Crop("fill"))
+                .Chain().Width(150).Crop("fill"))
                 .BuildUrl(imagePath);
             Object obj = new
             {
                 avatar = urls,
-                squareAvatar = urls.Replace("c_fill,h_300,w_300", "c_fill,h_height,w_width"),
-                rectangleAvatar = urlr.Replace("c_fill,h_100,w_150", "c_fill,h_height,w_width")
+                squareAvatar = urls.Replace("c_fill,w_270", "c_fill,w_width"),
+                rectangleAvatar = urlr.Replace("c_fill,w_150", "c_fill,w_width")
             };
             return Json(obj);
 
@@ -405,7 +409,7 @@ namespace FindTech.Web.Areas.BO.Controllers
             //{
             //    resizedPath = Path.GetDirectoryName(imagePath) + @"272x272\" + Path.GetFileName(imagePath);
             //}
-            
+
             //resizedPath = NormalizePath(resizedPath);
             ////resizedPath = Path.Combine(resizedPath, Path.GetFileName(imagePath));
             //return Json(resizedPath);
@@ -449,7 +453,7 @@ namespace FindTech.Web.Areas.BO.Controllers
         private void resizeImage(MemoryStream image, int width, int heigth, string path)
         {
             string savePath = Path.GetDirectoryName(path) + @"\" + width.ToString() + "x" + heigth.ToString();
-            if(!Directory.Exists(savePath))
+            if (!Directory.Exists(savePath))
             {
                 Directory.CreateDirectory(savePath);
             }
@@ -467,7 +471,7 @@ namespace FindTech.Web.Areas.BO.Controllers
                         fs.Write(matriz, 0, matriz.Length);
                         ms.Close();
                         fs.Close();
-                        
+
                     }
                 }
             }
