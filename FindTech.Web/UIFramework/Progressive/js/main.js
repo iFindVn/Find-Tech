@@ -20,7 +20,7 @@ jQuery(window).load(function() {
   });
 
   $("#zclip").zclip({
-      path: "../UIFramework/Progressive/js/ZeroClipboard.swf",
+      path: "../../UIFramework/Progressive/js/ZeroClipboard.swf",
       copy: function () {
           return $(this).attr('href');
       },

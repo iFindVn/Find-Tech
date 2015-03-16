@@ -109,10 +109,3 @@
 });
 
 var jssor_sliders = {};
-
-var rateOpinion = function (articleId, opinionLevel) {
-    $.post("/Article/RateOpinion", { articleId: articleId, opinionLevel: opinionLevel }, function (data) {
-        $('article.post .opinion a').hide();
-        $('article.post .opinion').append(data);
-    });
-};

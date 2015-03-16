@@ -1,6 +1,10 @@
 ﻿angular.module('FindTech.ArticleDetail', [])
     .controller('ArticleDetailCtrl', ['$scope', '$http', '$location', 'Page',
         function ($scope, $http, $location, Page) {
+            $scope.states = {                
+                ratedOpinion: false
+            };
+
             $scope.latestReviews = {};
             $http.get('/Article/GetLatestReviews').success(function (data) {
                 $scope.latestReviews = data;
@@ -11,8 +15,8 @@
                 $scope.pinnedArticles = data;
             });
 
-            var absUrl = $location.absUrl();
-            var path = absUrl.split('/bai-viet/')[1];
+            $scope.absUrl = $location.absUrl();
+            var path = $scope.absUrl.split('/bai-viet/')[1];
             $scope.seoTitle = path.split('/')[1];
             $scope.currentPage = path.split('/')[2] ? path.split('/')[2] : 1;
             $scope.article = {};
@@ -32,5 +36,12 @@
                     $scope.comments = comments;
                 });
             });
+
+            $scope.rateOpinion = function (articleId, opinionLevel) {
+                $http.post('/Article/RateOpinion', { articleId: articleId, opinionLevel: opinionLevel }).success(function(data) {
+                    $scope.article.Opinions = data;
+                    $scope.states.ratedOpinion = true;
+                });
+            };
         }
     ]);

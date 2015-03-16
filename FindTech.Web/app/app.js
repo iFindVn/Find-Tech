@@ -45,8 +45,35 @@ app.directive('imageGallerySlider', function () {
     };
 });
 
+app.directive('opinionPanel', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            model: '='
+        },
+        templateUrl: '/app/templates/opinion-panel.html'
+    };
+});
+
+app.directive('opinionForm', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            model: '='
+        },
+        templateUrl: '/app/templates/opinion-form.html'
+    };
+});
+
 app.filter('html', function ($sce) {
     return function (htmlString) {
         return $sce.trustAsHtml(htmlString);
+    };
+});
+
+app.filter('moment', function() {
+    return function (date) {
+        moment.locale('vi');
+        return moment(date).fromNow();
     };
 });

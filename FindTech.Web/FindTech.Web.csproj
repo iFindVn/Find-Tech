@@ -271,6 +271,8 @@
     <Content Include="app\templates\image-gallery-slider.html" />
     <Content Include="app\templates\mini-list-box.html" />
     <Content Include="app\templates\mini-list-item.html" />
+    <Content Include="app\templates\opinion-form.html" />
+    <Content Include="app\templates\opinion-panel.html" />
     <Content Include="Areas\BO\UIFramework\Guillotine\css\jquery.guillotine.css" />
     <Content Include="Areas\BO\UIFramework\Guillotine\js\jquery.guillotine.js" />
     <Content Include="Areas\BO\UIFramework\Guillotine\js\jquery.guillotine.min.js" />
@@ -1348,6 +1350,10 @@
     <Content Include="Areas\BO\UIFramework\Progressive\js\spin.min.js" />
     <Content Include="Areas\BO\UIFramework\Progressive\js\typeahead.js" />
     <Content Include="Areas\BO\UIFramework\Progressive\js\video.js" />
+    <Content Include="UIFramework\Moment\js\moment-with-locales.js" />
+    <Content Include="UIFramework\Moment\js\moment-with-locales.min.js" />
+    <Content Include="UIFramework\Moment\js\moment.js" />
+    <Content Include="UIFramework\Moment\js\moment.min.js" />
     <Content Include="UIFramework\Progressive\css\animate.css" />
     <Content Include="UIFramework\Progressive\css\bootstrap.min.css" />
     <Content Include="UIFramework\Progressive\css\buttons\buttons.css" />

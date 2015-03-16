@@ -65,12 +65,17 @@ namespace FindTech.Web.Controllers
                                 PageName = (string) a.GetType().GetProperty("PageName").GetValue(a),
                                 PageNumber = (int) a.GetType().GetProperty("PageNumber").GetValue(a)
                             }).ToList();
-            var currentPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page);
-            var nextPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page + 1);
-            var minPageNumber = contentSectionPages.Min(a => a.PageNumber);
-            return
-                Json(
-                    new {contentSectionPages, currentPage, nextPage, minPageNumber}, JsonRequestBehavior.AllowGet);
+            if (contentSectionPages.Count > 0)
+            {
+                var currentPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page);
+                var nextPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page + 1);
+                var minPageNumber = contentSectionPages.Min(a => a.PageNumber);
+                return
+                    Json(
+                        new { contentSectionPages, currentPage, nextPage, minPageNumber }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(
+                        new { contentSectionPages }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetLatestReviews()
@@ -168,8 +173,7 @@ namespace FindTech.Web.Controllers
                 opinionService.Update(opinion);
             }
             unitOfWork.SaveChanges();
-            Session["RatedOpinion"] = true;
-            return PartialView("_OpinionPanel", opinionService.GetOpinions(articleId).ToList().Select(Mapper.Map<OpinionViewModel>));
+            return Json(opinionService.GetOpinions(articleId).ToList().Select(Mapper.Map<OpinionViewModel>));
         }
 
         public ActionResult SearchArticles(string keyword)

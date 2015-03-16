@@ -181,6 +181,9 @@ namespace FindTech.Web
                     "~/UIFramework/Progressive/js/jquery.zclip.min.js",
                     "~/UIFramework/Progressive/js/main.js"));
 
+            bundles.Add(new ScriptBundle("~/fo/moment/js").Include(
+                   "~/UIFramework/Moment/js/moment-with-locales.js"));
+
             bundles.Add(new ScriptBundle("~/fo/article/detail/js").Include(
                    "~/UIFramework/Progressive/js/jssorslider/jssor.js",
                    "~/UIFramework/Progressive/js/jssorslider/jssor.slider.js",

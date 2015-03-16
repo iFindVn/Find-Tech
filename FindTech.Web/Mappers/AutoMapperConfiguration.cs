@@ -4,6 +4,7 @@ using FindTech.Entities.Models;
 using FindTech.Entities.Models.Enums;
 using FindTech.Web.Areas.BO.Models;
 using FindTech.Web.Models;
+using Microsoft.Ajax.Utilities;
 
 namespace FindTech.Web.Mappers
 {
@@ -62,7 +63,9 @@ namespace FindTech.Web.Mappers
                     .ForMember(a => a.ArticleCategorySeoName, o => o.MapFrom(x => x.ArticleCategory.SeoName))
                     .ForMember(a => a.SourceName, o => o.MapFrom(x => x.Source.SourceName))
                     .ForMember(a => a.SourceLogo, o => o.MapFrom(x => x.Source.Logo));
-                Mapper.CreateMap<Opinion, OpinionViewModel>();
+                Mapper.CreateMap<Opinion, OpinionViewModel>()
+                    .ForMember(a => a.OpinionText, o => o.ResolveUsing(x => GetOpinionText(x.OpinionLevel)))
+                    .ForMember(a => a.OpinionBackground, o => o.ResolveUsing(x => GetOpinionBackground(x.OpinionLevel)));
                 Mapper.CreateMap<Comment, CommentModel>();
                 Mapper.CreateMap<ContentSection, ContentSectionBOViewModel>();
                 Mapper.CreateMap<ArticleCategory, ArticleCategoryBOViewModel>();
@@ -73,6 +76,40 @@ namespace FindTech.Web.Mappers
                 Mapper.CreateMap<Spec, SpecBOViewModel>();
                 Mapper.CreateMap<BenchmarkGroup, BenchmarkGroupBOViewModel>()
                     .ForMember(a => a.Parent, o => o.ResolveUsing(x => Mapper.Map<BenchmarkGroupBOViewModel>(x.Parent) ?? new BenchmarkGroupBOViewModel { BenchmarkGroupId = 0, BenchmarkGroupName = "Root" }));
+            }
+
+            private string GetOpinionText(OpinionLevel opinionLevel)
+            {
+                switch (opinionLevel)
+                {
+                    case OpinionLevel.Excellent:
+                        return "Tuyệt";
+                    case OpinionLevel.Good:
+                        return "Hay";
+                    case OpinionLevel.Average:
+                        return "Tạm";
+                    case OpinionLevel.Bad:
+                        return "Dở";
+                    default:
+                        return "";
+                }
+            }
+
+            private string GetOpinionBackground(OpinionLevel opinionLevel)
+            {
+                switch (opinionLevel)
+                {
+                    case OpinionLevel.Excellent:
+                        return "background-danger";
+                    case OpinionLevel.Good:
+                        return "background-warning";
+                    case OpinionLevel.Average:
+                        return "background-info";
+                    case OpinionLevel.Bad:
+                        return "background-success";
+                    default:
+                        return "";
+                }
             }
         }
     }

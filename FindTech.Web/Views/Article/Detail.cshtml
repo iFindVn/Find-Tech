@@ -28,7 +28,7 @@
                                 <div class="row">
                                         <h1 class="title">{{article.Title}}</h1>
                                         <div class="entry-meta">
-                                            <div class="posted-info"><span class="blurry-text">Đăng:</span><strong> {{article.PublishedDate | date:'dd MMM yy HH:mm:ss'}}<span class="separator">|</span><span class="blurry-text">Bởi:</span> {{article.CreatedUserDisplayName}}</strong></div>
+                                            <div class="posted-info"><span class="blurry-text">Đăng:</span><strong> {{article.PublishedDate | moment}}<span class="separator">|</span><span class="blurry-text">Bởi:</span> {{article.CreatedUserDisplayName}}</strong></div>
                                             <span class="meta btn-icon tags">
                                                 <span class="blurry-text">Nhãn:</span>
                                                 <a href="#" ng-repeat="tag in article.Tags.split(',')">{{tag}}</a>
@@ -77,29 +77,16 @@
                                     </div>
                                 <div class="opinion">
                                     <span class="title">Đánh giá bài viết: </span>
-                                    <a href="#" ng-click="rateOpinion(article.ArticleId, 4)" class="background-danger-hover">Tuyệt</a>
-                                    <a href="#" ng-click="rateOpinion(article.ArticleId, 3)" class="background-warning-hover">Hay</a>
-                                    <a href="#" ng-click="rateOpinion(article.ArticleId, 2)" class="background-info-hover">Tạm</a>
-                                    <a href="#" ng-click="rateOpinion(article.ArticleId, 1)" class="background-success-hover">Dở</a>
-                                    @*@if (Session["RatedOpinion"] != null)
-                                    {
-                                        Html.RenderPartial("_OpinionPanel", article.Opinions.Select(Mapper.Map<OpinionViewModel>));
-                                    }
-                                    else
-                                    {
-                                        <a href="#" onclick="rateOpinion(@article.ArticleId, 4); return false;" class="background-danger-hover">Tuyệt</a>
-                                        <a href="#" onclick="rateOpinion(@article.ArticleId, 3); return false;" class="background-warning-hover">Hay</a>
-                                        <a href="#" onclick="rateOpinion(@article.ArticleId, 2); return false;" class="background-info-hover">Tạm</a>
-                                        <a href="#" onclick="rateOpinion(@article.ArticleId, 1); return false;" class="background-success-hover">Dở</a>
-                                    }*@
+                                    <span ng-show="states.ratedOpinion" ng-repeat="opinion in article.Opinions" ng-class="opinion.OpinionBackground" class="opinion-level">{{opinion.OpinionText}}<span class="count">{{opinion.OpinionCount}}</span></span>
+                                    <a ng-show="!states.ratedOpinion" ng-repeat="opinion in article.Opinions" href="#" ng-click="rateOpinion(article.ArticleId, opinion.OpinionLevel)" ng-class="opinion.OpinionBackground + '-hover'">{{opinion.OpinionText}}</a>
                                 </div>
                                 <div class="article-footer">
                                     <div class="addthis_sharing_toolbox"></div>
                                     <div class="social">
-                                        <a class="fa fa-share-alt" id="zclip" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}"></a>
+                                        <a class="fa fa-share-alt" id="zclip" ng-attr-href="{{absUrl}}"></a>
                                     </div>
                                     <div class="link">
-                                        <input type="text" readonly="readonly" placeholder="Link" onclick="$(this).select();" value="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}">
+                                        <input type="text" readonly="readonly" placeholder="Link" onclick="$(this).select();" value="{{absUrl}}">
                                     </div>
                                     <div class="addthis_native_toolbox"></div>
                                     <div class="source">
@@ -111,7 +98,7 @@
                             </article><!-- .post -->
                             @*@{Html.RenderPartial("_MiniSliderBox", new ArticleListViewModel { Articles = articles, Title = "Thủ thuật" });}*@
                             <h4 class="title slim">{{comments.length}} Bình luận</h4>
-                            <ul class="commentlist">
+                            <ul class="commentlist" ng-if="comments.length > 0">
                                 <li ng-repeat="comment in comments">
                                     <div class="comment">
                                         <img class="avatar" width="84" height="84" src="img/avatar.png" alt="">
@@ -151,13 +138,10 @@
                                     </ul>
                                 </li>
                             </ul>
-
-                            <h4 class="title slim">Bình luận của bạn</h4>
-
                             <form class="comments-form">
                                 <div class="row">
                                     <div class="comment-box col-sm-12 col-md-12">
-                                        <textarea class="form-control"></textarea>
+                                        <textarea class="form-control" placeholder="Bình luận của bạn"></textarea>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
