@@ -41,16 +41,18 @@ namespace FindTech.Web.Areas.BO.Controllers
         private ISourceService sourceService { get; set; }
         private IArticleCategoryService articleCategoryService { get; set; }
         private IArticleService articleService { get; set; }
+        private IOpinionService opinionService { get; set; }
         private IUnitOfWorkAsync unitOfWork { get; set; }
 
         private Cloudinary cloudinary;
 
         public ArticleBOController(IUnitOfWorkAsync unitOfWork, ISourceService sourceService,
-            IArticleService articleService, IArticleCategoryService articleCategoryService)
+            IArticleService articleService, IArticleCategoryService articleCategoryService, IOpinionService opinionService)
         {
             this.sourceService = sourceService;
             this.articleService = articleService;
             this.articleCategoryService = articleCategoryService;
+            this.opinionService = opinionService;
             this.unitOfWork = unitOfWork;
 
             Account account = new Account(
@@ -102,7 +104,7 @@ namespace FindTech.Web.Areas.BO.Controllers
             {
                 var articleGridListFiltersBOViewModel = JsonConvert.DeserializeObject<ArticleGridListFiltersBOViewModel>(filter);
                 var listParame = new List<string>();
-                var query = buildingWhereClause(articleGridListFiltersBOViewModel, listParame);
+                var query = BuildingWhereClause(articleGridListFiltersBOViewModel, listParame);
 
                 int from = skip + 1;
                 int to =  skip + take;
@@ -135,7 +137,7 @@ namespace FindTech.Web.Areas.BO.Controllers
             return Json(new { articles = articles.Select(Mapper.Map<ArticleGridBOViewModel>) , totalCount = total}, JsonRequestBehavior.AllowGet);
         }
 
-        private StringBuilder buildingWhereClause(ArticleGridListFiltersBOViewModel articleGridListFiltersBOViewModel, List<String> Params )
+        private StringBuilder BuildingWhereClause(ArticleGridListFiltersBOViewModel articleGridListFiltersBOViewModel, List<String> Params )
         {
             var query = new StringBuilder();
             query.Append(" ( ");
@@ -304,6 +306,7 @@ namespace FindTech.Web.Areas.BO.Controllers
                                     };
                                     articleService.Insert(article);
                                     unitOfWork.SaveChanges();
+                                    CreateDefaultOpinions(article.ArticleId);
                                 }
                                 catch(Exception e)
                                 {
@@ -340,6 +343,7 @@ namespace FindTech.Web.Areas.BO.Controllers
                     articleService.Update(existedArticle);
                     unitOfWork.SaveChanges();
                     articleId = existedArticle.ArticleId;
+                    CreateDefaultOpinions(articleId);
                 }
             }
             else
@@ -357,6 +361,19 @@ namespace FindTech.Web.Areas.BO.Controllers
             }
             var url = Url.Action("Create", "ArticleBO", new { articleId }, Request.Url.Scheme);
             return Json(url, JsonRequestBehavior.AllowGet);
+        }
+
+        public void CreateDefaultOpinions(int articleId)
+        {
+            var opinionLevels = new List<OpinionLevel>{ OpinionLevel.Excellent, OpinionLevel.Good, OpinionLevel.Average, OpinionLevel.Bad};
+            foreach (var opinionLevel in opinionLevels)
+            {
+                var opinion = opinionService.GetOpinion(articleId, opinionLevel);
+                if (opinion == null)
+                {
+                    opinionService.Insert(new Opinion { OpinionCount = 0, OpinionLevel = opinionLevel, ArticleId = articleId });
+                }
+            }
         }
        
         [HttpPost]
