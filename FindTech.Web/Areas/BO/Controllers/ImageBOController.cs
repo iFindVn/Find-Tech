@@ -390,9 +390,10 @@ namespace FindTech.Web.Areas.BO.Controllers
             string urlr = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(wr).Height(hr).Crop("crop").X(xr).Y(yr)
                 .Chain().Width(150).Crop("fill"))
                 .BuildUrl(imagePath);
+            string avartar = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(270).Crop("fill")).BuildUrl(imagePath);
             Object obj = new
             {
-                avatar = urls,
+                avatar = avartar,
                 squareAvatar = urls.Replace("c_fill,w_270", "c_fill,w_width"),
                 rectangleAvatar = urlr.Replace("c_fill,w_150", "c_fill,w_width")
             };
