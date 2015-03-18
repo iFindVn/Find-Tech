@@ -268,19 +268,20 @@ namespace FindTech.Web.Areas.BO.Controllers
                                                 .FirstOrDefault();
                                     if (imageUrl != null)
                                     {
-                                        HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(imageUrl);
-                                        // Sends the HttpWebRequest and waits for the response.			
-                                        HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
-                                        // Gets the stream associated with the response.
-                                        Stream receiveStream = myHttpWebResponse.GetResponseStream();
+                                        avatar = imageUrl;
+                                        //HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(imageUrl);
+                                        //// Sends the HttpWebRequest and waits for the response.			
+                                        //HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+                                        //// Gets the stream associated with the response.
+                                        //Stream receiveStream = myHttpWebResponse.GetResponseStream();
 
-                                        var imageUploadParams = new ImageUploadParams()
-                                        {
-                                            File = new FileDescription(seoTitle + "-avatar", receiveStream),
-                                            PublicId = Path.GetFileNameWithoutExtension(seoTitle + "-avatar")
-                                        };
-                                        var result = cloudinary.Upload(imageUploadParams);
-                                        avatar = result.Uri.ToString();
+                                        //var imageUploadParams = new ImageUploadParams()
+                                        //{
+                                        //    File = new FileDescription(seoTitle + "-avatar", receiveStream),
+                                        //    PublicId = Path.GetFileNameWithoutExtension(seoTitle + "-avatar")
+                                        //};
+                                        //var result = cloudinary.Upload(imageUploadParams);
+                                        //avatar = result.Uri.ToString();
                                         //avatar = Url.Action("Image", "ImageBO", new { path = seoTitle + "-avatar" });
                                         //return new FileStreamResult(receiveStream, "image/jpg");
                                     }

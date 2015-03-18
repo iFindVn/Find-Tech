@@ -372,7 +372,7 @@ namespace FindTech.Web.Areas.BO.Controllers
             return CanAccess(path) && IsValidFile(Path.GetExtension(path));
         }
 
-        public virtual ActionResult CropImage(string imagePath, float scales, int ws, int hs, int xs, int ys, float scaler, int wr, int hr, int xr, int yr)
+        public virtual ActionResult CropImage(string imagePath, float scales, int ws, int hs, int xs, int ys, float scaler, int wr, int hr, int xr, int yr, float scalea, int wa, int ha, int xa, int ya)
         {
             ws = (int)Math.Round((ws / scales), 0);
             hs = (int)Math.Round((hs / scales), 0);
@@ -384,18 +384,26 @@ namespace FindTech.Web.Areas.BO.Controllers
             xr = (int)Math.Round((xr / scaler), 0);
             yr = (int)Math.Round((yr / scaler), 0);
 
+            wa = (int)Math.Round((wa / scalea), 0);
+            ha = (int)Math.Round((ha / scalea), 0);
+            xa = (int)Math.Round((xa / scalea), 0);
+            ya = (int)Math.Round((ya / scalea), 0);
+
             string urls = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(ws).Height(hs).Crop("crop").X(xs).Y(ys)
                 .Chain().Width(270).Crop("fill"))
                 .BuildUrl(imagePath);
             string urlr = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(wr).Height(hr).Crop("crop").X(xr).Y(yr)
                 .Chain().Width(150).Crop("fill"))
                 .BuildUrl(imagePath);
-            string avartar = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(270).Crop("fill")).BuildUrl(imagePath);
+            string avartar = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(wa).Height(ha).Crop("crop").X(xa).Y(ya)
+                .Chain().Width(270).Crop("fill"))
+                .BuildUrl(imagePath);
             Object obj = new
             {
+                displayAvatar = urls,
                 avatar = avartar,
-                squareAvatar = urls.Replace("c_fill,w_270", "c_fill,w_width"),
-                rectangleAvatar = urlr.Replace("c_fill,w_150", "c_fill,w_width")
+                squareAvatar = urls.Replace("c_fill,w_270", "c_fill,w_{width}"),
+                rectangleAvatar = urlr.Replace("c_fill,w_150", "c_fill,w_{width}")
             };
             return Json(obj);
 

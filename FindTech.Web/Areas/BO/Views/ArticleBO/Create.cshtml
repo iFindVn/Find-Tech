@@ -174,10 +174,21 @@
                                     @*<button id='cropimg' type='button' title='Crop' style="float:right" onclick="getcropimgdata()"> Crop </button>*@
                                 </div>
                             </div>
+                            <div class="tab-pane" id="tabavatar">
+                                <div class='frame'>
+                                    <img id='imgCrop_ava' />
+                                </div>
+                                <div id='controls'>
+                                    <button id='zoom_out_ava' type='button' title='Zoom out'> - </button>
+                                    <button id='zoom_in_ava' type='button' title='Zoom in'> + </button>
+                                    @*<button id='cropimg' type='button' title='Crop' style="float:right" onclick="getcropimgdata()"> Crop </button>*@
+                                </div>
+                            </div>
                         </div>
                         <ul class="nav nav-pills">
                             <li><a href="#tabsquare" data-toggle="tab"><img id="thumbnail_square" style="width:30px; height:30px"/></a></li>
                             <li><a href="#tabrectangle" data-toggle="tab"><img id="thumbnail_rectangle" style="width:45px; height:30px" /></a></li>
+                            <li><a href="#tabavatar" data-toggle="tab"><img id="thumbnail_avatar" style="height:30px" /></a></li>
                         </ul>
                     </div>
                 </div>
@@ -196,6 +207,8 @@
     jQuery(function () {
         var picture = $('#imgCrop_sq');
         var picture2 = $('#imgCrop_rec');
+        var picture3 = $('#imgCrop_ava');
+
         picture.on('load', function () {
             // Initialize plugin (with custom event)
             picture.guillotine({ eventOnChange: 'guillotinechange', width: 576, height: 576, });
@@ -212,10 +225,10 @@
             
 
             // Update data on change
-            picture.on('guillotinechange', function (ev, data, action) {
-                data.scale = parseFloat(data.scale.toFixed(4));
-                for (var k in data) { $('#' + k).html(data[k]); }
-            });
+            //picture.on('guillotinechange', function (ev, data, action) {
+            //    data.scale = parseFloat(data.scale.toFixed(4));
+            //    for (var k in data) { $('#' + k).html(data[k]); }
+            //});
         });
 
         picture2.on('load', function () {
@@ -234,10 +247,33 @@
 
 
             // Update data on change
-            picture2.on('guillotinechange', function (ev, data, action) {
-                data.scale = parseFloat(data.scale.toFixed(4));
-                for (var k in data) { $('#' + k).html(data[k]); }
-            });
+            //picture2.on('guillotinechange', function (ev, data, action) {
+            //    data.scale = parseFloat(data.scale.toFixed(4));
+            //    for (var k in data) { $('#' + k).html(data[k]); }
+            //});
+        });
+
+        picture3.on('load', function () {
+            // Initialize plugin (with custom event)
+            var ratio = document.getElementById("thumbnail_avatar").width / document.getElementById("thumbnail_avatar").height;
+            picture3.guillotine({ eventOnChange: 'guillotinechange', height: 576, width: 576*ratio});
+            picture3.guillotine('fit');
+
+            // Display inital data
+            var data = picture3.guillotine('getData');
+            for (var key in data) { $('#' + key).html(data[key]); }
+
+            // Bind button actions
+
+            $('#zoom_in_ava').click(function () { picture3.guillotine('zoomIn'); });
+            $('#zoom_out_ava').click(function () { picture3.guillotine('zoomOut'); });
+
+
+            // Update data on change
+            //picture3.on('guillotinechange', function (ev, data, action) {
+            //    data.scale = parseFloat(data.scale.toFixed(4));
+            //    for (var k in data) { $('#' + k).html(data[k]); }
+            //});
         });
     });
     $(document).ready(function () {
@@ -303,8 +339,10 @@
             $('#imgCroper').modal({ backdrop: 'static' });
             document.getElementById("imgCrop_sq").src = imageUrl;
             document.getElementById("imgCrop_rec").src = imageUrl;
+            document.getElementById("imgCrop_ava").src = imageUrl;
             document.getElementById("thumbnail_square").src = imageUrl;
             document.getElementById("thumbnail_rectangle").src = imageUrl;
+            document.getElementById("thumbnail_avatar").src = imageUrl;
         });
         var tags = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -648,6 +686,7 @@
     function getcropimgdata() {
         var datas = $('#imgCrop_sq').guillotine('getData');
         var datar = $('#imgCrop_rec').guillotine('getData');
+        var dataa = $('#imgCrop_ava').guillotine('getData');
         var data = {};
         //square data
         data.scales = datas.scale;
@@ -661,6 +700,13 @@
         data.hr = datar.h;
         data.xr = datar.x;
         data.yr = datar.y;
+        //avatar data
+        data.scalea = dataa.scale;
+        data.wa = dataa.w;
+        data.ha = dataa.h;
+        data.xa = dataa.x;
+        data.ya = dataa.y;
+
 
         var imagePath = $("#imgCrop_sq").attr("src");
         imagePath = imagePath.split('/ImageBO/Image?path=')[1];
@@ -676,7 +722,7 @@
                 //document.getElementById("avatarHidden").value = '/ImageBO/Image?path=' + data;
                 //var result = JSON.parse(data);
 
-                document.getElementById("imgAvatar").src = data.avatar;
+                document.getElementById("imgAvatar").src = data.displayAvatar;
                 document.getElementById("avatarHidden").value = data.avatar;
                 document.getElementById("squareAvatarHidden").value = data.squareAvatar;
                 document.getElementById("rectangleAvatarHidden").value = data.rectangleAvatar;
