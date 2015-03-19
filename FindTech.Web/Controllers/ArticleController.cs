@@ -78,17 +78,30 @@ namespace FindTech.Web.Controllers
                         new { contentSectionPages }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetLatestReviews()
+        public ActionResult GetLatestReviews(int skip, int take)
         {
-            var articles = articleService.GetLatestReviews(0, 4).Select(Mapper.Map<ArticleViewModel>).ToList();
+            var articles = articleService.GetLatestReviews(skip, take);
             return
                 Json(
                     new ArticleListViewModel
                     {
-                        Articles = articles,
-                        Title = "Bài viết mới nhất",
-                        TitleStyleClass = "fa fa-eye background-00ade0"
+                        Articles = articles.Select(Mapper.Map<ArticleViewModel>),
+                        Title = "Soi mới nhất",
+                        TitleStyleClass = "fa fa-eye background-info"
                     }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetHotReviews(int skip, int take)
+        {
+            var articles = articleService.GetHotReviews(skip, take);
+            return
+                 Json(
+                     new ArticleListViewModel
+                     {
+                         Articles = articles.Select(Mapper.Map<ArticleViewModel>),
+                         Title = "Soi nóng nhất",
+                         TitleStyleClass = "fa fa-fire background-danger"
+                     }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetHotNewses(int skip, int take)
@@ -100,6 +113,19 @@ namespace FindTech.Web.Controllers
                      {
                          Articles = articles.Select(Mapper.Map<ArticleViewModel>),
                          Title = "Tin nóng",
+                         TitleStyleClass = "fa fa-fire background-danger"
+                     }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetHotArticles(int skip, int take)
+        {
+            var articles = articleService.GetHotArticles(skip, take);
+            return
+                 Json(
+                     new ArticleListViewModel
+                     {
+                         Articles = articles.Select(Mapper.Map<ArticleViewModel>),
+                         Title = "Bài nóng nhất",
                          TitleStyleClass = "fa fa-fire background-danger"
                      }, JsonRequestBehavior.AllowGet);
         }

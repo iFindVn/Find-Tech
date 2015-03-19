@@ -1,4 +1,4 @@
-﻿var app = angular.module('FindTechApp', ['FindTech.ArticleDetail']);
+﻿var app = angular.module('FindTechApp', ['FindTech.ArticleDetail', 'FindTech.Home']);
 
 app.controller('FindTechCtrl', ['$scope', 'Page', function ($scope, Page) {
     $scope.Page = Page;
@@ -25,16 +25,6 @@ app.directive('miniListBox', function () {
     };
 });
 
-app.directive('miniListItem', function () {
-    return {
-        restrict: 'E',
-        scope: {
-            model: '='
-        },
-        templateUrl: '/app/templates/mini-list-item.html'
-    };
-});
-
 app.directive('miniSliderBox', function () {
     return {
         restrict: 'E',
@@ -42,6 +32,16 @@ app.directive('miniSliderBox', function () {
             model: '='
         },
         templateUrl: '/app/templates/mini-slider-box.html'
+    };
+});
+
+app.directive('largeSliderBox', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            model: '='
+        },
+        templateUrl: '/app/templates/large-slider-box.html'
     };
 });
 

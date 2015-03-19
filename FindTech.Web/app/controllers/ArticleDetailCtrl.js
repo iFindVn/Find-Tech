@@ -42,7 +42,7 @@
                 });
                 
                 $scope.relatedNewses = {};
-                $http.get('/Article/GetArticleByCatogories?tags=' + $scope.article.Tags + '&articleType=1&skip=0&take=10').success(function (relatedNewses) {
+                $http.get('/Article/GetArticleByTags?tags=' + $scope.article.Tags + '&articleType=1&skip=0&take=10').success(function (relatedNewses) {
                     $scope.relatedNewses = relatedNewses;
                 });
             });

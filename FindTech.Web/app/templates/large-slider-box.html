@@ -1,0 +1,44 @@
+﻿<article class="content">
+    <div class="carousel-box bottom-padding bottom-padding-mid load overflow">
+        <div class="title-box no-margin">
+            <a class="next" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
+                <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="1,0.001 0,1.001 7,8 0,14.999 1,15.999 9,8 "></polygon>
+                                        </svg>
+            </a>
+            <a class="prev" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="9px" height="16px" viewBox="0 0 9 16" enable-background="new 0 0 9 16" xml:space="preserve">
+                <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="8,15.999 9,14.999 2,8 9,1.001 8,0.001 0,8 "></polygon>
+                                        </svg>
+            </a>
+            <h2 class="title">{{model.Title}}</h2>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="carousel articles">
+                <div ng-repeat="article in model.Articles" class="col-sm-6 col-md-3">
+                    <div class="article">
+                        <div class="default">
+                            <a ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}" class="article-avatar fixed-height-270">
+                                <img ng-src="{{article.Avatar}}" alt="" title="" width="270" height="270">
+                            </a>
+                            <div class="article-description article-description-wrap">
+                                <a ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}" class="title">{{article.Title}}</a>
+                                <div class="posted-info"><span class="blurry-text">Đăng:</span><strong> {{article.PublishedDate | moment}}, <span class="blurry-text">bởi</span> {{article.CreatedUserDisplayName}}</strong></div>
+                                <div class="description" ng-bind-html="article.Description | html"></div>
+                            </div>
+                            <div class="social" ng-attr-style="border-top-color: {{article.ArticleCategoryColor}}">
+                                <span class="opinion"><span ng-class="article.HighestOpinionBackground">{{article.HighestOpinionText}}</span></span>
+                                <a class="fa fa-eye" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}"><span class="count">{{article.ViewCount}}</span></a>
+                                <a class="fa fa-comments" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}"><span class="count">{{article.CommentCount}}</span></a>
+                                <a ng-class="'fa fa-thumb-tack ' + getPinnedClass(article.ArticleId)" href="#" data-article-id="{{article.ArticleId}}" onclick="pinArticle($(this)); return false;"></a>
+                            </div>
+                        </div>
+                    </div><!-- .article -->
+                </div>
+            </div>
+        </div>
+    </div><!-- .carousel-box -->
+</article>

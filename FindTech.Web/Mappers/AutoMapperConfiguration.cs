@@ -82,7 +82,7 @@ namespace FindTech.Web.Mappers
                     .ForMember(a => a.Parent, o => o.ResolveUsing(x => Mapper.Map<BenchmarkGroupBOViewModel>(x.Parent) ?? new BenchmarkGroupBOViewModel { BenchmarkGroupId = 0, BenchmarkGroupName = "Root" }));
             }
 
-            private string GetOpinionText(OpinionLevel opinionLevel)
+            private string GetOpinionText(OpinionLevel? opinionLevel)
             {
                 switch (opinionLevel)
                 {
@@ -95,11 +95,11 @@ namespace FindTech.Web.Mappers
                     case OpinionLevel.Bad:
                         return "Dở";
                     default:
-                        return "";
+                        return "???";
                 }
             }
 
-            private string GetOpinionBackground(OpinionLevel opinionLevel)
+            private string GetOpinionBackground(OpinionLevel? opinionLevel)
             {
                 switch (opinionLevel)
                 {
@@ -112,7 +112,7 @@ namespace FindTech.Web.Mappers
                     case OpinionLevel.Bad:
                         return "background-success";
                     default:
-                        return "";
+                        return "background-info";
                 }
             }
         }

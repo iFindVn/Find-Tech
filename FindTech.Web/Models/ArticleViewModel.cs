@@ -33,6 +33,7 @@ namespace FindTech.Web.Models
         public string HighestOpinionBackground { get; set; }
         public string SourceName { get; set; }
         public string SourceLogo { get; set; }
+        public string PinnedClass { get; set; }
         public ICollection<OpinionViewModel> Opinions { get; set; } 
         public ICollection<ContentSectionBOViewModel> ContentSections { get; set; } 
     }

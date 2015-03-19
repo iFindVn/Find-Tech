@@ -7,83 +7,90 @@
     var latestReviews = (IEnumerable<ArticleViewModel>)ViewBag.LatestReviews;
     var popularReviews = (IEnumerable<ArticleViewModel>)ViewBag.PopularReviews;
 }
-
-<div class="banner-set load">
-    <div class="container">
-        <div class="banners">
-            @foreach (var hotArticle in hotArticles)
-            {
-                Html.RenderPartial("_HotArticleBox", hotArticle);
-            }
-        </div><!-- .banners -->
-        <div class="clearfix"></div>
-    </div>
-    <div class="nav-box">
+<div ng-controller="HomeCtrl">
+    <div class="banner-set load">
         <div class="container">
-            <a class="prev" href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
-            <a class="next" href="#"><span class="glyphicon glyphicon-arrow-right"></span></a>
+            <div class="banners">
+                <a ng-repeat="article in hotArticles.Articles" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}" class="banner">
+                    <div class="box">
+                        <img ng-src="{{article.Avatar}}" width="275" height="275" alt="">
+                        <div class="overlay">
+                            <h2 class="title">{{article.Title}}</h2>
+                            <div class="description" ng-bind-html="article.Description | html"></div>
+                        </div>
+                    </div>
+                </a>
+            </div><!-- .banners -->
+            <div class="clearfix"></div>
         </div>
-    </div>
-</div><!-- .banner-set -->
-<section id="main">
-    <div class="container">
-        <div class="content">
-            <div class="row">
-                <div class="col-sm-12 col-md-9">
-                    @{Html.RenderPartial("_LargeSliderBox", new ArticleListViewModel { Articles = latestReviews, Title = "Đánh giá & So sánh" });}
-                    <article class="content">
-                        <div class="bottom-padding bottom-padding-mid load overflow">
-                            <div class="title-box no-margin">
-                                <h2 class="title">Tin Tức</h2>
-                            </div>
+        <div class="nav-box">
+            <div class="container">
+                <a class="prev" href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                <a class="next" href="#"><span class="glyphicon glyphicon-arrow-right"></span></a>
+            </div>
+        </div>
+    </div><!-- .banner-set -->
+    <section id="main">
+        <div class="container">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-12 col-md-9">
+                        <large-slider-box model="latestReviews"></large-slider-box>
+                        @*@{Html.RenderPartial("_LargeSliderBox", new ArticleListViewModel { Articles = latestReviews, Title = "Đánh giá & So sánh" });}*@
+                        <article class="content">
+                            <div class="bottom-padding bottom-padding-mid load overflow">
+                                <div class="title-box no-margin">
+                                    <h2 class="title">Tin Tức</h2>
+                                </div>
 
-                            <div class="clearfix"></div>
+                                <div class="clearfix"></div>
 
-                            <div class="row social-feed articles">
-                                @*@foreach (var article in articles)
-                                {
-                                    Html.RenderPartial("_NewsBox", article);
-                                }*@
-                            </div>
+                                <div class="row social-feed articles">
+                                    @*@foreach (var article in articles)
+                                        {
+                                            Html.RenderPartial("_NewsBox", article);
+                                        }*@
+                                </div>
 
-                            <div class="clearfix"></div>
+                                <div class="clearfix"></div>
 
-                            <div class="load-more-wrapper">
-                                <div id="load-more" class="btn load-more unclicked load">
-                                    Load more 
-                                    <span class="livicon loading" data-name="spinner-three" data-c="#ffffff" data-hc="#ffffff" data-s="22" data-loop="true"></span>
-                                    <span class="livicon" data-name="angle-double-down" data-s="22" data-c="#ffffff" data-hc="#ffffff" data-loop="true"></span>
+                                <div class="load-more-wrapper">
+                                    <div id="load-more" class="btn load-more unclicked load">
+                                        Load more
+                                        <span class="livicon loading" data-name="spinner-three" data-c="#ffffff" data-hc="#ffffff" data-s="22" data-loop="true"></span>
+                                        <span class="livicon" data-name="angle-double-down" data-s="22" data-c="#ffffff" data-hc="#ffffff" data-loop="true"></span>
+                                    </div>
+                                </div>
+                            </div><!-- .carousel-box -->
+                        </article>
+                        <article class="content">
+                            <div class="bottom-padding bottom-padding-mid">
+                                <div class="title-box">
+                                    <h2 class="title">YouTube</h2>
+                                </div>
+                                <div class="video-box youtube">
+                                    <iframe frameborder="0" allowfullscreen="" src="//www.youtube.com/embed/oNBBijn4JuY?showinfo=0&amp;wmode=opaque"></iframe>
                                 </div>
                             </div>
-                        </div><!-- .carousel-box -->
-                    </article>
-                    <article class="content">
-                        <div class="bottom-padding bottom-padding-mid">
-                            <div class="title-box">
-                                <h2 class="title">YouTube</h2>
-                            </div>
-                            <div class="video-box youtube">
-                                <iframe frameborder="0" allowfullscreen="" src="//www.youtube.com/embed/oNBBijn4JuY?showinfo=0&amp;wmode=opaque"></iframe>
-                            </div>
+                        </article>
+                        @*@{Html.RenderAction("_Widget", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniSlider, Title = "Thủ thuật" }, searchType = SearchType.Category, keyword = "tin-tong-hop" });}*@
+                    </div>
+                    <div class="sidebar col-sm-12 col-md-3">
+                        <div class="row">
+                            @*@{Html.RenderAction("_Pinned", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniList, Title = "Đã ghim", TitleStyleClass = "fa fa-thumb-tack background-warning", ClientId = "pinnedArticles" } });}*@
+                            @*@{Html.RenderPartial("_MiniListBox", new ArticleListViewModel { Articles = popularReviews, Title = "Đánh giá phổ biến", TitleStyleClass = "fa fa-eye background-primary" });}*@
+                            <aside class="widget facebook-widget col-sm-6 col-md-12">
+                                <header>
+                                    <h3 class="title">Facebook</h3>
+                                </header>
+                                <div id="fb-root"></div>
+                                <div class="fb-like-box" data-href="https://www.facebook.com/ifind.vn" data-width="270" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
+                            </aside><!-- .facebook-widget -->
                         </div>
-                    </article>
-                    @{Html.RenderAction("_Widget", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniSlider, Title = "Thủ thuật" }, searchType = SearchType.Category, keyword = "tin-tong-hop" });}
-                </div>
-                <div class="sidebar col-sm-12 col-md-3">
-                    <div class="row">
-                        @{Html.RenderAction("_Pinned", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniList, Title = "Đã ghim", TitleStyleClass = "fa fa-thumb-tack background-warning", ClientId = "pinnedArticles"} });}
-                        @{Html.RenderPartial("_MiniListBox", new ArticleListViewModel { Articles = popularReviews, Title = "Đánh giá phổ biến", TitleStyleClass = "fa fa-eye background-primary" });}
-                        <aside class="widget facebook-widget col-sm-6 col-md-12">
-                            <header>
-                                <h3 class="title">Facebook</h3>
-                            </header>
-                            <div id="fb-root"></div>
-                            <div class="fb-like-box" data-href="https://www.facebook.com/ifind.vn" data-width="270" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
-                        </aside><!-- .facebook-widget -->
                     </div>
                 </div>
-            </div>
-            <div class="clearfix"></div>
-        </div><!-- .content -->
-    </div>
-</section><!-- #main -->
+                <div class="clearfix"></div>
+            </div><!-- .content -->
+        </div>
+    </section><!-- #main -->
+</div>

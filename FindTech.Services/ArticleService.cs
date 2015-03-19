@@ -13,9 +13,9 @@ namespace FindTech.Services
 {
     public interface IArticleService : IService<Article>
     {
-        IEnumerable<Article> GetHotArticles();
-        IEnumerable<Article> GetLatestReviews(int skip = 0, int take = 20);
-        IEnumerable<Article> GetPopularReviews(int skip = 0, int take = 20);
+        IEnumerable<ArticleResult> GetHotArticles(int skip = 0, int take = 10);
+        IEnumerable<ArticleResult> GetLatestReviews(int skip = 0, int take = 20);
+        IEnumerable<ArticleResult> GetHotReviews(int skip = 0, int take = 20);
         Article GetArticle(int articleId);
         Article GetArticleDetail(string seoTitle);
         IEnumerable<ArticleResult> GetListOfArticles(string tags, string categories, ArticleType articleType,
@@ -34,28 +34,28 @@ namespace FindTech.Services
             _findTechStoredProcedures = findTechStoredProcedures;
         }
 
-        public IEnumerable<Article> GetHotArticles()
+        public IEnumerable<ArticleResult> GetHotArticles(int skip = 0, int take = 10)
         {
-            return
-                _articleRepository.GetHotArticles();
+            return _findTechStoredProcedures.GetListOfArticles("", "", ArticleType.All, " a.IsHot = 1 ", "",
+                skip, take);
         }
 
         public IEnumerable<ArticleResult> GetHotNewses(int skip = 0, int take = 10)
         {
-            return _findTechStoredProcedures.GetListOfArticles("", "", ArticleType.News, " tblResult.IsHot = 1 ", "",
+            return _findTechStoredProcedures.GetListOfArticles("", "", ArticleType.News, " a.IsHot = 1 ", "",
                 skip, take);
         }
 
-        public IEnumerable<Article> GetLatestReviews(int skip = 0, int take = 20)
+        public IEnumerable<ArticleResult> GetHotReviews(int skip = 0, int take = 20)
         {
-            return
-                _articleRepository.GetLatestReviews(skip, take);
+            return _findTechStoredProcedures.GetListOfArticles("", "", ArticleType.News, " a.IsHot = 1 ", "",
+                skip, take);
         }
 
-        public IEnumerable<Article> GetPopularReviews(int skip = 0, int take = 20)
+        public IEnumerable<ArticleResult> GetLatestReviews(int skip = 0, int take = 20)
         {
-            return
-                _articleRepository.GetPopularReviews(skip, take);
+            return _findTechStoredProcedures.GetListOfArticles("", "", ArticleType.Reviews, "", "",
+                skip, take);
         }
 
         public Article GetArticle(int articleId)

@@ -21,15 +21,15 @@ namespace FindTech.Web.Controllers
         }
         public ActionResult Index()
         {
-            ViewBag.Title =
-                "Tìm là thấy";
-            ViewBag.Description = "Cổng thông tin công nghệ, thiết bị di động, so sánh sản phẩm công nghệ, đánh giá smart phone, tablet,...";
-            var hotArticles = articleService.GetHotArticles().Select(Mapper.Map<ArticleViewModel>);
-            ViewBag.HotArticles = hotArticles;
-            var latestReviews = articleService.GetLatestReviews().Select(Mapper.Map<ArticleViewModel>);
-            ViewBag.LatestReviews = latestReviews;
-            var popularReviews = articleService.GetPopularReviews(0, 4).Select(Mapper.Map<ArticleViewModel>);
-            ViewBag.PopularReviews = popularReviews;
+            //ViewBag.Title =
+            //    "Tìm là thấy";
+            //ViewBag.Description = "Cổng thông tin công nghệ, thiết bị di động, so sánh sản phẩm công nghệ, đánh giá smart phone, tablet,...";
+            //var hotArticles = articleService.GetHotArticles().Select(Mapper.Map<ArticleViewModel>);
+            //ViewBag.HotArticles = hotArticles;
+            //var latestReviews = articleService.GetLatestReviews().Select(Mapper.Map<ArticleViewModel>);
+            //ViewBag.LatestReviews = latestReviews;
+            //var popularReviews = articleService.GetHotReviews(0, 4).Select(Mapper.Map<ArticleViewModel>);
+            //ViewBag.PopularReviews = popularReviews;
             return View();
         }
 

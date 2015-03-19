@@ -32,6 +32,6 @@ namespace FindTech.Entities.StoredProcedures.Models
         public int ViewCount { get; set; }
         public DateTime LatestInteraction { get; set; }
         public int CommentCount { get; set; }
-        public OpinionLevel OpinionLevel { get; set; }
+        public OpinionLevel? OpinionLevel { get; set; }
     }
 }
