@@ -35,6 +35,16 @@ app.directive('miniListItem', function () {
     };
 });
 
+app.directive('miniSliderBox', function () {
+    return {
+        restrict: 'E',
+        scope: {
+            model: '='
+        },
+        templateUrl: '/app/templates/mini-slider-box.html'
+    };
+});
+
 app.directive('imageGallerySlider', function () {
     return {
         restrict: 'E',

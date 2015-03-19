@@ -91,6 +91,45 @@ namespace FindTech.Web.Controllers
                     }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetHotNewses(int skip, int take)
+        {
+            var articles = articleService.GetHotNewses(skip, take); 
+            return
+                 Json(
+                     new ArticleListViewModel
+                     {
+                         Articles = articles.Select(Mapper.Map<ArticleViewModel>),
+                         Title = "Tin nóng",
+                         TitleStyleClass = "fa fa-fire background-danger"
+                     }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetArticleByCatogories(string categories, ArticleType articleType, int skip, int take)
+        {
+            var articles = articleService.GetListOfArticles(categories, "", articleType, "", "", skip, take);
+            return
+                 Json(
+                     new ArticleListViewModel
+                     {
+                         Articles = articles.Select(Mapper.Map<ArticleViewModel>),
+                         Title = "Tin cùng chuyên mục",
+                         TitleStyleClass = "fa fa-folder-open background-success"
+                     }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetArticleByTags(string tags, ArticleType articleType, int skip, int take)
+        {
+            var articles = articleService.GetListOfArticles(tags, "", articleType, "", "", skip, take);
+            return
+                 Json(
+                     new ArticleListViewModel
+                     {
+                         Articles = articles.Select(Mapper.Map<ArticleViewModel>),
+                         Title = "Tin liên quan",
+                         TitleStyleClass = "fa fa-tag background-primary"
+                     }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetPinnedArticles()
         {
             if (Session["Pinned"] == null)

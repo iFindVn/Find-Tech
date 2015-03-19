@@ -5,9 +5,9 @@
                 ratedOpinion: false
             };
 
-            $scope.latestReviews = {};
-            $http.get('/Article/GetLatestReviews').success(function (data) {
-                $scope.latestReviews = data;
+            $scope.hotNewses = {};
+            $http.get('/Article/GetHotNewses?skip=0&take=10').success(function (data) {
+                $scope.hotNewses = data;
             });
 
             $scope.pinnedArticles = {};
@@ -34,6 +34,16 @@
 
                 $http.get('/Comment/GetComments?objectType=1&objectId=' + $scope.article.ArticleId).success(function (comments) {
                     $scope.comments = comments;
+                });
+
+                $scope.sameCategoryNewses = {};
+                $http.get('/Article/GetArticleByCatogories?categories=' + $scope.article.ArticleCategorySeoName + '&articleType=1&skip=0&take=10').success(function (sameCategoryNewses) {
+                    $scope.sameCategoryNewses = sameCategoryNewses;
+                });
+                
+                $scope.relatedNewses = {};
+                $http.get('/Article/GetArticleByCatogories?tags=' + $scope.article.Tags + '&articleType=1&skip=0&take=10').success(function (relatedNewses) {
+                    $scope.relatedNewses = relatedNewses;
                 });
             });
 

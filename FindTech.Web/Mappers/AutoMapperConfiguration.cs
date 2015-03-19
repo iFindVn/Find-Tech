@@ -2,6 +2,7 @@
 using AutoMapper;
 using FindTech.Entities.Models;
 using FindTech.Entities.Models.Enums;
+using FindTech.Entities.StoredProcedures.Models;
 using FindTech.Web.Areas.BO.Models;
 using FindTech.Web.Models;
 using Microsoft.Ajax.Utilities;
@@ -63,6 +64,9 @@ namespace FindTech.Web.Mappers
                     .ForMember(a => a.ArticleCategorySeoName, o => o.MapFrom(x => x.ArticleCategory.SeoName))
                     .ForMember(a => a.SourceName, o => o.MapFrom(x => x.Source.SourceName))
                     .ForMember(a => a.SourceLogo, o => o.MapFrom(x => x.Source.Logo));
+                Mapper.CreateMap<ArticleResult, ArticleViewModel>()
+                    .ForMember(a => a.HighestOpinionText, o => o.ResolveUsing(x => GetOpinionText(x.OpinionLevel)))
+                    .ForMember(a => a.HighestOpinionBackground, o => o.ResolveUsing(x => GetOpinionBackground(x.OpinionLevel)));
                 Mapper.CreateMap<Opinion, OpinionViewModel>()
                     .ForMember(a => a.OpinionText, o => o.ResolveUsing(x => GetOpinionText(x.OpinionLevel)))
                     .ForMember(a => a.OpinionBackground, o => o.ResolveUsing(x => GetOpinionBackground(x.OpinionLevel)));

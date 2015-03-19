@@ -271,6 +271,7 @@
     <Content Include="app\templates\image-gallery-slider.html" />
     <Content Include="app\templates\mini-list-box.html" />
     <Content Include="app\templates\mini-list-item.html" />
+    <Content Include="app\templates\mini-slider-box.html" />
     <Content Include="app\templates\opinion-form.html" />
     <Content Include="app\templates\opinion-panel.html" />
     <Content Include="Areas\BO\UIFramework\Guillotine\css\jquery.guillotine.css" />

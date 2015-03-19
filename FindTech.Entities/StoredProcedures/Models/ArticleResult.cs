@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FindTech.Entities.Models;
 using FindTech.Entities.Models.Enums;
-using FindTech.Web.Areas.BO.Models;
 
-namespace FindTech.Web.Models
+namespace FindTech.Entities.StoredProcedures.Models
 {
-    public class ArticleViewModel
+    public class ArticleResult
     {
         public int ArticleId { get; set; }
         public string Title { get; set; }
@@ -29,11 +32,6 @@ namespace FindTech.Web.Models
         public int ViewCount { get; set; }
         public DateTime LatestInteraction { get; set; }
         public int CommentCount { get; set; }
-        public string HighestOpinionText { get; set; }
-        public string HighestOpinionBackground { get; set; }
-        public string SourceName { get; set; }
-        public string SourceLogo { get; set; }
-        public ICollection<OpinionViewModel> Opinions { get; set; } 
-        public ICollection<ContentSectionBOViewModel> ContentSections { get; set; } 
+        public OpinionLevel OpinionLevel { get; set; }
     }
 }
