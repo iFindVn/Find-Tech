@@ -106,9 +106,7 @@ namespace FindTech.Web.Areas.BO.Controllers
                 var listParame = new List<string>();
                 var query = BuildingWhereClause(articleGridListFiltersBOViewModel, listParame);
 
-                int from = skip + 1;
-                int to =  skip + take;
-
+          
                 var whereClause =  new SqlParameter
                 {
                     ParameterName = "whereClause",
@@ -116,19 +114,19 @@ namespace FindTech.Web.Areas.BO.Controllers
                     
                 };
 
-                var paramFrom = new SqlParameter
+                var paramSkip = new SqlParameter
                 {
-                    ParameterName = "from",
-                    Value = from.ToString(CultureInfo.InvariantCulture)
+                    ParameterName = "skip",
+                    Value = skip.ToString(CultureInfo.InvariantCulture)
                 };
 
-                var paramTo = new SqlParameter
+                var paramTake = new SqlParameter
                 {
-                    ParameterName = "to",
-                    Value = to.ToString(CultureInfo.InvariantCulture)
+                    ParameterName = "take",
+                    Value = take.ToString(CultureInfo.InvariantCulture)
                 };
 
-                articles = articleService.SelectQuery("exec ifadmin.getArticlesByFiltersPaging @whereClause, @from, @to", whereClause, paramFrom, paramTo).ToList();
+                articles = articleService.SelectQuery("exec ifadmin.SP_Article_BO_getArticlesByFiltersPaging @whereClause, @skip, @take", whereClause, paramSkip, paramTake).ToList();
             }
             else
             {  
