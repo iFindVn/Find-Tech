@@ -626,7 +626,7 @@ function bannerSetCarousel() {
 		height;
 
 	$(this).carouFredSel({
-	  auto       : false,
+	  auto       : true,
 	  width      : '100%',
 	  responsive : false,
 	  infinite   : false,

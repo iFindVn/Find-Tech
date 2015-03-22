@@ -11,9 +11,9 @@
     <div class="banner-set load">
         <div class="container">
             <div class="banners">
-                <a ng-repeat="article in hotArticles.Articles" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}" class="banner">
+                <a on-last-repeat ng-repeat="article in hotArticles.Articles" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}" class="banner">
                     <div class="box">
-                        <img ng-src="{{article.Avatar}}" width="275" height="275" alt="">
+                        <img ng-src="{{article.SquareAvatar}}" width="275" height="275" alt="">
                         <div class="overlay">
                             <h2 class="title">{{article.Title}}</h2>
                             <div class="description" ng-bind-html="article.Description | html"></div>
@@ -45,21 +45,40 @@
 
                                 <div class="clearfix"></div>
 
-                                <div class="row social-feed articles">
-                                    @*@foreach (var article in articles)
-                                        {
-                                            Html.RenderPartial("_NewsBox", article);
-                                        }*@
+                                <div class="row articles" isotope-container="isotope-container">
+                                    <div ng-repeat="article in latestNewses.Articles" isotope-item class="col-sm-6 col-md-3">
+                                        <div class="article">
+                                            <div class="default">
+                                                <a ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}" class="article-avatar">
+                                                    <img ng-src="{{article.Avatar}}" alt="" title="" width="270" height="270">
+                                                </a>
+                                                <div class="article-description">
+                                                    <a ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}" class="title">{{article.Title}}</a>
+                                                    <div class="posted-info"><span class="blurry-text">Đăng:</span><strong> {{article.PublishedDate | moment}}, <span class="blurry-text">bởi</span> {{article.CreatedUserDisplayName}}</strong></div>
+                                                    <div class="description" ng-bind-html="article.Description | html"></div>
+                                                </div>
+                                                <div class="social" ng-attr-style="border-top-color: {{article.ArticleCategoryColor}}">
+                                                    <span class="opinion"><span ng-class="article.HighestOpinionBackground">{{article.HighestOpinionText}}</span></span>
+                                                    <a class="fa fa-eye" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}"><span class="count">{{article.ViewCount}}</span></a>
+                                                    <a class="fa fa-comments" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}"><span class="count">{{article.CommentCount}}</span></a>
+                                                    <a ng-class="'fa fa-thumb-tack ' + getPinnedClass(article.ArticleId)" href="#" data-article-id="{{article.ArticleId}}" onclick="pinArticle($(this)); return false;"></a>
+                                                </div>
+                                            </div>
+                                        </div><!-- .article -->
+                                    </div>
                                 </div>
 
                                 <div class="clearfix"></div>
 
                                 <div class="load-more-wrapper">
-                                    <div id="load-more" class="btn load-more unclicked load">
+                                    <button ladda="loadMoreLoading" ng-click="loadMoreNewses()" data-style="zoom-out" class="btn load-more unclicked">
+                                        Xem thêm
+                                    </button>
+                                    @*<div ng-click="loadMoreNewses()" class="btn load-more unclicked load">
                                         Load more
                                         <span class="livicon loading" data-name="spinner-three" data-c="#ffffff" data-hc="#ffffff" data-s="22" data-loop="true"></span>
                                         <span class="livicon" data-name="angle-double-down" data-s="22" data-c="#ffffff" data-hc="#ffffff" data-loop="true"></span>
-                                    </div>
+                                    </div>*@
                                 </div>
                             </div><!-- .carousel-box -->
                         </article>
@@ -73,10 +92,15 @@
                                 </div>
                             </div>
                         </article>
+                        <mini-slider-box model="trickAndTipArticles"></mini-slider-box>
                         @*@{Html.RenderAction("_Widget", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniSlider, Title = "Thủ thuật" }, searchType = SearchType.Category, keyword = "tin-tong-hop" });}*@
                     </div>
                     <div class="sidebar col-sm-12 col-md-3">
                         <div class="row">
+                            <mini-list-box model="pinnedArticles"></mini-list-box>
+                            <mini-list-box model="productAndTechToyArticles"></mini-list-box>
+                            <mini-list-box model="brandAndDigiLifeArticles"></mini-list-box>
+                            <mini-list-box model="appAndGameArticles"></mini-list-box>
                             @*@{Html.RenderAction("_Pinned", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniList, Title = "Đã ghim", TitleStyleClass = "fa fa-thumb-tack background-warning", ClientId = "pinnedArticles" } });}*@
                             @*@{Html.RenderPartial("_MiniListBox", new ArticleListViewModel { Articles = popularReviews, Title = "Đánh giá phổ biến", TitleStyleClass = "fa fa-eye background-primary" });}*@
                             <aside class="widget facebook-widget col-sm-6 col-md-12">

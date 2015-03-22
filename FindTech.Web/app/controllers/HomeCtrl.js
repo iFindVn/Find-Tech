@@ -4,24 +4,81 @@
             Page.setTitle('Tìm là thấy');
             Page.setDescription('Cổng thông tin công nghệ, thiết bị di động, so sánh sản phẩm công nghệ, đánh giá smart phone, tablet,...');
 
+            //$scope.hotArticles = {};
+            //$http.get('/Article/GetHotArticles?skip=0&take=10').success(function (data) {
+            //    $scope.hotArticles = data;
+            //});
+
+            //$scope.latestReviews = {};
+            //$http.get('/Article/GetLatestReviews?skip=0&take=10').success(function (data) {
+            //    $scope.latestReviews = data;
+            //});
+
+            //$scope.pinnedArticles = {};
+            //$http.get('/Article/GetPinnedArticles').success(function (data) {
+            //    $scope.pinnedArticles = data;
+            //});
+            $scope.latestReviews = {                
+                Title: 'Soi mới nhất',
+                TitleStyleClass: 'fa fa-eye background-info'
+            };
             $scope.hotArticles = {};
-            $http.get('/Article/GetHotArticles?skip=0&take=10').success(function (data) {
-                $scope.hotArticles = data;
-            });
-
-            $scope.latestReviews = {};
-            $http.get('/Article/GetLatestReviews?skip=0&take=10').success(function (data) {
-                $scope.latestReviews = data;
-            });
-
-            $scope.pinnedArticles = {};
-            $http.get('/Article/GetPinnedArticles').success(function (data) {
-                $scope.pinnedArticles = data;
+            $scope.latestNewses = {
+                skip: 0,
+                take: 20
+            };
+            $scope.pinnedArticles = {
+                Title: 'Đã ghim',
+                TitleStyleClass: 'fa fa-thumb-tack background-warning',
+                ClientId:'pinnedArticles'
+            };
+            $scope.appAndGameArticles = {
+                Title: 'Ứng dụng và game',
+                TitleStyleClass: 'fa fa-android background-success'
+            };
+            $scope.productAndTechToyArticles = {
+                Title: 'Sản phẩm',
+                TitleStyleClass: 'fa fa-tablet background-primary'
+            };
+            $scope.brandAndDigiLifeArticles = {
+                Title: 'Đời sống số',
+                TitleStyleClass: 'fa fa-apple background-info'
+            };
+            $scope.trickAndTipArticles = {
+                Title: 'Thủ thuật, Mẹo vặt'
+            };
+            $http.get('/Home/Init').success(function (data) {
+                $scope.hotArticles.Articles = data.hotArticles;
+                $scope.latestReviews.Articles = data.latestReviews;
+                $scope.pinnedArticles.Articles = data.pinnedArticles;
+                $scope.appAndGameArticles.Articles = data.appAndGameArticles;
+                $scope.productAndTechToyArticles.Articles = data.productAndTechToyArticles;
+                $scope.brandAndDigiLifeArticles.Articles = data.brandAndDigiLifeArticles;
+                $scope.trickAndTipArticles.Articles = data.trickAndTipArticles;
+                $scope.latestNewses.Articles = data.latestNewses;
             });
 
             $scope.getPinnedClass = function (articleId) {
-                console.log('pinned' + articleId);
-                return 'active';
+                var pinnedClass = '';
+                $scope.pinnedArticles.Articles.some(function(article) {
+                    if (article.hasOwnProperty('ArticleId') && article['ArticleId'] === articleId) {
+                        pinnedClass = 'active';
+                    }
+                });
+                return pinnedClass;
             };
+
+            $scope.loadMoreNewses = function () {
+                $scope.loadMoreLoading = true;
+                $http.get('/Article/GetLatestNewses?skip=' + ($scope.latestNewses.skip + $scope.latestNewses.take) + '&take=' + $scope.latestNewses.take).success(function (data) {
+                    $scope.latestNewses.Articles = $scope.latestNewses.Articles.concat(data);
+                    $scope.latestNewses.skip += $scope.latestNewses.take;
+                    $scope.loadMoreLoading = false;
+                });
+            };
+            
+            $scope.$on('onRepeatLast', function (scope, element, attrs) {
+                bannerSetCarousel();
+            });
         }
     ]);

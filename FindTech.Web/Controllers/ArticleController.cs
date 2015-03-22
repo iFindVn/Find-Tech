@@ -91,6 +91,13 @@ namespace FindTech.Web.Controllers
                     }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetLatestNewses(int skip, int take)
+        {
+            var articles = articleService.GetLatestNewses(skip, take);
+            return
+                Json(articles.Select(Mapper.Map<ArticleViewModel>), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetHotReviews(int skip, int take)
         {
             var articles = articleService.GetHotReviews(skip, take);

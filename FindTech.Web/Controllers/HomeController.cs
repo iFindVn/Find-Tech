@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Web.Mvc;
 using System.Linq;
 using AutoMapper;
@@ -31,6 +32,21 @@ namespace FindTech.Web.Controllers
             //var popularReviews = articleService.GetHotReviews(0, 4).Select(Mapper.Map<ArticleViewModel>);
             //ViewBag.PopularReviews = popularReviews;
             return View();
+        }
+
+        public ActionResult Init()
+        {
+            var hotArticles = articleService.GetHotArticles(0, 10).Select(Mapper.Map<ArticleViewModel>);
+            var latestReviews = articleService.GetLatestReviews(0, 10).Select(Mapper.Map<ArticleViewModel>);
+            var latestNewses = articleService.GetLatestNewses(0, 20).Select(Mapper.Map<ArticleViewModel>);
+            var pinnedArticles = Session["Pinned"] == null
+                ? new List<ArticleViewModel>()
+                : (List<ArticleViewModel>) Session["Pinned"];
+            var trickAndTipArticles = articleService.GetListOfArticles("thu-thuat-va-meo-vat", "", ArticleType.All, "", "", 0, 10);
+            var appAndGameArticles = articleService.GetListOfArticles("ung-dung-va-game", "", ArticleType.All, "", "", 0, 10);
+            var productAndTechToyArticles = articleService.GetListOfArticles("san-pham,do-choi-cong-nghe", "", ArticleType.All, "", "", 0, 10);
+            var brandAndDigiLifeArticles = articleService.GetListOfArticles("thuong-hieu,doi-song-so", "", ArticleType.All, "", "", 0, 10);
+            return Json(new { hotArticles, latestReviews, pinnedArticles, trickAndTipArticles, appAndGameArticles, productAndTechToyArticles, brandAndDigiLifeArticles, latestNewses }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult About()

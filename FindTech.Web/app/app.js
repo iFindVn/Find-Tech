@@ -1,4 +1,4 @@
-﻿var app = angular.module('FindTechApp', ['FindTech.ArticleDetail', 'FindTech.Home']);
+﻿var app = angular.module('FindTechApp', ['FindTech.ArticleDetail', 'FindTech.Home', 'iso.directives', 'angular-ladda']);
 
 app.controller('FindTechCtrl', ['$scope', 'Page', function ($scope, Page) {
     $scope.Page = Page;
@@ -72,6 +72,15 @@ app.directive('opinionForm', function () {
             model: '='
         },
         templateUrl: '/app/templates/opinion-form.html'
+    };
+});
+
+app.directive('onLastRepeat', function() {
+    return function(scope, element, attrs) {
+        if (scope.$last)
+            setTimeout(function() {
+                scope.$emit('onRepeatLast', element, attrs);
+            }, 1);
     };
 });
 
