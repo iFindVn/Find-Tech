@@ -3,7 +3,7 @@
         <span ng-class="model.TitleStyleClass"></span><h2 class="title">{{model.Title}}</h2>
     </div>
     <ul>
-        <li class="clearfix" ng-repeat="article in model.Articles" ng-attr-id="list-item-article-{{article.ArticleId}}">
+        <li class="clearfix" ng-repeat="article in model.Articles track by $index" ng-if="$index < 4">
             <a ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}" class="article-avatar">
                 <img ng-src="{{article.Avatar}}" width="72" height="72" alt="" title="">
                 <h2 class="title">
@@ -11,8 +11,8 @@
                 </h2>
             </a>
         </li>
-        <li class="pinTips" ng-if="model.ClientId == 'pinnedArticles'">Bấm <span class="fa fa-thumb-tack"></span> để ghim bài viết</li>
-        <li class="action" ng-if="model.Articles.length > 4">
+        <li class="pinTips" ng-if="model.ClientId == 'pinnedArticles' && model.Articles.length == 0">Bấm <span class="fa fa-thumb-tack"></span> để ghim bài viết</li>
+        <li class="action" ng-if="(model.ClientId == 'pinnedArticles' && model.Articles.length > 4) || (model.ClientId != 'pinnedArticles' && model.Articles.length > 3)">
             <a href="#" class="view-all ">View all<span class="fa fa-arrow-right"></span></a>
         </li>
     </ul>

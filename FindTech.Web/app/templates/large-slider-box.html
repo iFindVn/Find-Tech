@@ -33,7 +33,7 @@
                                 <span class="opinion"><span ng-class="article.HighestOpinionBackground">{{article.HighestOpinionText}}</span></span>
                                 <a class="fa fa-eye" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}"><span class="count">{{article.ViewCount}}</span></a>
                                 <a class="fa fa-comments" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}"><span class="count">{{article.CommentCount}}</span></a>
-                                <a ng-class="'fa fa-thumb-tack ' + getPinnedClass(article.ArticleId)" href="#" data-article-id="{{article.ArticleId}}" onclick="pinArticle($(this)); return false;"></a>
+                                <a ng-class="'fa fa-thumb-tack ' + getPinnedClass(article.ArticleId)" href="#" ng-click="pinArticle(article.ArticleId)"></a>
                             </div>
                         </div>
                     </div><!-- .article -->

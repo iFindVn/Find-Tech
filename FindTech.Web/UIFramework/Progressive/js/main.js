@@ -30,39 +30,6 @@ jQuery(window).load(function() {
   });
 });
 
-jQuery(document).ready(function () {
-    showHideViewAll();
-});
-
-var pinArticle = function (thisObject) {
-    var articleId = thisObject.attr('data-article-id');
-    $.post("/Article/Pin", { articleId: articleId }, function(data) {
-        if (thisObject.hasClass('active')) {
-            thisObject.removeClass('active');
-            $('#list-item-article-' + articleId).remove();
-        } else {
-            thisObject.addClass('active');
-            $('#pinnedArticles ul').prepend(data);
-        }
-        showHideViewAll();
-    });
-};
-
-var showHideViewAll = function () {
-    $('#pinnedArticles ul li:gt(3)').hide();
-    $('#pinnedArticles ul li:lt(4)').show();
-    if ($('#pinnedArticles ul li').length > 6) {
-        $('#pinnedArticles .view-all').parent().show();
-    } else {
-        $('#pinnedArticles .view-all').parent().hide();
-    }
-    if ($('#pinnedArticles ul li').length < 3) {
-        $('#pinnedArticles .pinTips').show();
-    } else {
-        $('#pinnedArticles .pinTips').hide();
-    }
-}
-
 //Calculating The Browser Scrollbar Width
 var parent, child, scrollWidth, bodyWidth;
 

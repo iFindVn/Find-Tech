@@ -4,20 +4,6 @@
             Page.setTitle('Tìm là thấy');
             Page.setDescription('Cổng thông tin công nghệ, thiết bị di động, so sánh sản phẩm công nghệ, đánh giá smart phone, tablet,...');
 
-            //$scope.hotArticles = {};
-            //$http.get('/Article/GetHotArticles?skip=0&take=10').success(function (data) {
-            //    $scope.hotArticles = data;
-            //});
-
-            //$scope.latestReviews = {};
-            //$http.get('/Article/GetLatestReviews?skip=0&take=10').success(function (data) {
-            //    $scope.latestReviews = data;
-            //});
-
-            //$scope.pinnedArticles = {};
-            //$http.get('/Article/GetPinnedArticles').success(function (data) {
-            //    $scope.pinnedArticles = data;
-            //});
             $scope.latestReviews = {                
                 Title: 'Soi mới nhất',
                 TitleStyleClass: 'fa fa-eye background-info'
@@ -26,11 +12,6 @@
             $scope.latestNewses = {
                 skip: 0,
                 take: 20
-            };
-            $scope.pinnedArticles = {
-                Title: 'Đã ghim',
-                TitleStyleClass: 'fa fa-thumb-tack background-warning',
-                ClientId:'pinnedArticles'
             };
             $scope.appAndGameArticles = {
                 Title: 'Ứng dụng và game',
@@ -50,23 +31,12 @@
             $http.get('/Home/Init').success(function (data) {
                 $scope.hotArticles.Articles = data.hotArticles;
                 $scope.latestReviews.Articles = data.latestReviews;
-                $scope.pinnedArticles.Articles = data.pinnedArticles;
                 $scope.appAndGameArticles.Articles = data.appAndGameArticles;
                 $scope.productAndTechToyArticles.Articles = data.productAndTechToyArticles;
                 $scope.brandAndDigiLifeArticles.Articles = data.brandAndDigiLifeArticles;
                 $scope.trickAndTipArticles.Articles = data.trickAndTipArticles;
                 $scope.latestNewses.Articles = data.latestNewses;
             });
-
-            $scope.getPinnedClass = function (articleId) {
-                var pinnedClass = '';
-                $scope.pinnedArticles.Articles.some(function(article) {
-                    if (article.hasOwnProperty('ArticleId') && article['ArticleId'] === articleId) {
-                        pinnedClass = 'active';
-                    }
-                });
-                return pinnedClass;
-            };
 
             $scope.loadMoreNewses = function () {
                 $scope.loadMoreLoading = true;

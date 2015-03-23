@@ -5,16 +5,6 @@
                 ratedOpinion: false
             };
 
-            $scope.hotNewses = {};
-            $http.get('/Article/GetHotNewses?skip=0&take=10').success(function (data) {
-                $scope.hotNewses = data;
-            });
-
-            $scope.pinnedArticles = {};
-            $http.get('/Article/GetPinnedArticles').success(function (data) {
-                $scope.pinnedArticles = data;
-            });
-
             $scope.absUrl = $location.absUrl();
             var path = $scope.absUrl.split('/bai-viet/')[1];
             $scope.seoTitle = path.split('/')[1];
@@ -22,28 +12,28 @@
             $scope.article = {};
             $scope.contentSectionPageManager = {};
             $scope.comments = {};
+            $scope.sameCategoryNewses = {
+                Title: 'Tin cùng chuyên mục',
+                TitleStyleClass: 'fa fa-folder-open background-success'
+            };
+            $scope.hotNewses = {
+                Title: 'Tin nóng',
+                TitleStyleClass: 'fa fa-rss background-danger'
+            };
+            $scope.relatedNewses = {
+                Title: 'Tin liên quan'
+            };
             $http.get('/Article/GetArticleDetail?seoTitle=' + $scope.seoTitle + '&page=' + $scope.currentPage).success(function (data) {
-                $scope.article = data;
+                $scope.article = data.article;
                 Page.setTitle($scope.article.Title);
                 Page.setDescription($scope.article.Description);
 
-                $http.get('/Article/GetContentSectionPages?articleId=' + +$scope.article.ArticleId + '&page=' + $scope.currentPage).success(function (contentSectionPageManager) {
-                    $scope.contentSectionPageManager = contentSectionPageManager;
-                });
-
-
+                $scope.contentSectionPageManager = data.contentSectionPageManager;
+                $scope.sameCategoryNewses.Articles = data.sameCategoryNewses;
+                $scope.relatedNewses.Articles = data.relatedNewses;
+                $scope.hotNewses.Articles = data.hotNewses;
                 $http.get('/Comment/GetComments?objectType=1&objectId=' + $scope.article.ArticleId).success(function (comments) {
                     $scope.comments = comments;
-                });
-
-                $scope.sameCategoryNewses = {};
-                $http.get('/Article/GetArticleByCatogories?categories=' + $scope.article.ArticleCategorySeoName + '&articleType=1&skip=0&take=10').success(function (sameCategoryNewses) {
-                    $scope.sameCategoryNewses = sameCategoryNewses;
-                });
-                
-                $scope.relatedNewses = {};
-                $http.get('/Article/GetArticleByTags?tags=' + $scope.article.Tags + '&articleType=1&skip=0&take=10').success(function (relatedNewses) {
-                    $scope.relatedNewses = relatedNewses;
                 });
             });
 

@@ -1,8 +1,37 @@
 ﻿var app = angular.module('FindTechApp', ['FindTech.ArticleDetail', 'FindTech.Home', 'iso.directives', 'angular-ladda']);
 
-app.controller('FindTechCtrl', ['$scope', 'Page', function ($scope, Page) {
+app.controller('FindTechCtrl', ['$scope', '$http', 'Page', function ($scope, $http, Page) {
     $scope.Page = Page;
 }]);
+
+app.run(function ($rootScope, $http) {
+    $rootScope.pinnedArticles = {
+        Title: 'Đã ghim',
+        TitleStyleClass: 'fa fa-thumb-tack background-warning',
+        ClientId: 'pinnedArticles'
+    };
+    $rootScope.pinArticle = function (articleId) {
+        $http.post('/Article/Pin', { articleId: articleId }).success(function (data) {
+            $rootScope.pinnedArticles.Articles = data;
+        });
+    };
+
+    $http.get('/Article/GetPinnedArticles').success(function (data) {
+        $rootScope.pinnedArticles.Articles = data;
+    });
+
+    $rootScope.getPinnedClass = function (articleId) {
+        var pinnedClass = '';
+        if ($rootScope.pinnedArticles.Articles) {
+            $rootScope.pinnedArticles.Articles.some(function (article) {
+                if (article.hasOwnProperty('ArticleId') && article['ArticleId'] === articleId) {
+                    pinnedClass = 'active';
+                }
+            });
+        }
+        return pinnedClass;
+    };
+});
 
 app.factory('Page', function () {
     var title = '';
@@ -11,7 +40,7 @@ app.factory('Page', function () {
         getTitle: function() { return title; },
         setTitle: function (newTitle) { title = newTitle; },
         getDescription: function () { return description; },
-        setDescription: function(newDescription) { description = newDescription; }
+        setDescription: function (newDescription) { description = newDescription; }
     };
 });
 

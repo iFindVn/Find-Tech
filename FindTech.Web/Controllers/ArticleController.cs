@@ -51,8 +51,37 @@ namespace FindTech.Web.Controllers
             article.ContentSections = contentSectionService.GetContentSections(article.ArticleId, page).ToList();
             article.ViewCount++;
             articleService.Update(article);
-            unitOfWork.SaveChangesAsync();
-            return Json(Mapper.Map<ArticleViewModel>(article), JsonRequestBehavior.AllowGet);
+            unitOfWork.SaveChanges();
+
+            var contentSectionPages = contentSectionService.GetContentSectionPages(article.ArticleId, page).Select(
+                        a =>
+                            new ContentSectionPageViewModel
+                            {
+                                IsCurrentPage = (bool)a.GetType().GetProperty("IsCurrentPage").GetValue(a),
+                                PageName = (string)a.GetType().GetProperty("PageName").GetValue(a),
+                                PageNumber = (int)a.GetType().GetProperty("PageNumber").GetValue(a)
+                            }).ToList();
+            var contentSectionPageManager = contentSectionPages.Count > 0 ? new
+                {
+                    contentSectionPages,
+                    currentPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page),
+                    nextPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page + 1),
+                    minPageNumber = contentSectionPages.Min(a => a.PageNumber)
+                } : new
+                {
+                    contentSectionPages,
+                    currentPage = new ContentSectionPageViewModel(),
+                    nextPage = new ContentSectionPageViewModel(),
+                    minPageNumber = 0
+                };
+
+            var sameCategoryNewses = articleService.GetListOfArticles(article.ArticleCategory.SeoName, "", ArticleType.News, "", "", 0, 4).Select(Mapper.Map<ArticleViewModel>);
+
+            var relatedNewses = articleService.GetListOfArticles(article.Tags, "", ArticleType.News, "", "", 0, 10).Select(Mapper.Map<ArticleViewModel>);
+
+            var hotNewses = articleService.GetHotNewses(0, 4).Select(Mapper.Map<ArticleViewModel>); 
+
+            return Json(new { article = Mapper.Map<ArticleViewModel>(article), contentSectionPageManager, sameCategoryNewses, relatedNewses, hotNewses }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetContentSectionPages(int articleId, int page)
@@ -170,15 +199,7 @@ namespace FindTech.Web.Controllers
                 Session["Pinned"] = new List<ArticleViewModel>();
             }
             return
-                Json(
-                    new ArticleListViewModel
-                    {
-                        WidgetType = WidgetType.MiniList,
-                        Title = "Đã ghim",
-                        TitleStyleClass = "fa fa-thumb-tack background-warning",
-                        ClientId = "pinnedArticles",
-                        Articles = (List<ArticleViewModel>)Session["Pinned"]
-                    }, JsonRequestBehavior.AllowGet);
+                Json((List<ArticleViewModel>)Session["Pinned"], JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _NewsBoxs(int skip = 0, int take = 20)
@@ -218,17 +239,18 @@ namespace FindTech.Web.Controllers
         [HttpPost]
         public ActionResult Pin(int articleId)
         {
-            var article = Mapper.Map<ArticleViewModel>(articleService.Find(articleId));
             var pinnedArticles = (List<ArticleViewModel>)Session["Pinned"];
-            if (pinnedArticles.Select(a => a.ArticleId).Contains(articleId))
+            var existedArticle = pinnedArticles.FirstOrDefault(a => a.ArticleId == articleId);
+            if (existedArticle != null)
             {
-                pinnedArticles.Remove(article);
+                pinnedArticles.Remove(existedArticle);
             }
             else
             {
-                pinnedArticles.Add(article);
+                var article = Mapper.Map<ArticleViewModel>(articleService.Find(articleId));
+                pinnedArticles.Insert(0, article);
             }
-            return PartialView("_ListItemArticleBox", article);
+            return Json(pinnedArticles, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
