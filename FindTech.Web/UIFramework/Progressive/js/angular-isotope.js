@@ -67,22 +67,22 @@ angular.module("iso.controllers", ["iso.config", "iso.services"])
       $scope.isoMode = isoInit.isoMode || "addItems";
       return $timeout(function() {
         var opts = optionsStore.retrieve();
+          isotopeContainer.imagesLoaded(function() {
+              if (!(window.jQuery && isotopeContainer.isotope(opts))) {
+                  // create jqLite wrapper
+                  var instance = new Isotope(isotopeContainer[0], opts);
 
-        if (!(window.jQuery && isotopeContainer.isotope(opts)))
-        {
-            // create jqLite wrapper
-            var instance = new Isotope(isotopeContainer[0], opts);
-
-            isotopeContainer.isotope = function(options, callback) {
-                var args = Array.prototype.slice.call( arguments, 1 );
-                if ( typeof options === 'string' ) {
-                    return(instance[options].apply(instance, args));
-                } else {
-                    instance.option( options );
-                    instance._init( callback );
-                }
-           }
-        }
+                  isotopeContainer.isotope = function(options, callback) {
+                      var args = Array.prototype.slice.call(arguments, 1);
+                      if (typeof options === 'string') {
+                          return (instance[options].apply(instance, args));
+                      } else {
+                          instance.option(options);
+                          instance._init(callback);
+                      }
+                  }
+              }
+          });
 
         postInitialized = true;
       });
@@ -95,9 +95,11 @@ angular.module("iso.controllers", ["iso.config", "iso.services"])
       }
     };
     $scope.refreshIso = function() {
-      if (postInitialized) {
-        return isotopeContainer.isotope();
-      }
+        if (postInitialized) {
+            isotopeContainer.imagesLoaded(function() {
+                return isotopeContainer.isotope();
+            });
+        }
     };
     $scope.updateOptions = function(option) {
       if (isotopeContainer) {

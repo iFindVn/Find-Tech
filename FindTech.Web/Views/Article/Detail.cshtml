@@ -75,10 +75,14 @@
                                             </ul>
                                         </div>
                                     </div>
-                                <div class="opinion">
+                                <div class="opinion col-md-7 col-sm-12">
                                     <span class="title">Đánh giá bài viết: </span>
                                     <span ng-show="states.ratedOpinion" ng-repeat="opinion in article.Opinions" ng-class="opinion.OpinionBackground" class="opinion-level">{{opinion.OpinionText}}<span class="count">{{opinion.OpinionCount}}</span></span>
                                     <a ng-show="!states.ratedOpinion" ng-repeat="opinion in article.Opinions" href="#" ng-click="rateOpinion(article.ArticleId, opinion.OpinionLevel)" ng-class="opinion.OpinionBackground + '-hover'">{{opinion.OpinionText}}</a>
+                                </div>
+                                <div class="source col-md-5 col-sm-12">
+                                    <span class="blurry-text">Tác giả: </span><strong>{{article.Author}}</strong><br />
+                                    <span class="blurry-text">Nguồn: </span><strong>{{article.SourceName}}</strong>
                                 </div>
                                 <div class="article-footer">
                                     <div class="addthis_sharing_toolbox"></div>
@@ -89,10 +93,6 @@
                                         <input type="text" readonly="readonly" placeholder="Link" onclick="$(this).select();" value="{{absUrl}}">
                                     </div>
                                     <div class="addthis_native_toolbox"></div>
-                                    <div class="source">
-                                        <span class="blurry-text">Tác giả: </span><strong>{{article.Author}}</strong><br />
-                                        <span class="blurry-text">Nguồn: </span><strong>{{article.SourceName}}</strong>
-                                    </div>
                                 </div>
                                 <hr class="shadow">
                             </article><!-- .post -->

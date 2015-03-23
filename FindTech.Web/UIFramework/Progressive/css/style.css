@@ -11768,6 +11768,11 @@ padding-bottom: 20px;
     margin-left: 5px;
 }
 
+.post .opinion {
+    line-height: 40px;
+    padding: 0;
+}
+
 .background-danger > .count {
     color: #c10841;
 }
@@ -12145,7 +12150,7 @@ padding-bottom: 20px;
     width: 200px;
 }
 
-.article-footer .source {
+.post .source {
     float: right;
     margin-right: 0;
 }
