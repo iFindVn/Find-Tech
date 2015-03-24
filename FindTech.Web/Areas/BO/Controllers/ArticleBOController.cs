@@ -357,6 +357,7 @@ namespace FindTech.Web.Areas.BO.Controllers
                 articleService.Insert(newArticle);
                 unitOfWork.SaveChanges();
                 articleId = newArticle.ArticleId;
+                CreateDefaultOpinions(articleId);
             }
             var url = Url.Action("Create", "ArticleBO", new { articleId }, Request.Url.Scheme);
             return Json(url, JsonRequestBehavior.AllowGet);
@@ -373,6 +374,7 @@ namespace FindTech.Web.Areas.BO.Controllers
                     opinionService.Insert(new Opinion { OpinionCount = 0, OpinionLevel = opinionLevel, ArticleId = articleId });
                 }
             }
+            unitOfWork.SaveChanges();
         }
        
         [HttpPost]

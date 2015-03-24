@@ -59,7 +59,7 @@ namespace FindTech.Repository.Repositories
 
         public static Article GetArticleDetail(this IRepositoryAsync<Article> articleRepository, string seoTitle)
         {
-            return articleRepository.Queryable().Include(a => a.Source).Include(a => a.ArticleCategory).Include(a => a.Opinions).FirstOrDefault(a => a.SeoTitle == seoTitle);
+            return articleRepository.Queryable().Include(a => a.Source).Include(a => a.ArticleCategory).Include(a => a.Opinions).FirstOrDefault(a => a.SeoTitle == seoTitle && a.IsActived == true && a.IsDeleted != true);
         }
     }
 }

@@ -75,25 +75,31 @@
                                             </ul>
                                         </div>
                                     </div>
-                                <div class="opinion col-md-7 col-sm-12">
-                                    <span class="title">Đánh giá bài viết: </span>
-                                    <span ng-show="states.ratedOpinion" ng-repeat="opinion in article.Opinions" ng-class="opinion.OpinionBackground" class="opinion-level">{{opinion.OpinionText}}<span class="count">{{opinion.OpinionCount}}</span></span>
-                                    <a ng-show="!states.ratedOpinion" ng-repeat="opinion in article.Opinions" href="#" ng-click="rateOpinion(article.ArticleId, opinion.OpinionLevel)" ng-class="opinion.OpinionBackground + '-hover'">{{opinion.OpinionText}}</a>
-                                </div>
-                                <div class="source col-md-5 col-sm-12">
-                                    <span class="blurry-text">Tác giả: </span><strong>{{article.Author}}</strong><br />
-                                    <span class="blurry-text">Nguồn: </span><strong>{{article.SourceName}}</strong>
-                                </div>
                                 <div class="article-footer">
-                                    <div class="addthis_sharing_toolbox"></div>
-                                    <div class="social">
-                                        <a class="fa fa-share-alt" id="zclip" ng-attr-href="{{absUrl}}"></a>
+                                    <div class="opinion col-md-7 col-sm-12">
+                                        <span class="title">Đánh giá bài viết: </span>
+                                        <span ng-show="states.ratedOpinion" ng-repeat="opinion in article.Opinions" ng-class="opinion.OpinionBackground" class="opinion-level">{{opinion.OpinionText}}<span class="count">{{opinion.OpinionCount}}</span></span>
+                                        <a ng-show="!states.ratedOpinion" ng-repeat="opinion in article.Opinions" href="#" ng-click="rateOpinion(article.ArticleId, opinion.OpinionLevel)" ng-class="opinion.OpinionBackground + '-hover'">{{opinion.OpinionText}}</a>
                                     </div>
-                                    <div class="link">
-                                        <input type="text" readonly="readonly" placeholder="Link" onclick="$(this).select();" value="{{absUrl}}">
+                                    <div class="no-padding col-md-5 col-sm-12">
+                                        <div class="source">
+                                            <span class="blurry-text">Tác giả: </span><strong>{{article.Author}}</strong><br />
+                                            <span class="blurry-text">Nguồn: </span><strong>{{article.SourceName}}</strong>
+                                        </div>
                                     </div>
-                                    <div class="addthis_native_toolbox"></div>
-                                </div>
+                                    <div class="no-padding col-md-7 col-sm-12">
+                                        <div class="addthis_sharing_toolbox"></div>
+                                        <div class="social">
+                                            <a class="fa fa-share-alt" id="zclip" ng-attr-href="{{absUrl}}"></a>
+                                        </div>
+                                        <div class="link">
+                                            <input type="text" readonly="readonly" placeholder="Link" onclick="$(this).select();" value="{{absUrl}}">
+                                        </div>
+                                    </div>
+                                    <div class="no-padding col-md-5 col-sm-12">
+                                        <div class="addthis_native_toolbox no-margin pull-right"></div>
+                                    </div>
+                                    </div>
                                 <hr class="shadow">
                             </article><!-- .post -->
                             <mini-slider-box model="relatedNewses"></mini-slider-box>

@@ -12079,7 +12079,7 @@ padding-bottom: 20px;
     height: 50px;
 }
 
-.article-footer > div {
+.article-footer > div > div {
     display: inline-block;
     float: left;
     margin-right: 10px;
@@ -12257,4 +12257,14 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
     float: right;
 }
 
+#article .no-padding {
+  padding: 0;
+}
 
+#article .no-margin {
+    margin: 0;
+}
+
+.addthis_native_toolbox a {
+    float: right !important;
+}
