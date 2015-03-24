@@ -47,11 +47,11 @@
                 <script>
                     $(document).ready(function () {
 
-                        var specDetailBOUrl = "/SpecDetailBO",
+                        var specDetailBOUrl = "/DeviceBO",
             dataSource = new kendo.data.DataSource({
                 transport: {
                     read: {
-                        url: specDetailBOUrl + "/GetSpecDetails",
+                        url: specDetailBOUrl + "/GetDeviceSpec",
                         dataType: "json"
                     },
                     update: {

@@ -97,5 +97,10 @@ namespace FindTech.Web.Areas.BO.Controllers
                 return View();
             }
         }
+
+        public ActionResult GetDeviceSpec()
+        {
+            return Json(true);
+        }
     }
 }

@@ -372,7 +372,7 @@ namespace FindTech.Web.Areas.BO.Controllers
             return CanAccess(path) && IsValidFile(Path.GetExtension(path));
         }
 
-        public virtual ActionResult CropImage(string imagePath, float scales, int ws, int hs, int xs, int ys, float scaler, int wr, int hr, int xr, int yr, float scalea, int wa, int ha, int xa, int ya)
+        public ActionResult CropImage(string imagePath, float scales, int ws, int hs, int xs, int ys, float scaler, int wr, int hr, int xr, int yr, float scalea, int wa, int ha, int xa, int ya)
         {
             ws = (int)Math.Round((ws / scales), 0);
             hs = (int)Math.Round((hs / scales), 0);
