@@ -125,3 +125,9 @@ app.filter('moment', function() {
         return moment(date).fromNow();
     };
 });
+
+app.filter('width', function () {
+    return function (url, width, defaultUrl) {
+        return url ? url.replace('{width}', width) : defaultUrl;
+    };
+});

@@ -13,7 +13,7 @@
             <div class="banners">
                 <a on-last-repeat ng-repeat="article in hotArticles.Articles" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}" class="banner">
                     <div class="box">
-                        <img ng-src="{{article.SquareAvatar}}" width="275" height="275" alt="">
+                        <img ng-src="{{article.SquareAvatar | width:270:article.Avatar}}" width="275" height="275" alt="">
                         <div class="overlay">
                             <h2 class="title">{{article.Title}}</h2>
                             <div class="description" ng-bind-html="article.Description | html"></div>
