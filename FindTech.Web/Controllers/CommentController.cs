@@ -51,13 +51,12 @@ namespace FindTech.Web.Controllers
             return Json(comments, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Create(string model)
+        public ActionResult Create(CommentModel newComment)
         {
-            var commentViewModel = JsonConvert.DeserializeObject<CommentModel>(model);
-                var comment = Mapper.Map<Comment>(commentViewModel);
+                var comment = Mapper.Map<Comment>(newComment);
                 commentService.Insert(comment);
                 unitOfWork.SaveChanges();
-                return Json(commentViewModel, JsonRequestBehavior.AllowGet);
+                return Json(comment, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Update(string comment)
         {

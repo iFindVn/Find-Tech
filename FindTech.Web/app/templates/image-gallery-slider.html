@@ -12,10 +12,10 @@
     </div>
     <!-- Slides Container -->
     <div u="slides" style="cursor: move; position: absolute; left: 0px; top: 0px; width: 870px;
-                    height: 500px; overflow: hidden;" ng-repeat="image in model.Images">
-        <div>
-            <img ng-src="image.Url" style="position: absolute; top: 0; left: 0; width: 870px; height: 400px;" />
-            <img u="thumb" ng-src="image.Thumbnail" />
+                    height: 500px; overflow: hidden;">
+        <div ng-repeat="image in model.Images" on-last-repeat>
+            <img ng-src="{{image.Url}}" style="position: absolute; top: 0; left: 0; width: 870px; height: 400px;" />
+            <img u="thumb" ng-src="{{image.Thumbnail}}" />
         </div>
     </div>
     <!-- Arrow Navigator Skin Begin -->
