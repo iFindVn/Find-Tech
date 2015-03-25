@@ -110,10 +110,10 @@
                                         <div class="meta">
                                             <strong>{{comment.CommentatorEmail}}</strong>,
                                             <span class="time">03.11.2013, 10:45:</span>
-                                            <span class="like-count">{{comment.LikeCount}} <i class="fa fa-thumbs-up"></i></span>
+                                            <span ng-class="'like-count ' + getLikedClass(comment.CommentId)">{{comment.LikeCount}} <i class="fa fa-thumbs-up"></i></span>
                                             <span class="button-list">
                                                 <a href="#" class="btn btn-xs" ng-click="openReplyForm(comment, $event, $index)"><i class="fa fa-mail-reply"></i> Trả lời</a>
-                                                <a href="#" class="btn btn-xs"><i class="fa fa-thumbs-up"></i> Thích</a>
+                                                <a href="#" class="btn btn-xs" ng-click="submitCommentLike(comment)" ng-hide="checkLiked(comment.CommentId)"><i class="fa fa-thumbs-up"></i> Thích</a>
                                                 <a href="#" class="btn btn-xs"><i class="fa fa-bell"></i> Báo xấu</a>
                                             </span>
                                         </div>
@@ -128,9 +128,9 @@
                                                 <div class="meta">
                                                     <strong>{{reply.CommentatorEmail}}</strong>,
                                                     <span class="time">03.11.2013, 10:45:</span>
-                                                    <span class="like-count">{{reply.LikeCount}} <i class="fa fa-thumbs-up"></i></span>
+                                                    <span ng-class="'like-count ' + getLikedClass(reply.CommentId)">{{reply.LikeCount}} <i class="fa fa-thumbs-up"></i></span>
                                                     <span class="button-list">
-                                                        <a href="#" class="btn btn-xs"><i class="fa fa-thumbs-up"></i> Thích</a>
+                                                        <a href="#" class="btn btn-xs" ng-click="submitCommentLike(reply)" ng-hide="checkLiked(reply.CommentId)"><i class="fa fa-thumbs-up"></i> Thích</a>
                                                         <a href="#" class="btn btn-xs"><i class="fa fa-bell"></i> Báo xấu</a>
                                                     </span>
                                                 </div>

@@ -12230,9 +12230,12 @@ border-bottom: 1px solid #e1e1e1;
 }
 
 ul.commentlist li .meta .like-count {
-    color: #00ade0;
     font-size: 13px;
     padding-left: 10px;
+}
+
+ul.commentlist li .meta .active{
+    color: #00ade0;
 }
 
 ul.commentlist li .meta .button-list {

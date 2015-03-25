@@ -6,7 +6,7 @@ using System.Web;
 
 namespace FindTech.Web.Models
 {
-    public class CommentModel
+    public class CommentViewModel
     {
         public int CommentId { get; set; }
         public string CommentatorEmail { get; set; }
@@ -15,6 +15,6 @@ namespace FindTech.Web.Models
         public int ObjectId { get; set; }
         public ObjectType ObjectType { get; set; }
         public DateTime? CreatedDate { get; set; }
-        public IEnumerable<CommentModel> Replies { get; set; } 
+        public IEnumerable<CommentViewModel> Replies { get; set; } 
     }
 }

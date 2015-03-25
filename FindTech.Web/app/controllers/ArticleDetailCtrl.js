@@ -40,6 +40,7 @@
                     $scope.commentManager.commentCount = commentData.commentCount;
                     $scope.commentManager.skip = $scope.commentManager.skip + $scope.commentManager.take;
                 });
+                $scope.likedCommentIds = data.likedCommentIds;
 
                 $scope.newComment = {
                     ObjectType: 1,
@@ -104,6 +105,21 @@
                     $scope.commentManager.comments[$index].ReplyCount = replyData.commentCount;
                     $scope.loadMoreReplyLoading[$index] = false;
                 });
+            };
+
+            $scope.submitCommentLike = function (comment) {
+                $http.post('/Like/Create', { ObjectId: comment.CommentId, ObjectType: 3 }).success(function (data) {
+                    comment.LikeCount = data.likeCount;
+                    $scope.likedCommentIds.push(comment.CommentId);
+                });
+            };
+
+            $scope.checkLiked = function (commentId) {
+                return $scope.likedCommentIds.indexOf(commentId) > -1;
+            };
+            
+            $scope.getLikedClass = function (commentId) {
+                return $scope.likedCommentIds.indexOf(commentId) > -1 ? 'active' : '';
             };
 
             $scope.$on('onRepeatLast', function (scope, element, attrs) {

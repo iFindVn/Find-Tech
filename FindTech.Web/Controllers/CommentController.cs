@@ -16,13 +16,11 @@ namespace FindTech.Web.Controllers
     public class CommentController : Controller
     {
         private ICommentService commentService { get; set; }
-        private ILikeService likeService { get; set; }
         private IUnitOfWorkAsync unitOfWork { get; set; }
 
-        public CommentController(ICommentService commentService, ILikeService likeService, IUnitOfWorkAsync unitOfWork)
+        public CommentController(ICommentService commentService, IUnitOfWorkAsync unitOfWork)
         {
             this.commentService = commentService;
-            this.likeService = likeService;
             this.unitOfWork = unitOfWork;
         }
         // GET: Comment
@@ -53,13 +51,13 @@ namespace FindTech.Web.Controllers
             return Json(new { comments, commentCount }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Create(CommentModel newComment)
+        public ActionResult Create(CommentViewModel newComment)
         {
             var comment = Mapper.Map<Comment>(newComment);
             commentService.Insert(comment);
             unitOfWork.SaveChanges();
             var commentCount = commentService.GetCommentCount(newComment.ObjectId, newComment.ObjectType);
-            return Json(new { comment = Mapper.Map<CommentModel>(comment), commentCount }, JsonRequestBehavior.AllowGet);
+            return Json(new { comment = Mapper.Map<CommentViewModel>(comment), commentCount }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Update(string comment)
         {

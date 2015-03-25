@@ -99,9 +99,14 @@ namespace FindTech.Web.Controllers
                 SkipArticleIds = article.ArticleId.ToString()
             }).Select(Mapper.Map<ArticleViewModel>);
 
-            var hotNewses = articleService.GetHotNewses(0, 4, article.ArticleId.ToString()).Select(Mapper.Map<ArticleViewModel>); 
+            var hotNewses = articleService.GetHotNewses(0, 4, article.ArticleId.ToString()).Select(Mapper.Map<ArticleViewModel>);
 
-            return Json(new { article = Mapper.Map<ArticleViewModel>(article), contentSectionPageManager, sameCategoryNewses, relatedNewses, hotNewses }, JsonRequestBehavior.AllowGet);
+            if (Session["LikedCommentIds"] == null)
+            {
+                Session["LikedCommentIds"] = new List<int>();
+            }
+            var likedCommentIds = (List<int>)Session["LikedCommentIds"];
+            return Json(new { article = Mapper.Map<ArticleViewModel>(article), contentSectionPageManager, sameCategoryNewses, relatedNewses, hotNewses, likedCommentIds }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetContentSectionPages(int articleId, int page)

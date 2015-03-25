@@ -29,7 +29,8 @@ namespace FindTech.Web.Mappers
 
             protected override void Configure()
             {
-                Mapper.CreateMap<CommentModel, Comment>();
+                Mapper.CreateMap<CommentViewModel, Comment>();
+                Mapper.CreateMap<LikeViewModel, Like>();
                 Mapper.CreateMap<ArticleGridBOViewModel, Article>()
                     .ForMember(a => a.BoxSize, o => o.MapFrom(x => x.BoxSize.BoxSizeId))
                     .ForMember(a => a.ArticleType, o => o.MapFrom(x => x.ArticleType.ArticleTypeId));
@@ -71,7 +72,8 @@ namespace FindTech.Web.Mappers
                 Mapper.CreateMap<Opinion, OpinionViewModel>()
                     .ForMember(a => a.OpinionText, o => o.ResolveUsing(x => GetOpinionText(x.OpinionLevel)))
                     .ForMember(a => a.OpinionBackground, o => o.ResolveUsing(x => GetOpinionBackground(x.OpinionLevel)));
-                Mapper.CreateMap<Comment, CommentModel>();
+                Mapper.CreateMap<Comment, CommentViewModel>();
+                Mapper.CreateMap<Like, LikeViewModel>();
                 Mapper.CreateMap<ContentSection, ContentSectionBOViewModel>();
                 Mapper.CreateMap<ArticleCategory, ArticleCategoryBOViewModel>();
                 Mapper.CreateMap<Source, SourceBOViewModel>();
