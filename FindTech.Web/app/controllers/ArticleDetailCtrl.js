@@ -11,7 +11,10 @@
             $scope.currentPage = path.split('/')[2] ? path.split('/')[2] : 1;
             $scope.article = {};
             $scope.contentSectionPageManager = {};
-            $scope.comments = {};
+            $scope.commentManager = {
+                skip: 0,
+                take: 5
+            };
             $scope.sameCategoryNewses = {
                 Title: 'Tin cùng chuyên mục',
                 TitleStyleClass: 'fa fa-folder-open background-success'
@@ -32,8 +35,10 @@
                 $scope.sameCategoryNewses.Articles = data.sameCategoryNewses;
                 $scope.relatedNewses.Articles = data.relatedNewses;
                 $scope.hotNewses.Articles = data.hotNewses;
-                $http.get('/Comment/GetComments?objectType=1&objectId=' + $scope.article.ArticleId).success(function (comments) {
-                    $scope.comments = comments;
+                $http.get('/Comment/GetComments?objectType=1&objectId=' + $scope.article.ArticleId + '&skip=' + $scope.commentManager.skip + '&take=' + $scope.commentManager.take).success(function (commentData) {
+                    $scope.commentManager.comments = commentData.comments;
+                    $scope.commentManager.commentCount = commentData.commentCount;
+                    $scope.commentManager.skip = $scope.commentManager.skip + $scope.commentManager.take;
                 });
 
                 $scope.newComment = {
@@ -60,10 +65,11 @@
                 $scope.commentSubmitting = true;
                 $http.post('/Comment/Create', $scope.newComment).success(function (data) {
                     if ($scope.newComment.ObjectType == 1) {
-                        $scope.comments.unshift(data);
+                        $scope.commentManager.comments.unshift(data.comment);
                     } else {
-                        $scope.comments[$scope.CommentObjectIndex].Replies.unshift(data);
+                        $scope.commentManager.comments[$scope.CommentObjectIndex].Replies.unshift(data);
                     }
+                    $scope.commentManager.commentCount = data.commentCount;
                     $scope.cancelComment();
                     $scope.commentSubmitting = false;
                 });
@@ -77,7 +83,29 @@
                 };
                 $('#rootCommentList').after($('#commentForm'));
             };
-            
+
+            $scope.loadMoreComments = function (articleId) {
+                $scope.loadMoreCommentLoading = true;
+                $http.get('/Comment/GetComments?objectType=1&objectId=' + articleId + '&skip=' + $scope.commentManager.skip + '&take=' + $scope.commentManager.take).success(function (commentData) {
+                    $scope.commentManager.comments = $scope.commentManager.comments.concat(commentData.comments);
+                    $scope.commentManager.commentCount = commentData.commentCount;
+                    $scope.commentManager.skip = $scope.commentManager.skip + $scope.commentManager.take;
+                    $scope.loadMoreCommentLoading = false;
+                });
+            };
+
+            $scope.loadMoreReplyLoading = [];
+            $scope.loadMoreReplies = function (commentId, $index) {
+                $scope.loadMoreReplyLoading[$index] = true;
+                $scope.commentManager.comments[$index].skip = $scope.commentManager.comments[$index].skip || 2;
+                $scope.commentManager.comments[$index].take = $scope.commentManager.comments[$index].take || 5;
+                $http.get('/Comment/GetComments?objectType=3&objectId=' + commentId + '&skip=' + $scope.commentManager.comments[$index].skip + '&take=' + $scope.commentManager.comments[$index].take).success(function (replyData) {
+                    $scope.commentManager.comments[$index].Replies = $scope.commentManager.comments[$index].Replies.concat(replyData.comments);
+                    $scope.commentManager.comments[$index].ReplyCount = replyData.commentCount;
+                    $scope.loadMoreReplyLoading[$index] = false;
+                });
+            };
+
             $scope.$on('onRepeatLast', function (scope, element, attrs) {
                 $scope.ScaleSlider();
             });

@@ -20,6 +20,12 @@ namespace FindTech.Repository.Repositories
                 .AsEnumerable();
         }
 
+        public static int GetCommentCount(this IRepositoryAsync<Comment> commentRepository, int objectId, ObjectType objectType)
+        {
+            return commentRepository.Queryable()
+                .Count(a => a.ObjectId == objectId && a.ObjectType == objectType);
+        }
+
         public static IEnumerable<Comment> GetReplies(this IRepositoryAsync<Comment> commentRepository, int commentId, int skip = 0, int take = 2)
         {
             return commentRepository.Queryable()

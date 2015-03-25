@@ -102,9 +102,9 @@
                                     </div>
                             </article><!-- .post -->
                             <mini-slider-box model="relatedNewses"></mini-slider-box>
-                            <h4 class="title slim">{{comments.length}} Bình luận</h4>
-                            <ul id="rootCommentList" class="commentlist" ng-if="comments.length > 0">
-                                <li ng-repeat="comment in comments">
+                            <h4 class="title slim">{{commentManager.commentCount}} Bình luận</h4>
+                            <ul id="rootCommentList" class="commentlist" ng-if="commentManager.comments.length > 0">
+                                <li ng-repeat="comment in commentManager.comments">
                                     <div class="comment">
                                         <img class="avatar" width="60" height="60" src="/UIFramework/Progressive/img/favicon.ico" alt="">
                                         <div class="meta">
@@ -139,15 +139,15 @@
                                                 </p>
                                             </div>
                                         </li>
-                                        <li class="text-right">
-                                            <button ladda="loadMoreReplyLoading" ng-click="loadMoreComments()" data-style="zoom-out" class="btn btn-xs load-more unclicked">
+                                        <li class="text-right" ng-show="comment.Replies.length < comment.ReplyCount">
+                                            <button ladda="loadMoreReplyLoading[$index]" ng-click="loadMoreReplies(comment.CommentId, $index)" data-style="zoom-out" class="btn btn-xs load-more unclicked">
                                                 Xem thêm
                                             </button>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="text-center">
-                                    <button ladda="loadMoreCommentLoading" ng-click="loadMoreComments()" data-style="zoom-out" class="btn btn-sm load-more unclicked">
+                                <li class="text-center" ng-show="commentManager.comments.length < commentManager.commentCount">
+                                    <button ladda="loadMoreCommentLoading" ng-click="loadMoreComments(article.ArticleId)" data-style="zoom-out" class="btn btn-sm load-more unclicked">
                                         Xem thêm
                                     </button>
                                 </li>

@@ -13,8 +13,9 @@ namespace FindTech.Entities.StoredProcedures
         #region Article Stored Procedures
         IEnumerable<SearchArticlesResult> SearchArticles(string keyword, string orderString = "");
 
-        IEnumerable<ArticleResult> GetListOfArticles(string tags, string categories, ArticleType articleType,
-            string whereClauseMore, string orderString = "", int skip = 0, int take = 10);
+        IEnumerable<ArticleResult> GetListOfArticles(GetListOfArticlesParameters getListOfArticlesParameters);
+
+        IEnumerable<CommentResult> GetListOfComments(int objectId, ObjectType objectType, int skip, int take, ref int commentCount);
 
         #endregion
     }

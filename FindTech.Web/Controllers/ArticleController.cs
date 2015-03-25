@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using FindTech.Entities.Models;
 using FindTech.Entities.Models.Enums;
+using FindTech.Entities.StoredProcedures.Models;
 using FindTech.Services;
 using FindTech.Web.Models;
 using FindTech.Web.Models.Enums;
@@ -74,12 +75,31 @@ namespace FindTech.Web.Controllers
                     nextPage = new ContentSectionPageViewModel(),
                     minPageNumber = 0
                 };
+            var sameCategoryNewses = articleService.GetListOfArticles(new GetListOfArticlesParameters
+            {
+                ArticleType = ArticleType.News,
+                Categories = article.ArticleCategory.SeoName,
+                Tags = "",
+                OrderString = "",
+                Skip = 0,
+                Take = 4,
+                WhereClauseMore = "",
+                SkipArticleIds = article.ArticleId.ToString()
+            }).Select(Mapper.Map<ArticleViewModel>);
 
-            var sameCategoryNewses = articleService.GetListOfArticles(article.ArticleCategory.SeoName, "", ArticleType.News, "", "", 0, 4).Select(Mapper.Map<ArticleViewModel>);
+            var relatedNewses = articleService.GetListOfArticles(new GetListOfArticlesParameters
+            {
+                ArticleType = ArticleType.News,
+                Categories = "",
+                Tags = article.Tags,
+                OrderString = "",
+                Skip = 0,
+                Take = 10,
+                WhereClauseMore = "",
+                SkipArticleIds = article.ArticleId.ToString()
+            }).Select(Mapper.Map<ArticleViewModel>);
 
-            var relatedNewses = articleService.GetListOfArticles(article.Tags, "", ArticleType.News, "", "", 0, 10).Select(Mapper.Map<ArticleViewModel>);
-
-            var hotNewses = articleService.GetHotNewses(0, 4).Select(Mapper.Map<ArticleViewModel>); 
+            var hotNewses = articleService.GetHotNewses(0, 4, article.ArticleId.ToString()).Select(Mapper.Map<ArticleViewModel>); 
 
             return Json(new { article = Mapper.Map<ArticleViewModel>(article), contentSectionPageManager, sameCategoryNewses, relatedNewses, hotNewses }, JsonRequestBehavior.AllowGet);
         }
@@ -166,9 +186,19 @@ namespace FindTech.Web.Controllers
                      }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetArticleByCatogories(string categories, ArticleType articleType, int skip, int take)
+        public ActionResult GetArticleByCatogories(string categories, ArticleType articleType, string articleId, int skip, int take)
         {
-            var articles = articleService.GetListOfArticles(categories, "", articleType, "", "", skip, take);
+            var articles = articleService.GetListOfArticles(new GetListOfArticlesParameters
+            {
+                ArticleType = articleType,
+                Categories = categories,
+                Tags = "",
+                OrderString = "",
+                Skip = skip,
+                Take = take,
+                WhereClauseMore = "",
+                SkipArticleIds = articleId
+            });
             return
                  Json(
                      new ArticleListViewModel
@@ -179,9 +209,19 @@ namespace FindTech.Web.Controllers
                      }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetArticleByTags(string tags, ArticleType articleType, int skip, int take)
+        public ActionResult GetArticleByTags(string tags, ArticleType articleType, string articleId, int skip, int take)
         {
-            var articles = articleService.GetListOfArticles(tags, "", articleType, "", "", skip, take);
+            var articles = articleService.GetListOfArticles(new GetListOfArticlesParameters
+            {
+                ArticleType = articleType,
+                Categories = "",
+                Tags = tags,
+                OrderString = "",
+                Skip = skip,
+                Take = take,
+                WhereClauseMore = "",
+                SkipArticleIds = articleId
+            });
             return
                  Json(
                      new ArticleListViewModel

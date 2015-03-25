@@ -13,15 +13,14 @@ namespace FindTech.Services
 {
     public interface IArticleService : IService<Article>
     {
-        IEnumerable<ArticleResult> GetHotArticles(int skip = 0, int take = 10);
-        IEnumerable<ArticleResult> GetLatestReviews(int skip = 0, int take = 20);
-        IEnumerable<ArticleResult> GetHotReviews(int skip = 0, int take = 20);
-        IEnumerable<ArticleResult> GetLatestNewses(int skip = 0, int take = 20);
+        IEnumerable<ArticleResult> GetHotArticles(int skip = 0, int take = 10, string skipArticleIds = "");
+        IEnumerable<ArticleResult> GetLatestReviews(int skip = 0, int take = 20, string skipArticleIds = "");
+        IEnumerable<ArticleResult> GetHotReviews(int skip = 0, int take = 20, string skipArticleIds = "");
+        IEnumerable<ArticleResult> GetLatestNewses(int skip = 0, int take = 20, string skipArticleIds = "");
         Article GetArticle(int articleId);
         Article GetArticleDetail(string seoTitle);
-        IEnumerable<ArticleResult> GetListOfArticles(string tags, string categories, ArticleType articleType,
-            string whereClauseMore, string orderString = "", int skip = 0, int take = 10);
-        IEnumerable<ArticleResult> GetHotNewses(int skip = 0, int take = 10);
+        IEnumerable<ArticleResult> GetListOfArticles(GetListOfArticlesParameters getListOfArticlesParameters);
+        IEnumerable<ArticleResult> GetHotNewses(int skip = 0, int take = 10, string skipArticleIds = "");
     }
 
     public class ArticleService : Service<Article>, IArticleService
@@ -35,34 +34,84 @@ namespace FindTech.Services
             _findTechStoredProcedures = findTechStoredProcedures;
         }
 
-        public IEnumerable<ArticleResult> GetHotArticles(int skip = 0, int take = 10)
+        public IEnumerable<ArticleResult> GetHotArticles(int skip = 0, int take = 10, string skipArticleIds = "")
         {
-            return _findTechStoredProcedures.GetListOfArticles("", "", ArticleType.All, " a.IsHot = 1 ", "",
-                skip, take);
+            var getListOfArticlesParameters = new GetListOfArticlesParameters
+            {
+                ArticleType = ArticleType.All,
+                Categories = "",
+                Tags = "",
+                OrderString = "",
+                Skip = skip,
+                Take = take,
+                WhereClauseMore = " a.IsHot = 1 ",
+                SkipArticleIds = skipArticleIds
+            };
+            return _findTechStoredProcedures.GetListOfArticles(getListOfArticlesParameters);
         }
 
-        public IEnumerable<ArticleResult> GetHotNewses(int skip = 0, int take = 10)
+        public IEnumerable<ArticleResult> GetHotNewses(int skip = 0, int take = 10, string skipArticleIds = "")
         {
-            return _findTechStoredProcedures.GetListOfArticles("", "", ArticleType.News, " a.IsHot = 1 ", "",
-                skip, take);
+            var getListOfArticlesParameters = new GetListOfArticlesParameters
+            {
+                ArticleType = ArticleType.News,
+                Categories = "",
+                Tags = "",
+                OrderString = "",
+                Skip = skip,
+                Take = take,
+                WhereClauseMore = " a.IsHot = 1 ",
+                SkipArticleIds = skipArticleIds
+            };
+            return _findTechStoredProcedures.GetListOfArticles(getListOfArticlesParameters);
         }
 
-        public IEnumerable<ArticleResult> GetHotReviews(int skip = 0, int take = 20)
+        public IEnumerable<ArticleResult> GetHotReviews(int skip = 0, int take = 20, string skipArticleIds = "")
         {
-            return _findTechStoredProcedures.GetListOfArticles("", "", ArticleType.News, " a.IsHot = 1 ", "",
-                skip, take);
+            var getListOfArticlesParameters = new GetListOfArticlesParameters
+            {
+                ArticleType = ArticleType.Reviews,
+                Categories = "",
+                Tags = "",
+                OrderString = "",
+                Skip = skip,
+                Take = take,
+                WhereClauseMore = " a.IsHot = 1 ",
+                SkipArticleIds = skipArticleIds
+            };
+            return _findTechStoredProcedures.GetListOfArticles(getListOfArticlesParameters);
         }
 
-        public IEnumerable<ArticleResult> GetLatestReviews(int skip = 0, int take = 20)
+        public IEnumerable<ArticleResult> GetLatestReviews(int skip = 0, int take = 20, string skipArticleIds = "")
         {
-            return _findTechStoredProcedures.GetListOfArticles("", "", ArticleType.Reviews, "", "",
-                skip, take);
+            var getListOfArticlesParameters = new GetListOfArticlesParameters
+            {
+                ArticleType = ArticleType.Reviews,
+                Categories = "",
+                Tags = "",
+                OrderString = "",
+                Skip = skip,
+                Take = take,
+                WhereClauseMore = "",
+                SkipArticleIds = skipArticleIds
+            };
+            return _findTechStoredProcedures.GetListOfArticles(getListOfArticlesParameters);
         }
 
-        public IEnumerable<ArticleResult> GetLatestNewses(int skip = 0, int take = 20)
+        public IEnumerable<ArticleResult> GetLatestNewses(int skip = 0, int take = 20, string skipArticleIds = "")
         {
-            return _findTechStoredProcedures.GetListOfArticles("", "", ArticleType.News, "", "",
-                skip, take);
+            var getListOfArticlesParameters = new GetListOfArticlesParameters
+            {
+                ArticleType = ArticleType.News,
+                Categories = "",
+                Tags = "",
+                OrderString = "",
+                Skip = skip,
+                Take = take,
+                WhereClauseMore = "",
+                SkipArticleIds = skipArticleIds
+            };
+            return _findTechStoredProcedures.GetListOfArticles(getListOfArticlesParameters);
         }
 
         public Article GetArticle(int articleId)
@@ -75,11 +124,9 @@ namespace FindTech.Services
             return _articleRepository.GetArticleDetail(seoTitle);
         }
 
-        public IEnumerable<ArticleResult> GetListOfArticles(string tags, string categories, ArticleType articleType,
-            string whereClauseMore, string orderString = "", int skip = 0, int take = 10)
+        public IEnumerable<ArticleResult> GetListOfArticles(GetListOfArticlesParameters getListOfArticlesParameters)
         {
-            return _findTechStoredProcedures.GetListOfArticles(tags, categories, articleType, whereClauseMore,
-                orderString, skip, take);
+            return _findTechStoredProcedures.GetListOfArticles(getListOfArticlesParameters);
         }
     }
 }

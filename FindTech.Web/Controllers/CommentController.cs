@@ -31,32 +31,35 @@ namespace FindTech.Web.Controllers
             return View();
         }
 
-        public ActionResult GetComments(ObjectType objectType, int objectId)
+        public ActionResult GetComments(ObjectType objectType, int objectId, int skip, int take)
         {
-            var comments =
-                commentService.GetComments(objectId, objectType).ToList().Select(a => new CommentModel
-                    {
-                        CommentId = a.CommentId,
-                        CommentatorEmail = a.CommentatorEmail,
-                        Content = a.Content,
-                        CreatedDate = a.CreatedDate,
-                        LikeCount = likeService.GetLikeCount(a.CommentId, ObjectType.Comment),
-                        ObjectId = a.ObjectId,
-                        ObjectType = a.ObjectType,
-                        Replies =
-                            commentService.GetReplies(a.CommentId)
-                                .Select(Mapper.Map<CommentModel>)
-                    });
+            //var comments =
+            //    commentService.GetComments(objectId, objectType).ToList().Select(a => new CommentModel
+            //        {
+            //            CommentId = a.CommentId,
+            //            CommentatorEmail = a.CommentatorEmail,
+            //            Content = a.Content,
+            //            CreatedDate = a.CreatedDate,
+            //            LikeCount = likeService.GetLikeCount(a.CommentId, ObjectType.Comment),
+            //            ObjectId = a.ObjectId,
+            //            ObjectType = a.ObjectType,
+            //            Replies =
+            //                commentService.GetReplies(a.CommentId)
+            //                    .Select(Mapper.Map<CommentModel>)
+            //        });
+            var commentCount = 0;
+            var comments = commentService.GetListOfComments(objectId, objectType, skip, take, ref commentCount);
 
-            return Json(comments, JsonRequestBehavior.AllowGet);
+            return Json(new { comments, commentCount }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult Create(CommentModel newComment)
         {
-                var comment = Mapper.Map<Comment>(newComment);
-                commentService.Insert(comment);
-                unitOfWork.SaveChanges();
-                return Json(comment, JsonRequestBehavior.AllowGet);
+            var comment = Mapper.Map<Comment>(newComment);
+            commentService.Insert(comment);
+            unitOfWork.SaveChanges();
+            var commentCount = commentService.GetCommentCount(newComment.ObjectId, newComment.ObjectType);
+            return Json(new { comment = Mapper.Map<CommentModel>(comment), commentCount }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Update(string comment)
         {

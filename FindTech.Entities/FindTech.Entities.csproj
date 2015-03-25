@@ -103,6 +103,8 @@
     <Compile Include="StoredProcedures\FindTechStoredProcudures.cs" />
     <Compile Include="StoredProcedures\IFindTechStoredProcedures.cs" />
     <Compile Include="StoredProcedures\Models\ArticleResult.cs" />
+    <Compile Include="StoredProcedures\Models\CommentResult.cs" />
+    <Compile Include="StoredProcedures\Models\GetListOfArticlesParameters.cs" />
     <Compile Include="StoredProcedures\Models\SearchArticlesResult.cs" />
   </ItemGroup>
   <ItemGroup>

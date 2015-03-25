@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Linq;
 using AutoMapper;
 using FindTech.Entities.Models.Enums;
+using FindTech.Entities.StoredProcedures.Models;
 using FindTech.Services;
 using FindTech.Web.Models;
 using Repository.Pattern.UnitOfWork;
@@ -39,10 +40,50 @@ namespace FindTech.Web.Controllers
             var hotArticles = articleService.GetHotArticles(0, 10).Select(Mapper.Map<ArticleViewModel>);
             var latestReviews = articleService.GetLatestReviews(0, 10).Select(Mapper.Map<ArticleViewModel>);
             var latestNewses = articleService.GetLatestNewses(0, 20).Select(Mapper.Map<ArticleViewModel>);
-            var trickAndTipArticles = articleService.GetListOfArticles("", "thu-thuat-va-meo-vat", ArticleType.All, "", "", 0, 10).Select(Mapper.Map<ArticleViewModel>);
-            var appAndGameArticles = articleService.GetListOfArticles("", "ung-dung-va-game", ArticleType.All, "", "", 0, 10).Select(Mapper.Map<ArticleViewModel>);
-            var productAndTechToyArticles = articleService.GetListOfArticles("", "san-pham,do-choi-cong-nghe", ArticleType.All, "", "", 0, 10).Select(Mapper.Map<ArticleViewModel>);
-            var brandAndDigiLifeArticles = articleService.GetListOfArticles("", "thuong-hieu,doi-song-so", ArticleType.All, "", "", 0, 10).Select(Mapper.Map<ArticleViewModel>);
+            var trickAndTipArticles = articleService.GetListOfArticles(new GetListOfArticlesParameters
+            {
+                ArticleType = ArticleType.All,
+                Categories = "thu-thuat-va-meo-vat",
+                Tags = "",
+                OrderString = "",
+                Skip = 0,
+                Take = 10,
+                WhereClauseMore = "",
+                SkipArticleIds = ""
+            }).Select(Mapper.Map<ArticleViewModel>);
+            var appAndGameArticles = articleService.GetListOfArticles(new GetListOfArticlesParameters
+            {
+                ArticleType = ArticleType.All,
+                Categories = "ung-dung-va-game",
+                Tags = "",
+                OrderString = "",
+                Skip = 0,
+                Take = 10,
+                WhereClauseMore = "",
+                SkipArticleIds = ""
+            }).Select(Mapper.Map<ArticleViewModel>);
+            var productAndTechToyArticles = articleService.GetListOfArticles(new GetListOfArticlesParameters
+            {
+                ArticleType = ArticleType.All,
+                Categories = "san-pham,do-choi-cong-nghe",
+                Tags = "",
+                OrderString = "",
+                Skip = 0,
+                Take = 10,
+                WhereClauseMore = "",
+                SkipArticleIds = ""
+            }).Select(Mapper.Map<ArticleViewModel>);
+            var brandAndDigiLifeArticles = articleService.GetListOfArticles(new GetListOfArticlesParameters
+            {
+                ArticleType = ArticleType.All,
+                Categories = "thuong-hieu,doi-song-so",
+                Tags = "",
+                OrderString = "",
+                Skip = 0,
+                Take = 10,
+                WhereClauseMore = "",
+                SkipArticleIds = ""
+            }).Select(Mapper.Map<ArticleViewModel>);
             return Json(new { hotArticles, latestReviews, trickAndTipArticles, appAndGameArticles, productAndTechToyArticles, brandAndDigiLifeArticles, latestNewses }, JsonRequestBehavior.AllowGet);
         }
 
