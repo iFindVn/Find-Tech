@@ -6,9 +6,6 @@
             };
 
             $scope.absUrl = $location.absUrl();
-            var path = $scope.absUrl.split('/bai-viet/')[1];
-            $scope.seoTitle = path.split('/')[1];
-            $scope.currentPage = path.split('/')[2] ? path.split('/')[2] : 1;
             $scope.article = {};
             $scope.contentSectionPageManager = {};
             $scope.commentManager = {
@@ -26,27 +23,25 @@
             $scope.relatedNewses = {
                 Title: 'Tin liên quan'
             };
-            $http.get('/Article/GetArticleDetail?seoTitle=' + $scope.seoTitle + '&page=' + $scope.currentPage).success(function (data) {
-                $scope.article = data.article;
-                Page.setTitle($scope.article.Title);
-                Page.setDescription($scope.article.Description);
 
-                $scope.contentSectionPageManager = data.contentSectionPageManager;
-                $scope.sameCategoryNewses.Articles = data.sameCategoryNewses;
-                $scope.relatedNewses.Articles = data.relatedNewses;
-                $scope.hotNewses.Articles = data.hotNewses;
+            $scope.init = function(article, contentSectionPageManager, sameCategoryNewses, relatedNewses, hotNewses, likedCommentIds) {
+                $scope.article = article;
+                $scope.contentSectionPageManager = contentSectionPageManager;
+                $scope.sameCategoryNewses.Articles = sameCategoryNewses;
+                $scope.relatedNewses.Articles = relatedNewses;
+                $scope.hotNewses.Articles = hotNewses;
+                $scope.likedCommentIds = likedCommentIds;
                 $http.get('/Comment/GetComments?objectType=1&objectId=' + $scope.article.ArticleId + '&skip=' + $scope.commentManager.skip + '&take=' + $scope.commentManager.take).success(function (commentData) {
                     $scope.commentManager.comments = commentData.comments;
                     $scope.commentManager.commentCount = commentData.commentCount;
                     $scope.commentManager.skip = $scope.commentManager.skip + $scope.commentManager.take;
                 });
-                $scope.likedCommentIds = data.likedCommentIds;
 
                 $scope.newComment = {
                     ObjectType: 1,
                     ObjectId: $scope.article.ArticleId
                 };
-            });
+            };
 
             $scope.rateOpinion = function (articleId, opinionLevel) {
                 $http.post('/Article/RateOpinion', { articleId: articleId, opinionLevel: opinionLevel }).success(function(data) {

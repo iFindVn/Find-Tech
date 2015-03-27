@@ -28,15 +28,16 @@
             $scope.trickAndTipArticles = {
                 Title: 'Thủ thuật, Mẹo vặt'
             };
-            $http.get('/Home/Init').success(function (data) {
-                $scope.hotArticles.Articles = data.hotArticles;
-                $scope.latestReviews.Articles = data.latestReviews;
-                $scope.appAndGameArticles.Articles = data.appAndGameArticles;
-                $scope.productAndTechToyArticles.Articles = data.productAndTechToyArticles;
-                $scope.brandAndDigiLifeArticles.Articles = data.brandAndDigiLifeArticles;
-                $scope.trickAndTipArticles.Articles = data.trickAndTipArticles;
-                $scope.latestNewses.Articles = data.latestNewses;
-            });
+
+            $scope.init = function (hotArticles, latestReviews, trickAndTipArticles, appAndGameArticles, productAndTechToyArticles, brandAndDigiLifeArticles, latestNewses) {
+                $scope.hotArticles.Articles = hotArticles;
+                $scope.latestReviews.Articles = latestReviews;
+                $scope.appAndGameArticles.Articles = appAndGameArticles;
+                $scope.productAndTechToyArticles.Articles = productAndTechToyArticles;
+                $scope.brandAndDigiLifeArticles.Articles = brandAndDigiLifeArticles;
+                $scope.trickAndTipArticles.Articles = trickAndTipArticles;
+                $scope.latestNewses.Articles = latestNewses;
+            };
 
             $scope.loadMoreNewses = function () {
                 $scope.loadMoreLoading = true;

@@ -10,6 +10,7 @@ using FindTech.Entities.StoredProcedures.Models;
 using FindTech.Services;
 using FindTech.Web.Models;
 using FindTech.Web.Models.Enums;
+using Newtonsoft.Json;
 using Repository.Pattern.UnitOfWork;
 
 namespace FindTech.Web.Controllers
@@ -40,13 +41,6 @@ namespace FindTech.Web.Controllers
 
         public ActionResult Detail(string seoTitle, int page = 1)
         {
-            ViewBag.CurrentPage = page;
-            ViewBag.SeoTitle = seoTitle;
-            return View();
-        }
-
-        public ActionResult GetArticleDetail(string seoTitle, int page = 1)
-        {
             var article = articleService.GetArticleDetail(seoTitle);
             if (article == null) return null;
             article.ContentSections = contentSectionService.GetContentSections(article.ArticleId, page).ToList();
@@ -63,18 +57,19 @@ namespace FindTech.Web.Controllers
                                 PageNumber = (int)a.GetType().GetProperty("PageNumber").GetValue(a)
                             }).ToList();
             var contentSectionPageManager = contentSectionPages.Count > 0 ? new
-                {
-                    contentSectionPages,
-                    currentPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page),
-                    nextPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page + 1),
-                    minPageNumber = contentSectionPages.Min(a => a.PageNumber)
-                } : new
-                {
-                    contentSectionPages,
-                    currentPage = new ContentSectionPageViewModel(),
-                    nextPage = new ContentSectionPageViewModel(),
-                    minPageNumber = 0
-                };
+            {
+                contentSectionPages,
+                currentPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page),
+                nextPage = contentSectionPages.FirstOrDefault(a => a.PageNumber == page + 1),
+                minPageNumber = contentSectionPages.Min(a => a.PageNumber)
+            } : new
+            {
+                contentSectionPages,
+                currentPage = new ContentSectionPageViewModel(),
+                nextPage = new ContentSectionPageViewModel(),
+                minPageNumber = 0
+            };
+            ViewBag.ContentSectionPageManager = JsonConvert.SerializeObject(contentSectionPageManager);
             var sameCategoryNewses = articleService.GetListOfArticles(new GetListOfArticlesParameters
             {
                 ArticleType = ArticleType.News,
@@ -86,7 +81,7 @@ namespace FindTech.Web.Controllers
                 WhereClauseMore = "",
                 SkipArticleIds = article.ArticleId.ToString()
             }).Select(Mapper.Map<ArticleViewModel>);
-
+            ViewBag.SameCategoryNewses = JsonConvert.SerializeObject(sameCategoryNewses);
             var relatedNewses = articleService.GetListOfArticles(new GetListOfArticlesParameters
             {
                 ArticleType = ArticleType.News,
@@ -98,16 +93,20 @@ namespace FindTech.Web.Controllers
                 WhereClauseMore = "",
                 SkipArticleIds = article.ArticleId.ToString()
             }).Select(Mapper.Map<ArticleViewModel>);
-
+            ViewBag.RelatedNewses = JsonConvert.SerializeObject(relatedNewses);
             var hotNewses = articleService.GetHotNewses(0, 4, article.ArticleId.ToString()).Select(Mapper.Map<ArticleViewModel>);
-
+            ViewBag.HotNewses = JsonConvert.SerializeObject(hotNewses);
             if (Session["LikedCommentIds"] == null)
             {
                 Session["LikedCommentIds"] = new List<int>();
             }
             var likedCommentIds = (List<int>)Session["LikedCommentIds"];
-            return Json(new { article = Mapper.Map<ArticleViewModel>(article), contentSectionPageManager, sameCategoryNewses, relatedNewses, hotNewses, likedCommentIds }, JsonRequestBehavior.AllowGet);
+            ViewBag.LikedCommentIds = JsonConvert.SerializeObject(likedCommentIds);
+            ViewBag.Title = article.Title;
+            ViewBag.Description = article.Description;
+            return View(Mapper.Map<ArticleViewModel>(article));
         }
+
 
         public ActionResult GetContentSectionPages(int articleId, int page)
         {

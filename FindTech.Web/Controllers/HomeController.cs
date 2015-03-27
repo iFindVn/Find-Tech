@@ -7,6 +7,7 @@ using FindTech.Entities.Models.Enums;
 using FindTech.Entities.StoredProcedures.Models;
 using FindTech.Services;
 using FindTech.Web.Models;
+using Newtonsoft.Json;
 using Repository.Pattern.UnitOfWork;
 
 namespace FindTech.Web.Controllers
@@ -23,23 +24,14 @@ namespace FindTech.Web.Controllers
         }
         public ActionResult Index()
         {
-            //ViewBag.Title =
-            //    "Tìm là thấy";
-            //ViewBag.Description = "Cổng thông tin công nghệ, thiết bị di động, so sánh sản phẩm công nghệ, đánh giá smart phone, tablet,...";
-            //var hotArticles = articleService.GetHotArticles().Select(Mapper.Map<ArticleViewModel>);
-            //ViewBag.HotArticles = hotArticles;
-            //var latestReviews = articleService.GetLatestReviews().Select(Mapper.Map<ArticleViewModel>);
-            //ViewBag.LatestReviews = latestReviews;
-            //var popularReviews = articleService.GetHotReviews(0, 4).Select(Mapper.Map<ArticleViewModel>);
-            //ViewBag.PopularReviews = popularReviews;
-            return View();
-        }
-
-        public ActionResult Init()
-        {
+            ViewBag.Title = "Tìm là thấy";
+            ViewBag.Description = "Cổng thông tin công nghệ, thiết bị di động, so sánh sản phẩm công nghệ, đánh giá smart phone, tablet,...";
             var hotArticles = articleService.GetHotArticles(0, 10).Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.HotArticles = JsonConvert.SerializeObject(hotArticles);
             var latestReviews = articleService.GetLatestReviews(0, 10).Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.LatestReviews = JsonConvert.SerializeObject(latestReviews);
             var latestNewses = articleService.GetLatestNewses(0, 20).Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.LatestNewses = JsonConvert.SerializeObject(latestNewses);
             var trickAndTipArticles = articleService.GetListOfArticles(new GetListOfArticlesParameters
             {
                 ArticleType = ArticleType.All,
@@ -51,6 +43,7 @@ namespace FindTech.Web.Controllers
                 WhereClauseMore = "",
                 SkipArticleIds = ""
             }).Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.TrickAndTipArticles = JsonConvert.SerializeObject(trickAndTipArticles);
             var appAndGameArticles = articleService.GetListOfArticles(new GetListOfArticlesParameters
             {
                 ArticleType = ArticleType.All,
@@ -62,6 +55,7 @@ namespace FindTech.Web.Controllers
                 WhereClauseMore = "",
                 SkipArticleIds = ""
             }).Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.AppAndGameArticles = JsonConvert.SerializeObject(appAndGameArticles);
             var productAndTechToyArticles = articleService.GetListOfArticles(new GetListOfArticlesParameters
             {
                 ArticleType = ArticleType.All,
@@ -73,6 +67,7 @@ namespace FindTech.Web.Controllers
                 WhereClauseMore = "",
                 SkipArticleIds = ""
             }).Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.ProductAndTechToyArticles = JsonConvert.SerializeObject(productAndTechToyArticles);
             var brandAndDigiLifeArticles = articleService.GetListOfArticles(new GetListOfArticlesParameters
             {
                 ArticleType = ArticleType.All,
@@ -84,7 +79,14 @@ namespace FindTech.Web.Controllers
                 WhereClauseMore = "",
                 SkipArticleIds = ""
             }).Select(Mapper.Map<ArticleViewModel>);
-            return Json(new { hotArticles, latestReviews, trickAndTipArticles, appAndGameArticles, productAndTechToyArticles, brandAndDigiLifeArticles, latestNewses }, JsonRequestBehavior.AllowGet);
+            ViewBag.BrandAndDigiLifeArticles = JsonConvert.SerializeObject(brandAndDigiLifeArticles);
+            return View();
+        }
+
+        public ActionResult Init()
+        {
+            
+            return Json(new {  }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult About()

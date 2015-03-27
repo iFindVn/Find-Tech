@@ -3,12 +3,13 @@
 @using AutoMapper
 @using FindTech.Entities.Models.Enums
 @using FindTech.Web.Models
+@using Newtonsoft.Json
 @model ArticleViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Styles.Render("~/fo/article/detail/css")
-<div ng-controller="ArticleDetailCtrl">
+<div ng-controller="ArticleDetailCtrl" ng-init="init(@JsonConvert.SerializeObject(Model), @ViewBag.ContentSectionPageManager, @ViewBag.SameCategoryNewses, @ViewBag.RelatedNewses, @ViewBag.HotNewses, @ViewBag.LikedCommentIds)">
     <div class="container">
         <div class="breadcrumb-box">
             <ul class="breadcrumb">
@@ -26,21 +27,21 @@
                         <header class="page-header">
                             <div class="container-fluid">
                                 <div class="row">
-                                        <h1 class="title">{{article.Title}}</h1>
-                                        <div class="entry-meta">
-                                            <div class="posted-info"><span class="blurry-text">Đăng:</span><strong> {{article.PublishedDate | moment}}<span class="separator">|</span><span class="blurry-text">Bởi:</span> {{article.CreatedUserDisplayName}}</strong></div>
-                                            <span class="meta btn-icon tags">
-                                                <span class="blurry-text">Nhãn:</span>
-                                                <a href="#" ng-repeat="tag in article.Tags.split(',')">{{tag}}</a>
-                                            </span>
-                                                <div class="go-to-page pull-right" ng-if="contentSectionPageManager.contentSectionPages.length > 0">
-                                                    <i class="fa fa-bars"></i>Đi đến trang
-                                                    <div class="list-group">
-                                                        <span ng-repeat="contentSectionPage in contentSectionPageManager.contentSectionPages" class="list-group-item" ng-if="contentSectionPage.IsCurrentPage"><i class="fa fa-chevron-circle-right"></i>{{contentSectionPage.PageName}}</span>                                                  
-                                                        <a ng-repeat="contentSectionPage in contentSectionPageManager.contentSectionPages" ng-if="contentSectionPage.IsCurrentPage != true" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}/{{contentSectionPage.PageNumber}}" class="list-group-item"><i class="fa fa-chevron-circle-right"></i>{{contentSectionPage.PageName}}</a>                                                         
-                                                    </div>
-                                                </div>
+                                    <h1 class="title">{{article.Title}}</h1>
+                                    <div class="entry-meta">
+                                        <div class="posted-info"><span class="blurry-text">Đăng:</span><strong> {{article.PublishedDate | moment}}<span class="separator">|</span><span class="blurry-text">Bởi:</span> {{article.CreatedUserDisplayName}}</strong></div>
+                                        <span class="meta btn-icon tags">
+                                            <span class="blurry-text">Nhãn:</span>
+                                            <a href="#" ng-repeat="tag in article.Tags.split(',')">{{tag}}</a>
+                                        </span>
+                                        <div class="go-to-page pull-right" ng-if="contentSectionPageManager.contentSectionPages.length > 0">
+                                            <i class="fa fa-bars"></i>Đi đến trang
+                                            <div class="list-group">
+                                                <span ng-repeat="contentSectionPage in contentSectionPageManager.contentSectionPages" class="list-group-item" ng-if="contentSectionPage.IsCurrentPage"><i class="fa fa-chevron-circle-right"></i>{{contentSectionPage.PageName}}</span>
+                                                <a ng-repeat="contentSectionPage in contentSectionPageManager.contentSectionPages" ng-if="contentSectionPage.IsCurrentPage != true" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}/{{contentSectionPage.PageNumber}}" class="list-group-item"><i class="fa fa-chevron-circle-right"></i>{{contentSectionPage.PageName}}</a>
+                                            </div>
                                         </div>
+                                    </div>
                                 </div>
                             </div>
                         </header>
@@ -55,26 +56,26 @@
                                         <image-gallery-slider ng-if="contentSection.Images.length > 0" model="contentSection"></image-gallery-slider>
                                     </section>
                                 </div>
-                                    <div class="article-paging" ng-if="contentSectionPageManager.contentSectionPages.length > 0">
-                                        
-                                            <a ng-if="contentSectionPageManager.nextPage != null" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}/{{contentSectionPageManager.nextPage.PageNumber}}" class="next-page"><strong>Trang kế</strong> <i class="fa fa-chevron-right"></i> {{contentSectionPageManager.nextPage.PageName}}</a>
-                                        
-                                        <div class="pagination-box pull-right">
-                                            <ul class="pagination">
-                                                @*<li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>*@
-                                               
-                                                <li ng-repeat="contentSectionPage in contentSectionPageManager.contentSectionPages" ng-class="{active: contentSectionPage.IsCurrentPage}">
+                                <div class="article-paging" ng-if="contentSectionPageManager.contentSectionPages.length > 0">
 
-                                                    <span ng-if="contentSectionPage.PageNumber == contentSectionPageManager.currentPage.PageNumber">{{contentSectionPage.PageNumber}}</span>
+                                    <a ng-if="contentSectionPageManager.nextPage != null" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}/{{contentSectionPageManager.nextPage.PageNumber}}" class="next-page"><strong>Trang kế</strong> <i class="fa fa-chevron-right"></i> {{contentSectionPageManager.nextPage.PageName}}</a>
 
-                                                    <a ng-if="contentSectionPage.PageNumber != contentSectionPageManager.currentPage.PageNumber" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}/{{contentSectionPage.PageNumber}}">{{contentSectionPage.PageNumber}}</a>
+                                    <div class="pagination-box pull-right">
+                                        <ul class="pagination">
+                                            @*<li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>*@
 
-                                                </li>
-                                                
-                                                @*<li><a href="#"><i class="fa fa-angle-right"></i></a></li>*@
-                                            </ul>
-                                        </div>
+                                            <li ng-repeat="contentSectionPage in contentSectionPageManager.contentSectionPages" ng-class="{active: contentSectionPage.IsCurrentPage}">
+
+                                                <span ng-if="contentSectionPage.PageNumber == contentSectionPageManager.currentPage.PageNumber">{{contentSectionPage.PageNumber}}</span>
+
+                                                <a ng-if="contentSectionPage.PageNumber != contentSectionPageManager.currentPage.PageNumber" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}/{{contentSectionPage.PageNumber}}">{{contentSectionPage.PageNumber}}</a>
+
+                                            </li>
+
+                                            @*<li><a href="#"><i class="fa fa-angle-right"></i></a></li>*@
+                                        </ul>
                                     </div>
+                                </div>
                                 <div class="article-footer">
                                     <div class="opinion col-md-7 col-sm-12">
                                         <span class="title">Đánh giá bài viết: </span>
@@ -99,7 +100,7 @@
                                     <div class="no-padding col-md-5 col-sm-12">
                                         <div class="addthis_native_toolbox no-margin pull-right"></div>
                                     </div>
-                                    </div>
+                                </div>
                             </article><!-- .post -->
                             <mini-slider-box model="relatedNewses"></mini-slider-box>
                             <h4 class="title slim">{{commentManager.commentCount}} Bình luận</h4>

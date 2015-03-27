@@ -3,11 +3,8 @@
 @using FindTech.Web.Models
 @using FindTech.Web.Models.Enums
 @{
-    var hotArticles = (IEnumerable<ArticleViewModel>)ViewBag.HotArticles;
-    var latestReviews = (IEnumerable<ArticleViewModel>)ViewBag.LatestReviews;
-    var popularReviews = (IEnumerable<ArticleViewModel>)ViewBag.PopularReviews;
 }
-<div ng-controller="HomeCtrl">
+<div ng-controller="HomeCtrl" ng-init="init(@ViewBag.HotArticles, @ViewBag.LatestReviews, @ViewBag.TrickAndTipArticles, @ViewBag.AppAndGameArticles, @ViewBag.ProductAndTechToyArticles, @ViewBag.BrandAndDigiLifeArticles, @ViewBag.LatestNewses)">
     <div class="banner-set load">
         <div class="container">
             <div class="banners">
@@ -75,10 +72,10 @@
                                         Xem thêm
                                     </button>
                                     @*<div ng-click="loadMoreNewses()" class="btn load-more unclicked load">
-                                        Load more
-                                        <span class="livicon loading" data-name="spinner-three" data-c="#ffffff" data-hc="#ffffff" data-s="22" data-loop="true"></span>
-                                        <span class="livicon" data-name="angle-double-down" data-s="22" data-c="#ffffff" data-hc="#ffffff" data-loop="true"></span>
-                                    </div>*@
+                                            Load more
+                                            <span class="livicon loading" data-name="spinner-three" data-c="#ffffff" data-hc="#ffffff" data-s="22" data-loop="true"></span>
+                                            <span class="livicon" data-name="angle-double-down" data-s="22" data-c="#ffffff" data-hc="#ffffff" data-loop="true"></span>
+                                        </div>*@
                                 </div>
                             </div><!-- .carousel-box -->
                         </article>

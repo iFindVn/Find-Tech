@@ -2,9 +2,9 @@
 <html ng-app="FindTechApp">
 <head ng-controller="FindTechCtrl">
     <meta charset="utf-8">
-    <title>iFind.vn - {{ Page.getTitle() }}</title>
+    <title>iFind.vn - @ViewBag.Title</title>
     <meta name="keywords" content="ifind vietnam, ifind.vn, so sánh điện thoại, so sánh máy tính bảng, đánh giá điện thoại, đánh giá máy tính bảng, tìm điện thoại, tìm máy tính bảng">
-    <meta name="description" ng-attr-content="{{ Page.getDescription() }}">
+    <meta name="description" content="@ViewBag.Description">
     <meta name="author" content="ifind.vn">
     <meta class="viewport" name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,6 +13,7 @@
 
     <!-- Font -->
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic'>
+    <link rel="stylesheet" href="https://code.angularjs.org/snapshot/angular-csp.css">
     @Styles.Render("~/fo/progressive/css")
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -23,7 +24,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
-<body>
+<body ng-cloak>
     <div class="page-box">
         <div class="page-box-content">
             <header class="header">
@@ -65,132 +66,20 @@
 
                                         <nav class="collapse collapsing navbar-collapse">
                                             <ul class="nav navbar-nav navbar-center">
-                                                <li class="item-info">
-                                                    <a href="#"><i class="fa fa-home"></i>&nbsp; TRANG CHỦ</a>
-                                                </li>
-                                                <li class="parent megamenu promo item-danger">
-                                                    <a href="#"><i class="fa fa-mobile"></i>&nbsp; ĐIỆN THOẠI</a>
-                                                    <ul class="sub">
-                                                        <li class="sub-wrapper">
-                                                            <div class="sub-list">
-                                                                <div class="box closed">
-                                                                    <h6 class="title">Nhà mạng</h6>
-                                                                    <ul>
-                                                                        <li><a href="#">iPad, iPod touch, iPhone &amp; Mac Control</a></li>
-                                                                        <li><a href="#">iPod touch Remote Control</a></li>
-                                                                        <li><a href="#">Savant Host (Mac Mini)<span class="item-new bg-warning">Wow</span></a></li>
-                                                                    </ul>
-                                                                </div><!-- .box -->
-
-                                                                <div class="box closed">
-                                                                    <h6 class="title">Savant Audio/Video Control</h6>
-                                                                    <ul>
-                                                                        <li><a href="#">Distributed Audio &amp; Video</a></li>
-                                                                        <li><a href="#">Matrix Switchers</a></li>
-                                                                        <li><a href="#">Audio/Video Processing</a></li>
-                                                                    </ul>
-                                                                </div><!-- .box -->
-
-                                                                <div class="box closed">
-                                                                    <h6 class="title">Savant Display Solutions</h6>
-                                                                    <ul>
-                                                                        <li><a href="#">Video Tiling<span class="item-new">New</span></a></li>
-                                                                        <li><a href="#">On-Screen Display</a></li>
-                                                                        <li><a href="#">Digital Messaging</a></li>
-                                                                    </ul>
-                                                                </div><!-- .box -->
-
-                                                                <div class="box closed">
-                                                                    <h6 class="title">Savant Sound</h6>
-                                                                    <ul>
-                                                                        <li><a href="#">Distributed Audio Controller</a></li>
-                                                                        <li><a href="#">Multi-channel Amplifiers<span class="item-new">New</span></a></li>
-                                                                        <li><a href="#">Architectural Speakers</a></li>
-                                                                    </ul>
-                                                                </div><!-- .box -->
-
-                                                                <div class="box closed">
-                                                                    <h6 class="title">Savant Display Solutions</h6>
-                                                                    <ul>
-                                                                        <li><a href="#">Video Tiling<span class="item-new bg-success">Coming Soon</span></a></li>
-                                                                        <li><a href="#">On-Screen Display</a></li>
-                                                                        <li><a href="#">Digital Messaging</a></li>
-                                                                    </ul>
-                                                                </div><!-- .box -->
-
-                                                                <div class="box closed">
-                                                                    <h6 class="title">Savant Sound</h6>
-                                                                    <ul>
-                                                                        <li><a href="#">Distributed Audio Controller</a></li>
-                                                                        <li><a href="#">Multi-channel Amplifiers</a></li>
-                                                                        <li><a href="#">Architectural Speakers<span class="item-new">New</span></a></li>
-                                                                    </ul>
-                                                                </div><!-- .box -->
-                                                            </div><!-- .sub-list -->
-
-                                                            <div class="promo-block">
-                                                                <a href="#">
-                                                                    <img src="img/content/megamenu-big.png" width="253" height="457" alt="">
-                                                                </a>
-                                                            </div><!-- .promo-block -->
-                                                        </li>
-                                                    </ul><!-- .sub -->
-                                                </li>
-                                                <li class="parent megamenu promo item-warning">
-                                                    <a href="#"><i class="fa fa-tablet"></i>&nbsp; MÁY TÍNH BẢNG</a>
-                                                    <ul class="sub">
-                                                        <li class="sub-wrapper">
-                                                            <div class="sub-list">
-                                                                <div class="box">
-                                                                    <ul>
-                                                                        <li><a href="elements-accordions.html"><i class="fa fa-plus-square"></i> Accordions &amp; Toggles</a></li>
-                                                                        <li><a href="elements-animations.html"><i class="fa fa-money"></i> Animations</a></li>
-                                                                        <li><a href="elements-buttons.html"><i class="fa fa-twitter"></i> Buttons &amp; Social Icons</a></li>
-                                                                        <li><a href="elements-carousel.html"><i class="fa fa-arrows-h"></i> Carousels &amp; Sliders</a></li>
-                                                                        <li><a href="elements-charts.html"><i class="fa fa-bar-chart-o"></i> Charts</a></li>
-                                                                        <li><a href="elements-container.html"><i class="fa fa-archive"></i> Container</a></li>
-                                                                        <li><a href="elements-content-band.html"><i class="fa fa-road"></i> Content Band</a></li>
-                                                                        <li><a href="elements-dividers.html"><i class="fa fa-ellipsis-h"></i> Dividers &amp; Gaps</a></li>
-                                                                        <li><a href="elements-featured-box.html"><i class="fa fa-star"></i> Featured Box</a></li>
-                                                                        <li><a href="elements-icons.html"><i class="fa fa-rocket"></i> Font Awesome Icons</a></li>
-                                                                        <li><a href="elements-frames.html"><i class="fa fa-square-o"></i> Frames</a></li>
-                                                                        <li><a href="elements-maps.html"><i class="fa fa-map-marker"></i> Google Maps</a></li>
-                                                                        <li><a href="elements-livicons.html"><i class="livicon block" data-n="rocket" data-s="16" data-c="#1e1e1e" data-hc="0"></i> LivIcons</a></li>
-                                                                        <li><a href="elements-media.html"><i class="fa fa-video-camera"></i> Media</a></li>
-                                                                        <li><a href="elements-notification.html"><i class="fa fa-info-circle"></i> Notification</a></li>
-                                                                    </ul>
-                                                                </div><!-- .box -->
-                                                                <div class="box">
-                                                                    <ul>
-                                                                        <li><a href="elements-person.html"><i class="fa fa-user"></i> Person</a></li>
-                                                                        <li><a href="elements-post-sliders.html"><i class="fa fa-th-list"></i> Posts Sliders</a></li>
-                                                                        <li><a href="elements-pricing.html"><i class="fa fa-list-alt"></i> Pricing and Data Tables</a></li>
-                                                                        <li><a href="elements-progress-bar.html"><i class="fa fa-tasks"></i> Progress Bars</a></li>
-                                                                        <li><a href="elements-promo-panel.html"><i class="fa fa-tasks"></i> Promo Panel</a></li>
-                                                                        <li><a href="elements-recent-posts.html"><i class="fa fa-flash"></i> Recent Posts</a></li>
-                                                                        <li><a href="elements-shop.html"><i class="fa fa-shopping-cart"></i> Shop Elements</a></li>
-                                                                        <li><a href="elements-sequence.html"><i class="fa fa-sort-numeric-asc"></i> Sequence</a></li>
-                                                                        <li><a href="elements-social-feed.html"><i class="fa fa-users"></i> Social Feed</a></li>
-                                                                        <li><a href="elements-tabs.html"><i class="fa fa-folder-open"></i> Tabs</a></li>
-                                                                        <li><a href="elements-testimonials.html"><i class="fa fa-comment"></i> Testimonials</a></li>
-                                                                        <li><a href="elements-text-rotation.html"><i class="fa fa-rotate-right"></i> Text Rotation</a></li>
-                                                                        <li><a href="elements-time-line.html"><i class="fa fa-clock-o"></i> Timeline</a></li>
-                                                                        <li><a href="elements-works.html"><i class="fa fa-picture-o"></i> Works</a></li>
-                                                                    </ul>
-                                                                </div><!-- .box -->
-                                                            </div><!-- .sub-list -->
-
-                                                            <div class="promo-block bg">
-                                                                <img src="img/content/menu-elements.png" width="240" height="434" alt="">
-                                                            </div><!-- .promo-block -->
-                                                        </li>
-                                                    </ul>
-                                                </li>
                                                 <li class="item-success">
                                                     <a href="#"><i class="fa fa-rss"></i>&nbsp; TIN TỨC</a>
                                                 </li>
-                                                <li class="item-primary">
+                                                <li class="item-info">
                                                     <a href="#"><i class="fa fa-star"></i>&nbsp; ĐÁNH GIÁ</a>
+                                                </li>
+                                                <li class="item-primary">
+                                                    <a href="#"><i class="fa fa-home"></i>&nbsp; KÊNH GIẢI TRÍ</a>
+                                                </li>
+                                                <li class="item-danger">
+                                                    <a href="#"><i class="fa fa-mobile"></i>&nbsp; ĐIỆN THOẠI<span class="item-new">Sắp ra mắt</span></a>
+                                                </li>
+                                                <li class="item-warning">
+                                                    <a href="#"><i class="fa fa-tablet"></i>&nbsp; MÁY TÍNH BẢNG<span class="item-new">Sắp ra mắt</span></a>
                                                 </li>
                                             </ul>
                                         </nav>

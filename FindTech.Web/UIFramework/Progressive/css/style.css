@@ -11433,7 +11433,7 @@ padding-bottom: 20px;
 
 .main-menu {
     background: #f2f2f2 !important;
-    padding: 5px 12px !important;
+    padding: 15px 12px 5px 12px !important;
     position: relative;
 }
 
@@ -11496,6 +11496,10 @@ padding-bottom: 20px;
 .main-menu .primary .navbar .nav .item-warning > a.active {
     color: white !important;
     background: #f89406;
+}
+
+.header .primary .navbar .nav a .item-new {
+    top: -12px;
 }
 
 #footer {

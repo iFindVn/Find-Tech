@@ -1,5 +1,9 @@
 ﻿var app = angular.module('FindTechApp', ['FindTech.ArticleDetail', 'FindTech.Home', 'iso.directives', 'angular-ladda']);
 
+//app.config(function($locationProvider) {
+//    $locationProvider.html5Mode(true).hashPrefix('!');
+//});
+
 app.controller('FindTechCtrl', ['$scope', '$http', 'Page', function ($scope, $http, Page) {
     $scope.Page = Page;
 }]);
@@ -64,13 +68,17 @@ app.directive('miniSliderBox', function () {
     };
 });
 
-app.directive('largeSliderBox', function () {
+app.directive('largeSliderBox', function ($rootScope) {
     return {
         restrict: 'E',
         scope: {
             model: '='
         },
-        templateUrl: '/app/templates/large-slider-box.html'
+        templateUrl: '/app/templates/large-slider-box.html',
+        link: function(scope) {
+            scope.getPinnedClass = $rootScope.getPinnedClass;
+            scope.pinArticle = $rootScope.pinArticle;
+        }
     };
 });
 
