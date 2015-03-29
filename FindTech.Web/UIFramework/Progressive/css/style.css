@@ -12309,3 +12309,15 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
 #rootCommentList > li > ul li:last-child {
     background: none;
 }
+
+.comments-form .row textarea {
+    height: 100px;
+}
+
+.ng-dirty .ng-invalid {
+    border-color: #c10841;
+}
+
+.ng-dirty .ng-valid {
+    border-color: #738d00;
+}

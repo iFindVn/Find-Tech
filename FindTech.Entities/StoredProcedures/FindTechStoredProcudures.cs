@@ -19,7 +19,7 @@ namespace FindTech.Entities
     {
         #region Article Stored Procedures
 
-        public IEnumerable<SearchArticlesResult> SearchArticles(string keyword, string orderString = "")
+        public IEnumerable<ArticleResult> SearchArticles(string keyword, string orderString, int skip, int take)
         {
             var keywordParameter = keyword != null ?
             new SqlParameter("@keyword", keyword) :
@@ -29,7 +29,11 @@ namespace FindTech.Entities
             new SqlParameter("@orderString", orderString) :
             new SqlParameter("@orderString", typeof(string));
 
-            return Database.SqlQuery<SearchArticlesResult>("SP_Article_SearchArticles @keyword, @orderString", keywordParameter, orderStringParameter);
+            var skipParameter = new SqlParameter("@skip", skip);
+
+            var takeParameter = new SqlParameter("@take", take);
+
+            return Database.SqlQuery<ArticleResult>("SP_Article_SearchArticles @keyword, @orderString, @skip, @take", keywordParameter, orderStringParameter, skipParameter, takeParameter);
         }
 
         public IEnumerable<ArticleResult> GetListOfArticles(GetListOfArticlesParameters getListOfArticlesParameters)

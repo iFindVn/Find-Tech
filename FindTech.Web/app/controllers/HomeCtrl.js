@@ -1,15 +1,24 @@
 ﻿angular.module('FindTech.Home', [])
-    .controller('HomeCtrl', ['$scope', '$http', '$location', 'Page',
-        function ($scope, $http, $location, Page) {
-            Page.setTitle('Tìm là thấy');
-            Page.setDescription('Cổng thông tin công nghệ, thiết bị di động, so sánh sản phẩm công nghệ, đánh giá smart phone, tablet,...');
-
+    .controller('HomeCtrl', ['$scope', '$http', '$location',
+        function ($scope, $http, $location) {
             $scope.latestReviews = {                
                 Title: 'Soi mới nhất',
                 TitleStyleClass: 'fa fa-eye background-info'
             };
             $scope.hotArticles = {};
+
+            $scope.loadMoreNewses = function () {
+                $scope.latestNewses.loadMoreLoading = true;
+                $http.get('/Article/GetLatestNewses?skip=' + ($scope.latestNewses.skip + $scope.latestNewses.take) + '&take=' + $scope.latestNewses.take).success(function (data) {
+                    $scope.latestNewses.Articles = $scope.latestNewses.Articles.concat(data);
+                    $scope.latestNewses.skip += $scope.latestNewses.take;
+                    $scope.latestNewses.loadMoreLoading = false;
+                });
+            };
             $scope.latestNewses = {
+                Title: 'Tin tức Troy',
+                loadMore: $scope.loadMoreNewses,
+                loadMoreLoading: false,
                 skip: 0,
                 take: 20
             };
@@ -37,15 +46,6 @@
                 $scope.brandAndDigiLifeArticles.Articles = brandAndDigiLifeArticles;
                 $scope.trickAndTipArticles.Articles = trickAndTipArticles;
                 $scope.latestNewses.Articles = latestNewses;
-            };
-
-            $scope.loadMoreNewses = function () {
-                $scope.loadMoreLoading = true;
-                $http.get('/Article/GetLatestNewses?skip=' + ($scope.latestNewses.skip + $scope.latestNewses.take) + '&take=' + $scope.latestNewses.take).success(function (data) {
-                    $scope.latestNewses.Articles = $scope.latestNewses.Articles.concat(data);
-                    $scope.latestNewses.skip += $scope.latestNewses.take;
-                    $scope.loadMoreLoading = false;
-                });
             };
             
             $scope.$on('onRepeatLast', function (scope, element, attrs) {

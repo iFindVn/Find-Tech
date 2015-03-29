@@ -11,7 +11,7 @@ namespace FindTech.Services
     public interface IStoredProcedureService
     {
         #region Article Stored Procedures
-        IEnumerable<SearchArticlesResult> SearchArticles(string keyword, string orderString = "");
+
         #endregion
     }
     public class StoredProcedureService : IStoredProcedureService
@@ -23,10 +23,6 @@ namespace FindTech.Services
         }
         #region Article Stored Procedures
 
-        public IEnumerable<SearchArticlesResult> SearchArticles(string keyword, string orderString)
-        {
-            return _storedProcedureService.SearchArticles(keyword, orderString);
-        }
         #endregion
     }
 }

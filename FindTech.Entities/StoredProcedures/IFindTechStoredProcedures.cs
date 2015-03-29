@@ -11,7 +11,7 @@ namespace FindTech.Entities.StoredProcedures
     public interface IFindTechStoredProcedures
     {
         #region Article Stored Procedures
-        IEnumerable<SearchArticlesResult> SearchArticles(string keyword, string orderString = "");
+        IEnumerable<ArticleResult> SearchArticles(string keyword, string orderString, int skip, int take);
 
         IEnumerable<ArticleResult> GetListOfArticles(GetListOfArticlesParameters getListOfArticlesParameters);
 

@@ -270,8 +270,10 @@
   <ItemGroup>
     <Content Include="app\app.js" />
     <Content Include="app\controllers\ArticleDetailCtrl.js" />
+    <Content Include="app\controllers\ArticleListCtrl.js" />
     <Content Include="app\controllers\HomeCtrl.js" />
     <Content Include="app\templates\image-gallery-slider.html" />
+    <Content Include="app\templates\isotope-box.html" />
     <Content Include="app\templates\large-slider-box.html" />
     <Content Include="app\templates\mini-list-box.html" />
     <Content Include="app\templates\mini-slider-box.html" />
@@ -1998,6 +2000,7 @@
     <Content Include="Views\Article\_Pinned.cshtml" />
     <Content Include="Views\Shared\_ImageGallerySlider.cshtml" />
     <Content Include="Views\Shared\_OpinionPanel.cshtml" />
+    <Content Include="Views\Article\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FindTech.Entities\FindTech.Entities.csproj">

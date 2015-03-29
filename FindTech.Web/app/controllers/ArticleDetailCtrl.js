@@ -39,7 +39,9 @@
 
                 $scope.newComment = {
                     ObjectType: 1,
-                    ObjectId: $scope.article.ArticleId
+                    ObjectId: $scope.article.ArticleId,
+                    Content: '',
+                    CommentatorEmail: ''
                 };
             };
 
@@ -58,6 +60,9 @@
             };
 
             $scope.submitComment = function () {
+                if ($scope.commentForm.$invalid) {
+                    return false;
+                }
                 $scope.commentSubmitting = true;
                 $http.post('/Comment/Create', $scope.newComment).success(function (data) {
                     if ($scope.newComment.ObjectType == 1) {
@@ -66,6 +71,7 @@
                         $scope.commentManager.comments[$scope.CommentObjectIndex].Replies.unshift(data);
                     }
                     $scope.commentManager.commentCount = data.commentCount;
+                    $scope.commentForm.$setPristine();
                     $scope.cancelComment();
                     $scope.commentSubmitting = false;
                 });
@@ -75,7 +81,8 @@
                 $scope.newComment = {
                     ObjectType: 1,
                     ObjectId: $scope.article.ArticleId,
-                    Content: ''
+                    Content: '',
+                    CommentatorEmail: ''
                 };
                 $('#rootCommentList').after($('#commentForm'));
             };

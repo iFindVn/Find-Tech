@@ -1,0 +1,37 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div ng-controller="ArticleListCtrl" ng-init="init(@ViewBag.Newses, '@ViewBag.NewsesUrl', @ViewBag.Reviews, '@ViewBag.ReviewsUrl', @ViewBag.HotNewses, @ViewBag.HotReviews, '@ViewBag.Keyword')">
+    <section id="main">
+        <div class="container">
+            <div class="content">
+                <div class="row">
+                    <div class="col-sm-12 col-md-9">
+                        <isotope-box model="reviews"></isotope-box>
+                        @*@{Html.RenderPartial("_LargeSliderBox", new ArticleListViewModel { Articles = latestReviews, Title = "Đánh giá & So sánh" });}*@
+                        <isotope-box model="newses"></isotope-box>
+                        @*@{Html.RenderAction("_Widget", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniSlider, Title = "Thủ thuật" }, searchType = SearchType.Category, keyword = "tin-tong-hop" });}*@
+                    </div>
+                    <div class="sidebar col-sm-12 col-md-3">
+                        <div class="row">
+                            <mini-list-box model="pinnedArticles"></mini-list-box>
+                            <mini-list-box model="hotNewses"></mini-list-box>
+                            <mini-list-box model="hotReviews"></mini-list-box>
+                            @*@{Html.RenderAction("_Pinned", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniList, Title = "Đã ghim", TitleStyleClass = "fa fa-thumb-tack background-warning", ClientId = "pinnedArticles" } });}*@
+                            @*@{Html.RenderPartial("_MiniListBox", new ArticleListViewModel { Articles = popularReviews, Title = "Đánh giá phổ biến", TitleStyleClass = "fa fa-eye background-primary" });}*@
+                            <aside class="widget facebook-widget col-sm-6 col-md-12">
+                                <header>
+                                    <h3 class="title">Facebook</h3>
+                                </header>
+                                <div id="fb-root"></div>
+                                <div class="fb-like-box" data-href="https://www.facebook.com/ifind.vn" data-width="270" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="true"></div>
+                            </aside><!-- .facebook-widget -->
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div><!-- .content -->
+        </div>
+    </section><!-- #main -->
+</div>
+

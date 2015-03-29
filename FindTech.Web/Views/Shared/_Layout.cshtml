@@ -40,8 +40,8 @@
                             </div><!-- .logo-box -->
                             <div class="col-xs-6 col-md-10 col-lg-6 right-box">
                                 <div class="right-box-wrapper">
-                                    <form name="search-form" class="search-form">
-                                        <input class="search-string form-control" type="search" placeholder="Tìm kiếm điện thoại, máy tính bản..." name="search-string">
+                                    <form name="search-form" class="search-form" action="{{'/tim-kiem/' + keyword}}">
+                                        <input class="search-string form-control" type="search" placeholder="Tìm kiếm điện thoại, máy tính bản..." ng-model="keyword">
                                         <button class="search-submit">
                                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
                                             <path fill="#00ade0" d="M12.001,10l-0.5,0.5l-0.79-0.79c0.806-1.021,1.29-2.308,1.29-3.71c0-3.313-2.687-6-6-6C2.687,0,0,2.687,0,6

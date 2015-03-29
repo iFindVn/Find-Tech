@@ -1,0 +1,40 @@
+﻿<article class="content">
+    <div class="bottom-padding bottom-padding-mid load overflow">
+        <div class="title-box no-margin">
+            <h2 class="title">{{model.Title}}</h2>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="row articles" isotope-container="isotope-container">
+            <div ng-repeat="article in model.Articles" isotope-item class="col-sm-6 col-md-3">
+                <div class="article">
+                    <div class="default">
+                        <a ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}" class="article-avatar">
+                            <img ng-src="{{article.Avatar}}" alt="" title="" width="270" height="270">
+                        </a>
+                        <div class="article-description">
+                            <a ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}" class="title">{{article.Title}}</a>
+                            <div class="posted-info"><span class="blurry-text">Đăng:</span><strong> {{article.PublishedDate | moment}}, <span class="blurry-text">bởi</span> {{article.CreatedUserDisplayName}}</strong></div>
+                            <div class="description" ng-bind-html="article.Description | html"></div>
+                        </div>
+                        <div class="social" ng-attr-style="border-top-color: {{article.ArticleCategoryColor}}">
+                            <span class="opinion"><span ng-class="article.HighestOpinionBackground">{{article.HighestOpinionText}}</span></span>
+                            <a class="fa fa-eye" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}"><span class="count">{{article.ViewCount}}</span></a>
+                            <a class="fa fa-comments" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}"><span class="count">{{article.CommentCount}}</span></a>
+                            <a ng-class="'fa fa-thumb-tack ' + getPinnedClass(article.ArticleId)" href="#" ng-click="pinArticle(article.ArticleId)"></a>
+                        </div>
+                    </div>
+                </div><!-- .article -->
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="load-more-wrapper">
+            <button ladda="model.loadMoreLoading" ng-click="model.loadMore()" data-style="zoom-out" class="btn load-more unclicked">
+                Xem thêm
+            </button>
+        </div>
+    </div><!-- .carousel-box -->
+</article>

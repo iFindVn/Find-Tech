@@ -1,4 +1,4 @@
-﻿var app = angular.module('FindTechApp', ['FindTech.ArticleDetail', 'FindTech.Home', 'iso.directives', 'angular-ladda']);
+﻿var app = angular.module('FindTechApp', ['FindTech.ArticleDetail', 'FindTech.ArticleList', 'FindTech.Home', 'iso.directives', 'angular-ladda']);
 
 //app.config(function($locationProvider) {
 //    $locationProvider.html5Mode(true).hashPrefix('!');
@@ -89,6 +89,20 @@ app.directive('imageGallerySlider', function () {
             model: '='
         },
         templateUrl: '/app/templates/image-gallery-slider.html'
+    };
+});
+
+app.directive('isotopeBox', function ($rootScope) {
+    return {
+        restrict: 'E',
+        scope: {
+            model: '='
+        },
+        templateUrl: '/app/templates/isotope-box.html',
+        link: function (scope) {
+            scope.getPinnedClass = $rootScope.getPinnedClass;
+            scope.pinArticle = $rootScope.pinArticle;
+        }
     };
 });
 

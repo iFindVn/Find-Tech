@@ -73,7 +73,7 @@ namespace FindTech.Web.Controllers
             var sameCategoryNewses = articleService.GetListOfArticles(new GetListOfArticlesParameters
             {
                 ArticleType = ArticleType.News,
-                Categories = article.ArticleCategory.SeoName,
+                Categories = article.ArticleCategory.SeoName ?? "",
                 Tags = "",
                 OrderString = "",
                 Skip = 0,
@@ -86,7 +86,7 @@ namespace FindTech.Web.Controllers
             {
                 ArticleType = ArticleType.News,
                 Categories = "",
-                Tags = article.Tags,
+                Tags = article.Tags ?? "",
                 OrderString = "",
                 Skip = 0,
                 Take = 10,
@@ -314,10 +314,27 @@ namespace FindTech.Web.Controllers
             return Json(opinionService.GetOpinions(articleId).ToList().Select(Mapper.Map<OpinionViewModel>));
         }
 
-        public ActionResult SearchArticles(string keyword)
+        public ActionResult SearchArticles(string keyword, ArticleType articleType, int skip, int take)
         {
-            var articles = storedProcedureService.SearchArticles(keyword);
+            var articles = articleService.SearchArticles(keyword, "", skip, take).Select(Mapper.Map<ArticleViewModel>);
             return Json(articles.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Search(string keyword, int skip = 0, int take = 20)
+        {
+            var searchResults = articleService.SearchArticles(keyword, "", skip, take).Select(Mapper.Map<ArticleViewModel>).ToList();
+            var newses = searchResults.Where(a => a.ArticleType == ArticleType.News);
+            ViewBag.Newses = JsonConvert.SerializeObject(newses);
+            ViewBag.NewsesUrl = "/Article/SearchArticles?keyword=" + keyword + "&articleType=" + ArticleType.News + "&";
+            var reviews = searchResults.Where(a => a.ArticleType == ArticleType.Reviews);
+            ViewBag.Reviews = JsonConvert.SerializeObject(reviews);
+            ViewBag.ReviewsUrl = "/Article/SearchArticles?keyword=" + keyword + "&articleType=" + ArticleType.Reviews + "&";
+            var hotNewses = articleService.GetHotNewses(0, 4, "").Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.HotNewses = JsonConvert.SerializeObject(hotNewses);
+            var hotReviews = articleService.GetHotReviews(0, 4, "").Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.HotReviews = JsonConvert.SerializeObject(hotReviews);
+            ViewBag.Keyword = keyword;
+            return View("List");
         }
     }
 }

@@ -153,12 +153,15 @@
                                     </button>
                                 </li>
                             </ul>
-                            <form id="commentForm" class="comments-form">
+                            <form id="commentForm" name="commentForm" class="comments-form">
                                 <div class="row">
-                                    <div class="comment-box col-sm-12 col-md-12">
-                                        <textarea class="form-control" placeholder="Bình luận của bạn" rows="3" ng-model="newComment.Content"></textarea>
+                                    <div class="comment-box col-sm-12 col-md-8">
+                                        <textarea class="form-control" placeholder="Bình luận của bạn" rows="3" ng-model="newComment.Content" required></textarea>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
+                                        <input type="email" class="form-control" placeholder="Email của bạn" ng-model="newComment.CommentatorEmail" required />
                                         <button class="btn btn-default pull-right" ng-click="submitComment()" ladda="commentSubmitting" data-style="zoom-out">Gửi</button>
-                                        <button class="btn btn-danger pull-right" ng-click="cancelComment()">Hủy</button>
+                                        <button class="btn btn-danger" ng-click="cancelComment()">Hủy</button>
                                     </div>
                                 </div>
                             </form>

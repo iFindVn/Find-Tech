@@ -19,6 +19,7 @@ namespace FindTech.Services
         IEnumerable<ArticleResult> GetLatestNewses(int skip = 0, int take = 20, string skipArticleIds = "");
         Article GetArticle(int articleId);
         Article GetArticleDetail(string seoTitle);
+        IEnumerable<ArticleResult> SearchArticles(string keyword, string orderString, int skip, int take);
         IEnumerable<ArticleResult> GetListOfArticles(GetListOfArticlesParameters getListOfArticlesParameters);
         IEnumerable<ArticleResult> GetHotNewses(int skip = 0, int take = 10, string skipArticleIds = "");
     }
@@ -127,6 +128,11 @@ namespace FindTech.Services
         public IEnumerable<ArticleResult> GetListOfArticles(GetListOfArticlesParameters getListOfArticlesParameters)
         {
             return _findTechStoredProcedures.GetListOfArticles(getListOfArticlesParameters);
+        }
+
+        public IEnumerable<ArticleResult> SearchArticles(string keyword, string orderString, int skip, int take)
+        {
+            return _findTechStoredProcedures.SearchArticles(keyword, orderString, skip, take);
         }
     }
 }
