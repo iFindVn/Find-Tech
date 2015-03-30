@@ -415,23 +415,24 @@ namespace FindTech.Web.Controllers
             ViewBag.HotNewses = JsonConvert.SerializeObject(hotNewses);
             var hotReviews = articleService.GetHotReviews(0, 4, "").Select(Mapper.Map<ArticleViewModel>);
             ViewBag.HotReviews = JsonConvert.SerializeObject(hotReviews);
+            
+            var isHotText = isHot ? " nóng " : " mới ";
             var articleTypeText = "";
             switch (articleType)
             {
                 case ArticleType.All:
-                    articleTypeText = " bài viết ";
+                    articleTypeText = "";
                     break;
                 case ArticleType.News:
-                    articleTypeText = " tin tức ";
+                    articleTypeText = "Tin " + isHotText;
                     break;
                 case ArticleType.Reviews:
-                    articleTypeText = " bài soi ";
+                    articleTypeText = "Soi " + isHotText;
                     break;
             }
-            var isHotText = isHot ? " nóng " : " mới ";
-            var tagsText = !string.IsNullOrEmpty(tags) ? " chứa nhãn '" + tags + "' " : "";
-            var categoriesText = !string.IsNullOrEmpty(categories) ? " thuộc danh mục '" + string.Join(", ", articleCategoryService.Queryable().Where(a => categories.Contains(a.SeoName)).Select(a => a.ArticleCategoryName).ToList()) + "' " : "";
-            ViewBag.Title = String.Format("Những{0}{1}{2}{3}", articleTypeText, isHotText, tagsText, categoriesText);
+            var tagsText = !string.IsNullOrEmpty(tags) ? "Nhãn: '" + tags + "' " : "";
+            var categoriesText = !string.IsNullOrEmpty(categories) ? string.Join(", ", articleCategoryService.Queryable().Where(a => categories.Contains(a.SeoName)).Select(a => a.ArticleCategoryName).ToList()) : "";
+            ViewBag.Title = String.Format("{0}{1}{2}", articleTypeText, tagsText, categoriesText);
             return View("List");
         }
 

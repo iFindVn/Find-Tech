@@ -64,8 +64,8 @@ namespace FindTech.Web
 
             routes.MapRoute(
                 name: "SeoTitle",
-                url: "bai-viet/{categorySeoName}/{seoTitle}/{page}",
-                defaults: new { controller = "Article", action = "Detail", categorySeoName = UrlParameter.Optional, seoTitle = UrlParameter.Optional, page = UrlParameter.Optional }
+                url: "bai-viet/{seoTitle}/{page}",
+                defaults: new { controller = "Article", action = "Detail", seoTitle = UrlParameter.Optional, page = UrlParameter.Optional }
             );
 
             routes.MapRoute(

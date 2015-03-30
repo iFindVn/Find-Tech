@@ -14,7 +14,7 @@
         <div class="breadcrumb-box">
             <ul class="breadcrumb">
                 <li><a href="/">Home</a> </li>
-                <li><a ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}">{{article.ArticleCategoryName}}</a> </li>
+                <li><a ng-attr-href="/danh-muc/{{article.ArticleCategorySeoName}}">{{article.ArticleCategoryName}}</a> </li>
                 <li class="active">{{article.Title}}</li>
             </ul>
         </div><!-- .breadcrumb-box -->
@@ -38,7 +38,7 @@
                                             <i class="fa fa-bars"></i>Đi đến trang
                                             <div class="list-group">
                                                 <span ng-repeat="contentSectionPage in contentSectionPageManager.contentSectionPages" class="list-group-item" ng-if="contentSectionPage.IsCurrentPage"><i class="fa fa-chevron-circle-right"></i>{{contentSectionPage.PageName}}</span>
-                                                <a ng-repeat="contentSectionPage in contentSectionPageManager.contentSectionPages" ng-if="contentSectionPage.IsCurrentPage != true" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}/{{contentSectionPage.PageNumber}}" class="list-group-item"><i class="fa fa-chevron-circle-right"></i>{{contentSectionPage.PageName}}</a>
+                                                <a ng-repeat="contentSectionPage in contentSectionPageManager.contentSectionPages" ng-if="contentSectionPage.IsCurrentPage != true" ng-attr-href="/bai-viet/{{article.SeoTitle}}/{{contentSectionPage.PageNumber}}" class="list-group-item"><i class="fa fa-chevron-circle-right"></i>{{contentSectionPage.PageName}}</a>
                                             </div>
                                         </div>
                                     </div>
@@ -58,7 +58,7 @@
                                 </div>
                                 <div class="article-paging" ng-if="contentSectionPageManager.contentSectionPages.length > 0">
 
-                                    <a ng-if="contentSectionPageManager.nextPage != null" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}/{{contentSectionPageManager.nextPage.PageNumber}}" class="next-page"><strong>Trang kế</strong> <i class="fa fa-chevron-right"></i> {{contentSectionPageManager.nextPage.PageName}}</a>
+                                    <a ng-if="contentSectionPageManager.nextPage != null" ng-attr-href="/bai-viet/{{article.SeoTitle}}/{{contentSectionPageManager.nextPage.PageNumber}}" class="next-page"><strong>Trang kế</strong> <i class="fa fa-chevron-right"></i> {{contentSectionPageManager.nextPage.PageName}}</a>
 
                                     <div class="pagination-box pull-right">
                                         <ul class="pagination">
@@ -68,7 +68,7 @@
 
                                                 <span ng-if="contentSectionPage.PageNumber == contentSectionPageManager.currentPage.PageNumber">{{contentSectionPage.PageNumber}}</span>
 
-                                                <a ng-if="contentSectionPage.PageNumber != contentSectionPageManager.currentPage.PageNumber" ng-attr-href="/bai-viet/{{article.ArticleCategorySeoName}}/{{article.SeoTitle}}/{{contentSectionPage.PageNumber}}">{{contentSectionPage.PageNumber}}</a>
+                                                <a ng-if="contentSectionPage.PageNumber != contentSectionPageManager.currentPage.PageNumber" ng-attr-href="/bai-viet/{{article.SeoTitle}}/{{contentSectionPage.PageNumber}}">{{contentSectionPage.PageNumber}}</a>
 
                                             </li>
 
@@ -156,13 +156,15 @@
                             </ul>
                             <form id="commentForm" name="commentForm" class="comments-form">
                                 <div class="row">
-                                    <div class="comment-box col-sm-12 col-md-8">
+                                    <div class="comment-box col-sm-12 col-md-12">
                                         <textarea class="form-control" placeholder="Bình luận của bạn" rows="3" ng-model="newComment.Content" required></textarea>
                                     </div>
-                                    <div class="col-sm-12 col-md-4">
+                                    <div class="col-sm-12 col-md-8">
                                         <input type="email" class="form-control" placeholder="Email của bạn" ng-model="newComment.CommentatorEmail" required />
+                                    </div>
+                                    <div class="col-sm-12 col-md-4">
                                         <button class="btn btn-default pull-right" ng-click="submitComment()" ladda="commentSubmitting" data-style="zoom-out">Gửi</button>
-                                        <button class="btn btn-danger" ng-click="cancelComment()">Hủy</button>
+                                        <button class="btn btn-danger pull-right" ng-click="cancelComment()">Hủy</button>
                                     </div>
                                 </div>
                             </form>
