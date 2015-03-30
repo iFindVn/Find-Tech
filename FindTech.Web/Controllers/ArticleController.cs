@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ using FindTech.Entities.StoredProcedures.Models;
 using FindTech.Services;
 using FindTech.Web.Models;
 using FindTech.Web.Models.Enums;
+using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json;
 using Repository.Pattern.UnitOfWork;
 
@@ -19,14 +21,16 @@ namespace FindTech.Web.Controllers
     {
         private IArticleService articleService { get; set; }
         private IContentSectionService contentSectionService { get; set; }
+        private IArticleCategoryService articleCategoryService { get; set; }
         private IOpinionService opinionService { get; set; }
         private IStoredProcedureService storedProcedureService { get; set; }
         private IUnitOfWorkAsync unitOfWork { get; set; }
 
-        public ArticleController(IUnitOfWorkAsync unitOfWork, IArticleService articleService, IContentSectionService contentSectionService, IOpinionService opinionService, IStoredProcedureService storedProcedureService)
+        public ArticleController(IUnitOfWorkAsync unitOfWork, IArticleService articleService, IContentSectionService contentSectionService, IArticleCategoryService articleCategoryService, IOpinionService opinionService, IStoredProcedureService storedProcedureService)
         {
             this.articleService = articleService;
             this.contentSectionService = contentSectionService;
+            this.articleCategoryService = articleCategoryService;
             this.opinionService = opinionService;
             this.storedProcedureService = storedProcedureService;
             this.unitOfWork = unitOfWork;
@@ -44,6 +48,7 @@ namespace FindTech.Web.Controllers
             var article = articleService.GetArticleDetail(seoTitle);
             if (article == null) return null;
             article.ContentSections = contentSectionService.GetContentSections(article.ArticleId, page).ToList();
+            var articleViewModel = Mapper.Map<ArticleViewModel>(article);
             article.ViewCount++;
             articleService.Update(article);
             unitOfWork.SaveChanges();
@@ -104,7 +109,7 @@ namespace FindTech.Web.Controllers
             ViewBag.LikedCommentIds = JsonConvert.SerializeObject(likedCommentIds);
             ViewBag.Title = article.Title;
             ViewBag.Description = article.Description;
-            return View(Mapper.Map<ArticleViewModel>(article));
+            return View(articleViewModel);
         }
 
 
@@ -236,14 +241,14 @@ namespace FindTech.Web.Controllers
                      }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetPinnedArticles()
+        public ActionResult GetPinnedArticles(ArticleType articleType = ArticleType.All, int skip = 0, int take = 20)
         {
             if (Session["Pinned"] == null)
             {
                 Session["Pinned"] = new List<ArticleViewModel>();
             }
             return
-                Json((List<ArticleViewModel>)Session["Pinned"], JsonRequestBehavior.AllowGet);
+                Json(((List<ArticleViewModel>)Session["Pinned"]).Where(a => a.ArticleType == articleType || articleType == ArticleType.All).Skip(skip).Take(take), JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult _NewsBoxs(int skip = 0, int take = 20)
@@ -334,6 +339,87 @@ namespace FindTech.Web.Controllers
             var hotReviews = articleService.GetHotReviews(0, 4, "").Select(Mapper.Map<ArticleViewModel>);
             ViewBag.HotReviews = JsonConvert.SerializeObject(hotReviews);
             ViewBag.Keyword = keyword;
+            ViewBag.Title = String.Format("Những bài viết chứa từ khóa '{0}'", keyword);
+            return View("List");
+        }
+
+        public ActionResult GetListOfArticles(string tags = "", string categories = "", ArticleType articleType = ArticleType.All, bool isHot = false, int skip = 0, int take = 20)
+        {
+            var articles = articleService.GetListOfArticles(new GetListOfArticlesParameters
+            {
+                ArticleType = articleType,
+                Categories = categories,
+                Tags = tags,
+                OrderString = "",
+                SkipArticleIds = "",
+                WhereClauseMore = isHot ? " a.IsHot = 1 " : "",
+                Skip = skip,
+                Take = take
+            }).Select(Mapper.Map<ArticleViewModel>);
+            return Json(articles.ToList(), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetList(string tags = "", string categories = "", ArticleType articleType = ArticleType.All, bool isHot = false, int skip = 0, int take = 20)
+        {
+            var articles = articleService.GetListOfArticles(new GetListOfArticlesParameters
+            {
+                ArticleType = articleType,
+                Categories = categories,
+                Tags = tags,
+                OrderString = "",
+                SkipArticleIds = "",
+                WhereClauseMore = isHot ? " a.IsHot = 1 " : "",
+                Skip = skip,
+                Take = take
+            }).Select(Mapper.Map<ArticleViewModel>).ToList();
+            var newses = articles.Where(a => a.ArticleType == ArticleType.News);
+            ViewBag.Newses = JsonConvert.SerializeObject(newses);
+            ViewBag.NewsesUrl = "/Article/GetListOfArticles?tags=" + tags + "&categories=" + categories + "&articleType=" + ArticleType.News + "&isHot=" + isHot + "&";
+            var reviews = articles.Where(a => a.ArticleType == ArticleType.Reviews);
+            ViewBag.Reviews = JsonConvert.SerializeObject(reviews);
+            ViewBag.ReviewsUrl = "/Article/GetListOfArticles?tags=" + tags + "&categories=" + categories + "&articleType=" + ArticleType.Reviews + "&isHot=" + isHot + "&";
+            var hotNewses = articleService.GetHotNewses(0, 4, "").Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.HotNewses = JsonConvert.SerializeObject(hotNewses);
+            var hotReviews = articleService.GetHotReviews(0, 4, "").Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.HotReviews = JsonConvert.SerializeObject(hotReviews);
+            var articleTypeText = "";
+            switch (articleType)
+            {
+                case ArticleType.All:
+                    articleTypeText = " bài viết ";
+                    break;
+                case ArticleType.News:
+                    articleTypeText = " tin tức ";
+                    break;
+                case ArticleType.Reviews:
+                    articleTypeText = " bài soi ";
+                    break;
+            }
+            var isHotText = isHot ? " nóng " : " mới ";
+            var tagsText = !string.IsNullOrEmpty(tags) ? " chứa nhãn '" + tags + "' " : "";
+            var categoriesText = !string.IsNullOrEmpty(categories) ? " thuộc danh mục '" + string.Join(", ", articleCategoryService.Queryable().Where(a => categories.Contains(a.SeoName)).Select(a => a.ArticleCategoryName).ToList()) + "' " : "";
+            ViewBag.Title = String.Format("Những{0}{1}{2}{3}", articleTypeText, isHotText, tagsText, categoriesText);
+            return View("List");
+        }
+
+        public ActionResult GetPinned(int skip = 0, int take = 20)
+        {
+            if (Session["Pinned"] == null)
+            {
+                Session["Pinned"] = new List<ArticleViewModel>();
+            }
+            var articles = (List<ArticleViewModel>)Session["Pinned"];
+            var newses = articles.Where(a => a.ArticleType == ArticleType.News);
+            ViewBag.Newses = JsonConvert.SerializeObject(newses);
+            ViewBag.NewsesUrl = "/Article/GetPinnedArticles?articleType=" + ArticleType.News + "&";
+            var reviews = articles.Where(a => a.ArticleType == ArticleType.Reviews);
+            ViewBag.Reviews = JsonConvert.SerializeObject(reviews);
+            ViewBag.ReviewsUrl = "/Article/GetPinnedArticles?articleType=" + ArticleType.Reviews + "&";
+            var hotNewses = articleService.GetHotNewses(0, 4, "").Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.HotNewses = JsonConvert.SerializeObject(hotNewses);
+            var hotReviews = articleService.GetHotReviews(0, 4, "").Select(Mapper.Map<ArticleViewModel>);
+            ViewBag.HotReviews = JsonConvert.SerializeObject(hotReviews);
+            ViewBag.Title = "Những bài viết đã ghim";
             return View("List");
         }
     }

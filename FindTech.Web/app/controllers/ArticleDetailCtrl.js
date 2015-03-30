@@ -28,8 +28,13 @@
                 $scope.article = article;
                 $scope.contentSectionPageManager = contentSectionPageManager;
                 $scope.sameCategoryNewses.Articles = sameCategoryNewses;
+                $scope.sameCategoryNewses.Title = article.ArticleCategoryName;
+                $scope.sameCategoryNewses.Url = '/danh-muc/' + article.ArticleCategorySeoName;
                 $scope.relatedNewses.Articles = relatedNewses;
+                $scope.relatedNewses.Title = 'Tin tức liên quan đến \'' + article.Tags + '\'';
+                $scope.relatedNewses.Url = '/nhan/' + article.Tags;
                 $scope.hotNewses.Articles = hotNewses;
+                $scope.hotNewses.Url = '/tin-nong';
                 $scope.likedCommentIds = likedCommentIds;
                 $http.get('/Comment/GetComments?objectType=1&objectId=' + $scope.article.ArticleId + '&skip=' + $scope.commentManager.skip + '&take=' + $scope.commentManager.take).success(function (commentData) {
                     $scope.commentManager.comments = commentData.comments;

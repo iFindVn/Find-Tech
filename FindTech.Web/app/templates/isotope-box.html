@@ -1,7 +1,7 @@
-﻿<article class="content">
+﻿<article class="content" ng-if="model.Articles.length > 0">
     <div class="bottom-padding bottom-padding-mid load overflow">
         <div class="title-box no-margin">
-            <h2 class="title">{{model.Title}}</h2>
+            <a href="{{model.Url}}"><h2 class="title">{{model.Title}}</h2></a>
         </div>
 
         <div class="clearfix"></div>

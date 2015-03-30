@@ -12,7 +12,8 @@ app.run(function ($rootScope, $http) {
     $rootScope.pinnedArticles = {
         Title: 'Đã ghim',
         TitleStyleClass: 'fa fa-thumb-tack background-warning',
-        ClientId: 'pinnedArticles'
+        ClientId: 'pinnedArticles',
+        Url: '/ghim'
     };
     $rootScope.pinArticle = function (articleId) {
         $http.post('/Article/Pin', { articleId: articleId }).success(function (data) {

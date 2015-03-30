@@ -11639,6 +11639,14 @@ padding-bottom: 20px;
   text-transform: uppercase;
 }
 
+.title-box a:hover{
+    text-decoration: none;
+}
+
+.title-box a:hover .title{
+    color: #00ade0;
+}
+
 .social-feed {
     left: 3px;
 }
@@ -11991,7 +11999,7 @@ padding-bottom: 20px;
     margin: 0 0 20px;
 }
 
-.page-header .title {
+#article .page-header .title {
     font-size: 36px;
     color: #1e1e1e;
     margin: -4px 0 0;

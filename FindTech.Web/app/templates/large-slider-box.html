@@ -1,4 +1,4 @@
-﻿<article class="content">
+﻿<article class="content" ng-if="model.Articles.length > 0">
     <div class="carousel-box bottom-padding bottom-padding-mid load overflow">
         <div class="title-box no-margin">
             <a class="next" href="#">
@@ -11,7 +11,7 @@
                 <polygon fill-rule="evenodd" clip-rule="evenodd" fill="#fcfcfc" points="8,15.999 9,14.999 2,8 9,1.001 8,0.001 0,8 "></polygon>
                                         </svg>
             </a>
-            <h2 class="title">{{model.Title}}</h2>
+            <a href="{{model.Url}}"><h2 class="title">{{model.Title}}</h2></a>
         </div>
 
         <div class="clearfix"></div>

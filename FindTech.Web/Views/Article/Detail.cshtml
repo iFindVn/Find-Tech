@@ -32,7 +32,7 @@
                                         <div class="posted-info"><span class="blurry-text">Đăng:</span><strong> {{article.PublishedDate | moment}}<span class="separator">|</span><span class="blurry-text">Bởi:</span> {{article.CreatedUserDisplayName}}</strong></div>
                                         <span class="meta btn-icon tags">
                                             <span class="blurry-text">Nhãn:</span>
-                                            <a href="#" ng-repeat="tag in article.Tags.split(',')">{{tag}}</a>
+                                            <a href="/nhan/{{tag}}" ng-repeat="tag in article.Tags.split(',')">{{tag}}</a>
                                         </span>
                                         <div class="go-to-page pull-right" ng-if="contentSectionPageManager.contentSectionPages.length > 0">
                                             <i class="fa fa-bars"></i>Đi đến trang

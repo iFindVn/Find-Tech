@@ -16,7 +16,7 @@
                 });
             };
             $scope.latestNewses = {
-                Title: 'Tin tức Troy',
+                Title: 'Tin tức',
                 loadMore: $scope.loadMoreNewses,
                 loadMoreLoading: false,
                 skip: 0,
@@ -41,11 +41,17 @@
             $scope.init = function (hotArticles, latestReviews, trickAndTipArticles, appAndGameArticles, productAndTechToyArticles, brandAndDigiLifeArticles, latestNewses) {
                 $scope.hotArticles.Articles = hotArticles;
                 $scope.latestReviews.Articles = latestReviews;
+                $scope.latestReviews.Url = '/soi';
                 $scope.appAndGameArticles.Articles = appAndGameArticles;
+                $scope.appAndGameArticles.Url = '/danh-muc/ung-dung-va-game';
                 $scope.productAndTechToyArticles.Articles = productAndTechToyArticles;
+                $scope.productAndTechToyArticles.Url = '/danh-muc/san-pham,do-choi-cong-nghe';
                 $scope.brandAndDigiLifeArticles.Articles = brandAndDigiLifeArticles;
+                $scope.brandAndDigiLifeArticles.Url = '/danh-muc/thuong-hieu,doi-song-so';
                 $scope.trickAndTipArticles.Articles = trickAndTipArticles;
+                $scope.trickAndTipArticles.Url = '/danh-muc/thu-thuat-va-meo-vat';
                 $scope.latestNewses.Articles = latestNewses;
+                $scope.latestNewses.Url = '/tin-tuc';
             };
             
             $scope.$on('onRepeatLast', function (scope, element, attrs) {

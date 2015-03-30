@@ -3,6 +3,11 @@
 }
 <div ng-controller="ArticleListCtrl" ng-init="init(@ViewBag.Newses, '@ViewBag.NewsesUrl', @ViewBag.Reviews, '@ViewBag.ReviewsUrl', @ViewBag.HotNewses, @ViewBag.HotReviews, '@ViewBag.Keyword')">
     <section id="main">
+        <header class="page-header">
+            <div class="container">
+                <h1 class="title">@ViewBag.Title</h1>
+            </div>
+        </header>
         <div class="container">
             <div class="content">
                 <div class="row">

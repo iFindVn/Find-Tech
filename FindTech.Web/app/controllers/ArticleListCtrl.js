@@ -4,7 +4,7 @@
 
             $scope.loadMoreNewses = function () {
                 $scope.newses.loadMoreLoading = true;
-                $http.get($scope.newses.Url + 'skip=' + ($scope.newses.skip + $scope.newses.take) + '&take=' + $scope.newses.take).success(function (data) {
+                $http.get($scope.newses.LoadMoreUrl + 'skip=' + ($scope.newses.skip + $scope.newses.take) + '&take=' + $scope.newses.take).success(function (data) {
                     $scope.newses.Articles = $scope.newses.Articles.concat(data);
                     $scope.newses.skip += $scope.newses.take;
                     $scope.newses.loadMoreLoading = false;
@@ -13,7 +13,7 @@
 
             $scope.loadMoreReviews = function () {
                 $scope.reviews.loadMoreLoading = true;
-                $http.get($scope.reviews.Url + 'skip=' + ($scope.reviews.skip + $scope.reviews.take) + '&take=' + $scope.reviews.take).success(function (data) {
+                $http.get($scope.reviews.LoadMoreUrl + 'skip=' + ($scope.reviews.skip + $scope.reviews.take) + '&take=' + $scope.reviews.take).success(function (data) {
                     $scope.reviews.Articles = $scope.reviews.Articles.concat(data);
                     $scope.reviews.skip += $scope.reviews.take;
                     $scope.reviews.loadMoreLoading = false;
@@ -46,11 +46,15 @@
 
             $scope.init = function (newses, newsesUrl, reviews, reviewsUrl, hotNewses, hotReviews, keyword) {
                 $scope.newses.Articles = newses;
-                $scope.newses.Url = newsesUrl;
+                $scope.newses.LoadMoreUrl = newsesUrl;
+                $scope.newses.Url = '/tin-tuc';
                 $scope.reviews.Articles = reviews;
-                $scope.reviews.Url = reviewsUrl;
+                $scope.reviews.LoadMoreUrl = reviewsUrl;
+                $scope.reviews.Url = '/soi';
                 $scope.hotNewses.Articles = hotNewses;
+                $scope.hotNewses.Url = '/tin-nong';
                 $scope.hotReviews.Articles = hotReviews;
+                $scope.hotReviews.Url = '/soi-nong';
                 $scope.$parent.keyword = keyword;
             };
             

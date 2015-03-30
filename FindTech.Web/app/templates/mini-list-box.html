@@ -1,6 +1,6 @@
-﻿<aside class="widget articles col-sm-6 col-md-12" ng-attr-id="{{model.ClientId}}">
+﻿<aside class="widget articles col-sm-6 col-md-12" ng-attr-id="{{model.ClientId}}" ng-if="model.Articles.length > 0 || model.ClientId == 'pinnedArticles'">
     <div class="title-box">
-        <span ng-class="model.TitleStyleClass"></span><h2 class="title">{{model.Title}}</h2>
+        <span ng-class="model.TitleStyleClass"></span><a href="{{model.Url}}"><h2 class="title">{{model.Title}}</h2></a>
     </div>
     <ul>
         <li class="clearfix" ng-repeat="article in model.Articles track by $index" ng-if="$index < 4">
@@ -13,7 +13,7 @@
         </li>
         <li class="pinTips" ng-if="model.ClientId == 'pinnedArticles' && model.Articles.length == 0">Bấm <span class="fa fa-thumb-tack"></span> để ghim bài viết</li>
         <li class="action" ng-if="(model.ClientId == 'pinnedArticles' && model.Articles.length > 4) || (model.ClientId != 'pinnedArticles' && model.Articles.length > 3)">
-            <a href="#" class="view-all ">View all<span class="fa fa-arrow-right"></span></a>
+            <a href="{{model.Url}}" class="view-all ">View all<span class="fa fa-arrow-right"></span></a>
         </li>
     </ul>
 </aside><!-- .specials-->
