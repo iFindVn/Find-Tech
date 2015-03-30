@@ -223,93 +223,96 @@ namespace FindTech.Web.Areas.BO.Controllers
             var rssSources = sourceService.Queryable().Include(a => a.Xpaths).ToList();
             foreach (var rssSource in rssSources)
             {
-                var xmlReader = XmlReader.Create(rssSource.Link);
-                var feed = SyndicationFeed.Load(xmlReader);
-                xmlReader.Close();
-                if (feed != null)
+                if (!string.IsNullOrEmpty(rssSource.Link))
                 {
-                    foreach (var feedItem in feed.Items)
+                    var xmlReader = XmlReader.Create(rssSource.Link);
+                    var feed = SyndicationFeed.Load(xmlReader);
+                    xmlReader.Close();
+                    if (feed != null)
                     {
-                        var title = feedItem.Title.Text;
-                        if (!articleService.Queryable().Any(a => a.Title == title))
+                        foreach (var feedItem in feed.Items)
                         {
-                            var summary = new HtmlAgilityPack.HtmlDocument();
-                            summary.LoadHtml(feedItem.Summary != null ? feedItem.Summary.Text : "");
-                            var contentDocument = new HtmlAgilityPack.HtmlDocument();
-                            var link = feedItem.Links.FirstOrDefault();
-                            if (link != null)
+                            var title = feedItem.Title.Text;
+                            if (!articleService.Queryable().Any(a => a.Title == title))
                             {
-                                var absoluteUri = link.GetAbsoluteUri();
-                                if (absoluteUri != null) contentDocument = new HtmlWeb().Load(absoluteUri.AbsoluteUri);
-                            }
-                            var contentXpaths = rssSource.Xpaths.Where(a => a.ArticleField == ArticleField.Content);
-                            var content = "";
-                            foreach (
-                                var contentNode in
-                                    contentXpaths.Select(
-                                        contentXpath =>
-                                            contentDocument.DocumentNode.SelectSingleNode(contentXpath.XpathString))
-                                        .Where(contentNode => contentNode != null))
-                            {
-                                content = contentNode.InnerHtml;
-                                break;
-                            }
-                            if (category != null)
-                            {
-                                try
+                                var summary = new HtmlAgilityPack.HtmlDocument();
+                                summary.LoadHtml(feedItem.Summary != null ? feedItem.Summary.Text : "");
+                                var contentDocument = new HtmlAgilityPack.HtmlDocument();
+                                var link = feedItem.Links.FirstOrDefault();
+                                if (link != null)
                                 {
-                                    var seoTitle = title.GenerateSeoTitle();
-                                    var avatar = "";
-                                    var imageUrl = summary.DocumentNode.Descendants("img")
-                                                .Select(n => n.Attributes["src"].Value)
-                                                .ToArray()
-                                                .FirstOrDefault();
-                                    if (imageUrl != null)
-                                    {
-                                        avatar = imageUrl;
-                                        //HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(imageUrl);
-                                        //// Sends the HttpWebRequest and waits for the response.			
-                                        //HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
-                                        //// Gets the stream associated with the response.
-                                        //Stream receiveStream = myHttpWebResponse.GetResponseStream();
-
-                                        //var imageUploadParams = new ImageUploadParams()
-                                        //{
-                                        //    File = new FileDescription(seoTitle + "-avatar", receiveStream),
-                                        //    PublicId = Path.GetFileNameWithoutExtension(seoTitle + "-avatar")
-                                        //};
-                                        //var result = cloudinary.Upload(imageUploadParams);
-                                        //avatar = result.Uri.ToString();
-                                        //avatar = Url.Action("Image", "ImageBO", new { path = seoTitle + "-avatar" });
-                                        //return new FileStreamResult(receiveStream, "image/jpg");
-                                    }
-                                    var article = new Article
-                                    {
-                                        ArticleCategoryId = category.ArticleCategoryId,
-                                        ArticleCategory = category,
-                                        Title = title,
-                                        Avatar = avatar,
-                                        Description = summary.DocumentNode.InnerText,
-                                        IsActived = false,
-                                        Priority = 1,
-                                        PublishedDate = feedItem.PublishDate.DateTime,
-                                        BoxSize = BoxSize.Box1,
-                                        SourceId = rssSource.SourceId,
-                                        Source = rssSource,
-                                        Content = content,
-                                        ArticleType = ArticleType.News,
-                                        SeoTitle = seoTitle,
-                                        IsHot = false,
-                                        CreatedUserId = CurrentUser.Id,
-                                        CreatedUserDisplayName = CurrentUser.DisplayName
-                                    };
-                                    articleService.Insert(article);
-                                    unitOfWork.SaveChanges();
-                                    CreateDefaultOpinions(article.ArticleId);
+                                    var absoluteUri = link.GetAbsoluteUri();
+                                    if (absoluteUri != null) contentDocument = new HtmlWeb().Load(absoluteUri.AbsoluteUri);
                                 }
-                                catch(Exception e)
+                                var contentXpaths = rssSource.Xpaths.Where(a => a.ArticleField == ArticleField.Content);
+                                var content = "";
+                                foreach (
+                                    var contentNode in
+                                        contentXpaths.Select(
+                                            contentXpath =>
+                                                contentDocument.DocumentNode.SelectSingleNode(contentXpath.XpathString))
+                                            .Where(contentNode => contentNode != null))
                                 {
-                                    errorArticles.Add(new { Title = title, PublishedDate = feedItem.PublishDate.DateTime });
+                                    content = contentNode.InnerHtml;
+                                    break;
+                                }
+                                if (category != null)
+                                {
+                                    try
+                                    {
+                                        var seoTitle = title.GenerateSeoTitle();
+                                        var avatar = "";
+                                        var imageUrl = summary.DocumentNode.Descendants("img")
+                                                    .Select(n => n.Attributes["src"].Value)
+                                                    .ToArray()
+                                                    .FirstOrDefault();
+                                        if (imageUrl != null)
+                                        {
+                                            avatar = imageUrl;
+                                            //HttpWebRequest myHttpWebRequest = (HttpWebRequest)WebRequest.Create(imageUrl);
+                                            //// Sends the HttpWebRequest and waits for the response.			
+                                            //HttpWebResponse myHttpWebResponse = (HttpWebResponse)myHttpWebRequest.GetResponse();
+                                            //// Gets the stream associated with the response.
+                                            //Stream receiveStream = myHttpWebResponse.GetResponseStream();
+
+                                            //var imageUploadParams = new ImageUploadParams()
+                                            //{
+                                            //    File = new FileDescription(seoTitle + "-avatar", receiveStream),
+                                            //    PublicId = Path.GetFileNameWithoutExtension(seoTitle + "-avatar")
+                                            //};
+                                            //var result = cloudinary.Upload(imageUploadParams);
+                                            //avatar = result.Uri.ToString();
+                                            //avatar = Url.Action("Image", "ImageBO", new { path = seoTitle + "-avatar" });
+                                            //return new FileStreamResult(receiveStream, "image/jpg");
+                                        }
+                                        var article = new Article
+                                        {
+                                            ArticleCategoryId = category.ArticleCategoryId,
+                                            ArticleCategory = category,
+                                            Title = title,
+                                            Avatar = avatar,
+                                            Description = summary.DocumentNode.InnerText,
+                                            IsActived = false,
+                                            Priority = 1,
+                                            PublishedDate = feedItem.PublishDate.DateTime,
+                                            BoxSize = BoxSize.Box1,
+                                            SourceId = rssSource.SourceId,
+                                            Source = rssSource,
+                                            Content = content,
+                                            ArticleType = ArticleType.News,
+                                            SeoTitle = seoTitle,
+                                            IsHot = false,
+                                            CreatedUserId = CurrentUser.Id,
+                                            CreatedUserDisplayName = CurrentUser.DisplayName
+                                        };
+                                        articleService.Insert(article);
+                                        unitOfWork.SaveChanges();
+                                        CreateDefaultOpinions(article.ArticleId);
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        errorArticles.Add(new { Title = title, PublishedDate = feedItem.PublishDate.DateTime });
+                                    }
                                 }
                             }
                         }

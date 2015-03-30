@@ -75,18 +75,53 @@ namespace FindTech.Web.Controllers
                 minPageNumber = 0
             };
             ViewBag.ContentSectionPageManager = JsonConvert.SerializeObject(contentSectionPageManager);
-            var sameCategoryNewses = articleService.GetListOfArticles(new GetListOfArticlesParameters
+            if (article.ArticleType == ArticleType.News)
             {
-                ArticleType = ArticleType.News,
-                Categories = article.ArticleCategory.SeoName ?? "",
-                Tags = "",
-                OrderString = "",
-                Skip = 0,
-                Take = 4,
-                WhereClauseMore = "",
-                SkipArticleIds = article.ArticleId.ToString()
-            }).Select(Mapper.Map<ArticleViewModel>);
-            ViewBag.SameCategoryNewses = JsonConvert.SerializeObject(sameCategoryNewses);
+                var sameCategoryNewses = articleService.GetListOfArticles(new GetListOfArticlesParameters
+                {
+                    ArticleType = ArticleType.News,
+                    Categories = article.ArticleCategory.SeoName ?? "",
+                    Tags = "",
+                    OrderString = "",
+                    Skip = 0,
+                    Take = 4,
+                    WhereClauseMore = "",
+                    SkipArticleIds = article.ArticleId.ToString()
+                }).Select(Mapper.Map<ArticleViewModel>);
+                ViewBag.SameCategoryNewses = JsonConvert.SerializeObject(sameCategoryNewses);
+                var hotNewses = articleService.GetHotNewses(0, 4, article.ArticleId.ToString()).Select(Mapper.Map<ArticleViewModel>);
+                ViewBag.HotNewses = JsonConvert.SerializeObject(hotNewses);
+            }
+            else
+            {
+                ViewBag.SameCategoryNewses = JsonConvert.SerializeObject(new List<ArticleListViewModel>());
+                ViewBag.HotNewses = JsonConvert.SerializeObject(new List<ArticleListViewModel>());
+            }
+            if (article.ArticleType == ArticleType.Reviews)
+            {
+                var latestReviews = articleService.GetLatestReviews(0, 4).Select(Mapper.Map<ArticleViewModel>);
+                ViewBag.LatestReviews = JsonConvert.SerializeObject(latestReviews);
+                var hotReviews = articleService.GetHotReviews(0, 4, "").Select(Mapper.Map<ArticleViewModel>);
+                ViewBag.HotReviews = JsonConvert.SerializeObject(hotReviews);
+                var relatedReviews = articleService.GetListOfArticles(new GetListOfArticlesParameters
+                {
+                    ArticleType = ArticleType.Reviews,
+                    Categories = "",
+                    Tags = article.Tags ?? "",
+                    OrderString = "",
+                    Skip = 0,
+                    Take = 10,
+                    WhereClauseMore = "",
+                    SkipArticleIds = article.ArticleId.ToString()
+                }).Select(Mapper.Map<ArticleViewModel>);
+                ViewBag.RelatedReviews = JsonConvert.SerializeObject(relatedReviews);
+            }
+            else
+            {
+                ViewBag.LatestReviews = JsonConvert.SerializeObject(new List<ArticleListViewModel>());
+                ViewBag.HotReviews = JsonConvert.SerializeObject(new List<ArticleListViewModel>());
+                ViewBag.RelatedReviews = JsonConvert.SerializeObject(new List<ArticleListViewModel>());
+            }
             var relatedNewses = articleService.GetListOfArticles(new GetListOfArticlesParameters
             {
                 ArticleType = ArticleType.News,
@@ -99,8 +134,6 @@ namespace FindTech.Web.Controllers
                 SkipArticleIds = article.ArticleId.ToString()
             }).Select(Mapper.Map<ArticleViewModel>);
             ViewBag.RelatedNewses = JsonConvert.SerializeObject(relatedNewses);
-            var hotNewses = articleService.GetHotNewses(0, 4, article.ArticleId.ToString()).Select(Mapper.Map<ArticleViewModel>);
-            ViewBag.HotNewses = JsonConvert.SerializeObject(hotNewses);
             if (Session["LikedCommentIds"] == null)
             {
                 Session["LikedCommentIds"] = new List<int>();

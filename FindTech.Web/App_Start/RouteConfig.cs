@@ -28,8 +28,8 @@ namespace FindTech.Web
 
             routes.MapRoute(
                 name: "Tags",
-                url: "nhan/{tags}",
-                defaults: new { controller = "Article", action = "GetList", tags = UrlParameter.Optional }
+                url: "nhan/{tags}/{articleType}",
+                defaults: new { controller = "Article", action = "GetList", tags = UrlParameter.Optional, articleType = UrlParameter.Optional }
             );
 
             routes.MapRoute(

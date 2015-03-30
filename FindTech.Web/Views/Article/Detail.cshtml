@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @Styles.Render("~/fo/article/detail/css")
-<div ng-controller="ArticleDetailCtrl" ng-init="init(@JsonConvert.SerializeObject(Model), @ViewBag.ContentSectionPageManager, @ViewBag.SameCategoryNewses, @ViewBag.RelatedNewses, @ViewBag.HotNewses, @ViewBag.LikedCommentIds)">
+<div ng-controller="ArticleDetailCtrl" ng-init="init(@JsonConvert.SerializeObject(Model), @ViewBag.ContentSectionPageManager, @ViewBag.SameCategoryNewses, @ViewBag.RelatedNewses, @ViewBag.HotNewses, @ViewBag.LatestReviews, @ViewBag.HotReviews, @ViewBag.RelatedReviews, @ViewBag.LikedCommentIds)">
     <div class="container">
         <div class="breadcrumb-box">
             <ul class="breadcrumb">
@@ -102,6 +102,7 @@
                                     </div>
                                 </div>
                             </article><!-- .post -->
+                            <large-slider-box model="relatedReviews"></large-slider-box>
                             <mini-slider-box model="relatedNewses"></mini-slider-box>
                             <h4 class="title slim">{{commentManager.commentCount}} Bình luận</h4>
                             <ul id="rootCommentList" class="commentlist" ng-if="commentManager.comments.length > 0">
@@ -173,6 +174,8 @@
                             <mini-list-box model="pinnedArticles"></mini-list-box>
                             <mini-list-box model="sameCategoryNewses"></mini-list-box>
                             <mini-list-box model="hotNewses"></mini-list-box>
+                            <mini-list-box model="hotReviews"></mini-list-box>
+                            <mini-list-box model="latestReviews"></mini-list-box>
                         </div>
                     </div>
                     <div class="clearfix"></div>

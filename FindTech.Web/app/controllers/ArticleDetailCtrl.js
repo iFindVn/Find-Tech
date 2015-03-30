@@ -23,8 +23,18 @@
             $scope.relatedNewses = {
                 Title: 'Tin liên quan'
             };
-
-            $scope.init = function(article, contentSectionPageManager, sameCategoryNewses, relatedNewses, hotNewses, likedCommentIds) {
+            $scope.latestReviews = {
+                Title: 'Soi mới nhất',
+                TitleStyleClass: 'fa fa-eye background-info'
+            };
+            $scope.hotReviews = {
+                Title: 'Soi nóng',
+                TitleStyleClass: 'fa fa-eye background-danger'
+            };
+            $scope.relatedReviews = {
+                Title: 'Soi liên quan'
+            };
+            $scope.init = function (article, contentSectionPageManager, sameCategoryNewses, relatedNewses, hotNewses, latestReviews, hotReviews, relatedReviews, likedCommentIds) {
                 $scope.article = article;
                 $scope.contentSectionPageManager = contentSectionPageManager;
                 $scope.sameCategoryNewses.Articles = sameCategoryNewses;
@@ -32,9 +42,16 @@
                 $scope.sameCategoryNewses.Url = '/danh-muc/' + article.ArticleCategorySeoName;
                 $scope.relatedNewses.Articles = relatedNewses;
                 $scope.relatedNewses.Title = 'Tin tức liên quan đến \'' + article.Tags + '\'';
-                $scope.relatedNewses.Url = '/nhan/' + article.Tags;
+                $scope.relatedNewses.Url = '/nhan/' + article.Tags + '/1';
                 $scope.hotNewses.Articles = hotNewses;
                 $scope.hotNewses.Url = '/tin-nong';
+                $scope.latestReviews.Articles = latestReviews;
+                $scope.latestReviews.Url = '/soi';
+                $scope.hotReviews.Articles = hotReviews;
+                $scope.hotReviews.Url = '/soi-nong';
+                $scope.relatedReviews.Articles = relatedReviews;
+                $scope.relatedReviews.Title = 'Soi liên quan đến \'' + article.Tags + '\'';
+                $scope.relatedReviews.Url = '/nhan/' + article.Tags + '/2';
                 $scope.likedCommentIds = likedCommentIds;
                 $http.get('/Comment/GetComments?objectType=1&objectId=' + $scope.article.ArticleId + '&skip=' + $scope.commentManager.skip + '&take=' + $scope.commentManager.take).success(function (commentData) {
                     $scope.commentManager.comments = commentData.comments;

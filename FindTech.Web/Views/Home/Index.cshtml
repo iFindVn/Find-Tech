@@ -4,7 +4,7 @@
 @using FindTech.Web.Models.Enums
 @{
 }
-<div ng-controller="HomeCtrl" ng-init="init(@ViewBag.HotArticles, @ViewBag.LatestReviews, @ViewBag.TrickAndTipArticles, @ViewBag.AppAndGameArticles, @ViewBag.ProductAndTechToyArticles, @ViewBag.BrandAndDigiLifeArticles, @ViewBag.LatestNewses)">
+<div ng-controller="HomeCtrl" ng-init="init(@ViewBag.HotArticles, @ViewBag.LatestReviews, @ViewBag.TrickAndTipArticles, @ViewBag.EntertainmentChannelArticles, @ViewBag.AppAndGameArticles, @ViewBag.ProductAndTechToyArticles, @ViewBag.BrandAndDigiLifeArticles, @ViewBag.LatestNewses, @ViewBag.HotReviews)">
     <div class="banner-set load">
         <div class="container">
             <div class="banners">
@@ -35,22 +35,24 @@
                         <large-slider-box model="latestReviews"></large-slider-box>
                         @*@{Html.RenderPartial("_LargeSliderBox", new ArticleListViewModel { Articles = latestReviews, Title = "Đánh giá & So sánh" });}*@
                         <isotope-box model="latestNewses"></isotope-box>
-                            <article class="content">
-                                <div class="bottom-padding bottom-padding-mid">
-                                    <div class="title-box">
-                                        <h2 class="title">Mỗi ngày một Video</h2>
-                                    </div>
-                                    <div class="video-box youtube">
-                                        <iframe frameborder="0" allowfullscreen="" src="//www.youtube.com/embed/96WjArBXbvA?showinfo=0&amp;wmode=opaque"></iframe>
-                                    </div>
+                        <article class="content">
+                            <div class="bottom-padding bottom-padding-mid">
+                                <div class="title-box">
+                                    <h2 class="title">Mỗi ngày một Video</h2>
                                 </div>
-                            </article>
-                            <mini-slider-box model="trickAndTipArticles"></mini-slider-box>
-                            @*@{Html.RenderAction("_Widget", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniSlider, Title = "Thủ thuật" }, searchType = SearchType.Category, keyword = "tin-tong-hop" });}*@
-</div>
+                                <div class="video-box youtube">
+                                    <iframe frameborder="0" allowfullscreen="" src="//www.youtube.com/embed/96WjArBXbvA?showinfo=0&amp;wmode=opaque"></iframe>
+                                </div>
+                            </div>
+                        </article>
+                        <mini-slider-box model="trickAndTipArticles"></mini-slider-box>
+                        <mini-slider-box model="entertainmentChannelArticles"></mini-slider-box>
+                        @*@{Html.RenderAction("_Widget", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniSlider, Title = "Thủ thuật" }, searchType = SearchType.Category, keyword = "tin-tong-hop" });}*@
+                    </div>
                     <div class="sidebar col-sm-12 col-md-3">
                         <div class="row">
                             <mini-list-box model="pinnedArticles"></mini-list-box>
+                            <mini-list-box model="hotReviews"></mini-list-box>
                             <mini-list-box model="productAndTechToyArticles"></mini-list-box>
                             <mini-list-box model="brandAndDigiLifeArticles"></mini-list-box>
                             <mini-list-box model="appAndGameArticles"></mini-list-box>

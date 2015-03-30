@@ -37,11 +37,20 @@
             $scope.trickAndTipArticles = {
                 Title: 'Thủ thuật, Mẹo vặt'
             };
+            $scope.entertainmentChannelArticles = {
+                Title: 'Kênh giải trí'
+            };
+            $scope.hotReviews = {
+                Title: 'Soi nóng',
+                TitleStyleClass: 'fa fa-eye background-danger'
+            };
 
-            $scope.init = function (hotArticles, latestReviews, trickAndTipArticles, appAndGameArticles, productAndTechToyArticles, brandAndDigiLifeArticles, latestNewses) {
+            $scope.init = function (hotArticles, latestReviews, trickAndTipArticles, entertainmentChannelArticles, appAndGameArticles, productAndTechToyArticles, brandAndDigiLifeArticles, latestNewses, hotReviews) {
                 $scope.hotArticles.Articles = hotArticles;
                 $scope.latestReviews.Articles = latestReviews;
                 $scope.latestReviews.Url = '/soi';
+                $scope.hotReviews.Articles = hotReviews;
+                $scope.hotReviews.Url = '/soi-nong';
                 $scope.appAndGameArticles.Articles = appAndGameArticles;
                 $scope.appAndGameArticles.Url = '/danh-muc/ung-dung-va-game';
                 $scope.productAndTechToyArticles.Articles = productAndTechToyArticles;
@@ -50,6 +59,8 @@
                 $scope.brandAndDigiLifeArticles.Url = '/danh-muc/thuong-hieu,doi-song-so';
                 $scope.trickAndTipArticles.Articles = trickAndTipArticles;
                 $scope.trickAndTipArticles.Url = '/danh-muc/thu-thuat-va-meo-vat';
+                $scope.entertainmentChannelArticles.Articles = entertainmentChannelArticles;
+                $scope.entertainmentChannelArticles.Url = '/danh-muc/kenh-giai-tri';
                 $scope.latestNewses.Articles = latestNewses;
                 $scope.latestNewses.Url = '/tin-tuc';
             };

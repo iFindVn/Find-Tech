@@ -12329,3 +12329,7 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
 .ng-dirty .ng-valid {
     border-color: #738d00;
 }
+
+.blog-post .comments-form {
+    margin: 6px 0 40px;
+}
