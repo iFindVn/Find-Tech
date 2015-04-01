@@ -142,6 +142,7 @@ namespace FindTech.Web.Controllers
             ViewBag.LikedCommentIds = JsonConvert.SerializeObject(likedCommentIds);
             ViewBag.Title = article.Title;
             ViewBag.Description = article.Description;
+            ViewBag.Image = article.SquareAvatar.Replace("{width}", "270");
             return View(articleViewModel);
         }
 
@@ -329,7 +330,7 @@ namespace FindTech.Web.Controllers
             }
             else
             {
-                var article = Mapper.Map<ArticleViewModel>(articleService.Find(articleId));
+                var article = Mapper.Map<ArticleViewModel>(articleService.Queryable().Include(a => a.Opinions).FirstOrDefault(a => a.ArticleId == articleId));
                 pinnedArticles.Insert(0, article);
             }
             return Json(pinnedArticles, JsonRequestBehavior.AllowGet);

@@ -11971,6 +11971,11 @@ padding-bottom: 20px;
     color: #1e1e1e;
     text-decoration: none;
     padding-top: 10px;
+    display: -webkit-box;      
+    -webkit-line-clamp: 2;      
+    overflow: hidden;      
+    text-overflow: ellipsis;      
+    -webkit-box-orient: vertical;
 }
 
 .manufactures .make-wrapper .title:hover{
@@ -12332,4 +12337,8 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
 
 .blog-post .comments-form {
     margin: 6px 0 40px;
+}
+
+.breadcrumb {
+    font-size: 12px;
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using AutoMapper;
 using FindTech.Entities.Models;
 using FindTech.Entities.Models.Enums;
@@ -65,7 +66,25 @@ namespace FindTech.Web.Mappers
                     .ForMember(a => a.ArticleCategoryName, o => o.MapFrom(x => x.ArticleCategory.ArticleCategoryName))
                     .ForMember(a => a.ArticleCategorySeoName, o => o.MapFrom(x => x.ArticleCategory.SeoName))
                     .ForMember(a => a.SourceName, o => o.MapFrom(x => x.Source.SourceName))
-                    .ForMember(a => a.SourceLogo, o => o.MapFrom(x => x.Source.Logo));
+                    .ForMember(a => a.SourceLogo, o => o.MapFrom(x => x.Source.Logo))
+                    .ForMember(a => a.HighestOpinionText, o => o.ResolveUsing(x =>
+                    {
+                        if (x.Opinions == null)
+                        {
+                            return null;
+                        }
+                        var firstOrDefault = x.Opinions.OrderByDescending(a => a.OpinionCount).ThenByDescending(a => a.OpinionLevel).FirstOrDefault();
+                        return firstOrDefault != null ? GetOpinionText(firstOrDefault.OpinionLevel) : null;
+                    }))
+                    .ForMember(a => a.HighestOpinionBackground, o => o.ResolveUsing(x =>
+                    {
+                        if (x.Opinions == null)
+                        {
+                            return null;
+                        }
+                        var firstOrDefault = x.Opinions.OrderByDescending(a => a.OpinionCount).ThenByDescending(a => a.OpinionLevel).FirstOrDefault();
+                        return firstOrDefault != null ? GetOpinionBackground(firstOrDefault.OpinionLevel) : null;
+                    }));
                 Mapper.CreateMap<ArticleResult, ArticleViewModel>()
                     .ForMember(a => a.HighestOpinionText, o => o.ResolveUsing(x => GetOpinionText(x.OpinionLevel)))
                     .ForMember(a => a.HighestOpinionBackground, o => o.ResolveUsing(x => GetOpinionBackground(x.OpinionLevel)));

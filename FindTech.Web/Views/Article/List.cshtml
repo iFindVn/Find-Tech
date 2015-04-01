@@ -2,12 +2,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div ng-controller="ArticleListCtrl" ng-init="init(@ViewBag.Newses, '@ViewBag.NewsesUrl', @ViewBag.Reviews, '@ViewBag.ReviewsUrl', @ViewBag.HotNewses, @ViewBag.HotReviews, '@ViewBag.Keyword')">
+    <div class="container">
+        <div class="breadcrumb-box">
+            <ul class="breadcrumb">
+                <li><a href="/">Home</a> </li>
+                <li class="active">@ViewBag.Title</li>
+            </ul>
+        </div><!-- .breadcrumb-box -->
+    </div>
     <section id="main">
-        <header class="page-header">
-            <div class="container">
-                <h1 class="title">@ViewBag.Title</h1>
-            </div>
-        </header>
         <div class="container">
             <div class="content">
                 <div class="row">

@@ -29,9 +29,9 @@
                                 <div class="row">
                                     <h1 class="title">{{article.Title}}</h1>
                                     <div class="entry-meta">
-                                        <div class="posted-info"><span class="blurry-text">Đăng:</span><strong> {{article.PublishedDate | moment}}<span class="separator">|</span><span class="blurry-text">Bởi:</span> {{article.CreatedUserDisplayName}}</strong></div>
+                                        <div class="posted-info"><span class="blurry-text"><i class="fa fa-clock-o"></i></span><strong> {{article.PublishedDate | moment}}<span class="separator">|</span><span class="blurry-text"><i class="fa fa-user"></i></span> {{article.CreatedUserDisplayName}}</strong></div>
                                         <span class="meta btn-icon tags">
-                                            <span class="blurry-text">Nhãn:</span>
+                                            <span class="blurry-text"><i class="fa fa-tags"></i></span>
                                             <a href="/nhan/{{tag}}" ng-repeat="tag in article.Tags.split(',')">{{tag}}</a>
                                         </span>
                                         <div class="go-to-page pull-right" ng-if="contentSectionPageManager.contentSectionPages.length > 0">

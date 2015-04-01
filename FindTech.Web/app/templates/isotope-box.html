@@ -15,7 +15,7 @@
                         </a>
                         <div class="article-description">
                             <a ng-attr-href="/bai-viet/{{article.SeoTitle}}" class="title">{{article.Title}}</a>
-                            <div class="posted-info"><span class="blurry-text">Đăng:</span><strong> {{article.PublishedDate | moment}}, <span class="blurry-text">bởi</span> {{article.CreatedUserDisplayName}}</strong></div>
+                            <div class="posted-info"><strong><span class="blurry-text"><i class="fa fa-clock-o"></i></span>&nbsp; {{article.PublishedDate | moment}} &nbsp;-&nbsp; <span class="blurry-text"><i class="fa fa-user"></i></span>&nbsp; {{article.CreatedUserDisplayName}}</strong></div>
                             <div class="description" ng-bind-html="article.Description | html"></div>
                         </div>
                         <div class="social" ng-attr-style="border-top-color: {{article.ArticleCategoryColor}}">
