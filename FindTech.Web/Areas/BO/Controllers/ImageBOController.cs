@@ -372,7 +372,7 @@ namespace FindTech.Web.Areas.BO.Controllers
             return CanAccess(path) && IsValidFile(Path.GetExtension(path));
         }
 
-        public ActionResult CropImage(string imagePath, float scales, int ws, int hs, int xs, int ys, float scaler, int wr, int hr, int xr, int yr, float scalea, int wa, int ha, int xa, int ya)
+        public ActionResult CropImage(string imagePath, float scales, int ws, int hs, int xs, int ys, float scaler, int wr, int hr, int xr, int yr, float scalea, float wa, float ha, int xa, int ya)
         {
             ws = (int)Math.Round((ws / scales), 0);
             hs = (int)Math.Round((hs / scales), 0);
@@ -384,10 +384,11 @@ namespace FindTech.Web.Areas.BO.Controllers
             xr = (int)Math.Round((xr / scaler), 0);
             yr = (int)Math.Round((yr / scaler), 0);
 
-            wa = (int)Math.Round((wa / scalea), 0);
-            ha = (int)Math.Round((ha / scalea), 0);
-            xa = (int)Math.Round((xa / scalea), 0);
-            ya = (int)Math.Round((ya / scalea), 0);
+
+            wa = (int)Math.Round((wa / scalea));
+            ha = (int)Math.Round((ha / scalea));
+            xa = (int)Math.Round((xa / scalea));
+            ya = (int)Math.Round((ya / scalea));
 
             string urls = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(ws).Height(hs).Crop("crop").X(xs).Y(ys)
                 .Chain().Width(270).Crop("fill"))
@@ -395,7 +396,7 @@ namespace FindTech.Web.Areas.BO.Controllers
             string urlr = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(wr).Height(hr).Crop("crop").X(xr).Y(yr)
                 .Chain().Width(150).Crop("fill"))
                 .BuildUrl(imagePath);
-            string avartar = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(wa).Height(ha).Crop("crop").X(xa).Y(ya)
+            string avartar = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width((int)wa).Height((int)ha).Crop("crop").X(xa).Y(ya)
                 .Chain().Width(270).Crop("fill"))
                 .BuildUrl(imagePath);
             Object obj = new
