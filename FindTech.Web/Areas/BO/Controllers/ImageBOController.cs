@@ -89,7 +89,7 @@ namespace FindTech.Web.Areas.BO.Controllers
                 Context = true,
                 Moderations = true,
                 Type = "upload",
-                MaxResults = 100,
+                MaxResults = 100
             };
             //var listResource = cloudinary.ListResources(listResourceParams).Resources;
             var listResource = cloudinary.ListResourcesByTag("user_upload").Resources;

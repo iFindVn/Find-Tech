@@ -161,7 +161,26 @@
                 "fontSize",
                 "foreColor",
                 "backColor"
-            ]
+            ],
+            imageBrowser: {
+                messages: {
+                    dropFilesHere: "Drop files here"
+                },
+                transport: {
+                    read: "/ImageBO/Read",
+                    destroy: {
+                        url: "/ImageBO/Destroy",
+                        type: "POST"
+                    },
+                    create: {
+                        url: "/ImageBO/Create",
+                        type: "POST"
+                    },
+                    thumbnailUrl: "/ImageBO/Thumbnail",
+                    uploadUrl: "/ImageBO/Upload",
+                    imageUrl: "/ImageBO/Image?path={0}"
+                }
+            }
         });
     });
 </script>

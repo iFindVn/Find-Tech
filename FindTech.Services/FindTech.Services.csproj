@@ -65,6 +65,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ImageService.cs" />
     <Compile Include="StoredProcedureService.cs" />
+    <Compile Include="VideoService.cs" />
     <Compile Include="XpathService.cs" />
   </ItemGroup>
   <ItemGroup>

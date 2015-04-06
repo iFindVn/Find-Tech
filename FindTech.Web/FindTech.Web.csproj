@@ -220,6 +220,7 @@
     <Compile Include="Areas\BO\Controllers\ArticleCategoryBOController.cs" />
     <Compile Include="Areas\BO\Controllers\ImageBOController.cs" />
     <Compile Include="Areas\BO\Controllers\ContentSectionBOController.cs" />
+    <Compile Include="Areas\BO\Controllers\VideoBOController.cs" />
     <Compile Include="Areas\BO\Controllers\XpathBOController.cs" />
     <Compile Include="Areas\BO\Models\ArticleGridListFiltersBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\ArticleGridBOViewModel.cs" />
@@ -230,6 +231,7 @@
     <Compile Include="Areas\BO\Models\BenchmarkGroupBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\SpecDetailBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\SpecGroupBOViewModel.cs" />
+    <Compile Include="Areas\BO\Models\VideoBOModel.cs" />
     <Compile Include="Areas\BO\Models\XpathBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\SourceBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\ArticleCategoryBOViewModel.cs" />
@@ -1956,6 +1958,7 @@
     <Content Include="Areas\BO\Views\BenchmarkGroupBO\Index.cshtml" />
     <Content Include="Areas\BO\Views\DeviceBO\Index.cshtml" />
     <Content Include="Areas\BO\Views\ContentSectionBO\_ContentSectionForm.cshtml" />
+    <Content Include="Areas\BO\Views\VideoBO\Index.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Article\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\FindTech.pubxml" />
@@ -2038,7 +2041,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50257</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
