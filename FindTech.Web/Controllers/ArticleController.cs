@@ -142,7 +142,7 @@ namespace FindTech.Web.Controllers
             ViewBag.LikedCommentIds = JsonConvert.SerializeObject(likedCommentIds);
             ViewBag.Title = article.Title;
             ViewBag.Description = article.Description;
-            ViewBag.Image = article.SquareAvatar.Replace("{width}", "270");
+            ViewBag.Image = article.RectangleAvatar != null ? article.RectangleAvatar.Replace("{width}", "600") : article.Avatar;
             return View(articleViewModel);
         }
 

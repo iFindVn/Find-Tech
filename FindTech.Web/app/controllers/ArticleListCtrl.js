@@ -44,13 +44,15 @@
                 TitleStyleClass: 'fa fa-rss background-danger'
             };
 
-            $scope.init = function (newses, newsesUrl, reviews, reviewsUrl, hotNewses, hotReviews, keyword) {
+            $scope.init = function (newses, newsesUrl, reviews, reviewsUrl, hotNewses, hotReviews, keyword, title) {
                 $scope.newses.Articles = newses;
                 $scope.newses.LoadMoreUrl = newsesUrl;
                 $scope.newses.Url = '/tin-tuc';
+                $scope.newses.Title = title + ' [Tin tức]';
                 $scope.reviews.Articles = reviews;
                 $scope.reviews.LoadMoreUrl = reviewsUrl;
                 $scope.reviews.Url = '/soi';
+                $scope.reviews.Title = title + ' [Soi]';
                 $scope.hotNewses.Articles = hotNewses;
                 $scope.hotNewses.Url = '/tin-nong';
                 $scope.hotReviews.Articles = hotReviews;
