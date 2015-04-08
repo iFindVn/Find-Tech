@@ -336,8 +336,9 @@ namespace FindTech.Web.Areas.BO.Controllers
         [OutputCache(Duration = 360, VaryByParam = "path")]
         public ActionResult Image(string path)
         {
-            var resource = cloudinary.GetResource(path);
-            string url = resource.Url;
+            var url = cloudinary.Api.Url.BuildUrl(path);
+            //var resource = cloudinary.GetResource(path);
+            //string url = resource.Url;
 
             //string url = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(80).Height(80).Crop("pad")).BuildUrl(path);
             if (url != null)
