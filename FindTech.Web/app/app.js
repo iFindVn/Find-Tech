@@ -36,6 +36,10 @@ app.run(function ($rootScope, $http) {
         }
         return pinnedClass;
     };
+
+    $rootScope.getBoxSizeClass = function (boxSize) {
+        return boxSize != 2 ? 'col-sm-6 col-md-3' : 'col-sm-12 col-md-6';
+    };
 });
 
 app.factory('Page', function () {
@@ -79,6 +83,7 @@ app.directive('largeSliderBox', function ($rootScope) {
         link: function(scope) {
             scope.getPinnedClass = $rootScope.getPinnedClass;
             scope.pinArticle = $rootScope.pinArticle;
+            scope.getBoxSizeClass = $rootScope.getBoxSizeClass;
         }
     };
 });
@@ -103,6 +108,7 @@ app.directive('isotopeBox', function ($rootScope) {
         link: function (scope) {
             scope.getPinnedClass = $rootScope.getPinnedClass;
             scope.pinArticle = $rootScope.pinArticle;
+            scope.getBoxSizeClass = $rootScope.getBoxSizeClass;
         }
     };
 });

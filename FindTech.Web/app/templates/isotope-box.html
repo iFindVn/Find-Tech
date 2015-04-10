@@ -7,7 +7,7 @@
         <div class="clearfix"></div>
 
         <div class="row articles" isotope-container="isotope-container">
-            <div ng-repeat="article in model.Articles" isotope-item class="col-sm-6 col-md-3">
+            <div ng-repeat="article in model.Articles" isotope-item ng-class="getBoxSizeClass(article.BoxSize)">
                 <div class="article">
                     <div class="default">
                         <a ng-attr-href="/bai-viet/{{article.SeoTitle}}" class="article-avatar">

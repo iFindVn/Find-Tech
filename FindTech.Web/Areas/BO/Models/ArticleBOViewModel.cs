@@ -19,6 +19,7 @@ namespace FindTech.Web.Areas.BO.Models
         public string RectangleAvatar { get; set; }
         public DateTime PublishedDate { get; set; }
         public string Author { get; set; }
+        public int ViewCount { get; set; }
         public string SourceId { get; set; }
         public BoxSize BoxSize { get; set; }
         public ArticleType ArticleType { get; set; }

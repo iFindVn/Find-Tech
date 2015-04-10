@@ -150,7 +150,6 @@
                 $scope.ScaleSlider();
             });
             
-            
             //responsive code begin
             //you can remove responsive code if you don't want the slider scales while window resizes
             $scope.ScaleSlider = function() {
