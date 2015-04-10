@@ -2272,7 +2272,7 @@ zoom: 1;
 }
 
 @font-face {
-  font-family: 'myriad-pro';
+  font-family: 'myriad-pro-local';
   src: url('../fonts/myriad-pro.eot?5510888');
   src: url('../fonts/myriad-pro.eot?5510888#iefix') format('embedded-opentype'),
        url('../fonts/myriad-pro.woff?5510888') format('woff'),

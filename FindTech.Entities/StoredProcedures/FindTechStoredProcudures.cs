@@ -33,7 +33,7 @@ namespace FindTech.Entities
 
             var takeParameter = new SqlParameter("@take", take);
 
-            return Database.SqlQuery<ArticleResult>("SP_Article_SearchArticles @keyword, @orderString, @skip, @take", keywordParameter, orderStringParameter, skipParameter, takeParameter);
+            return Database.SqlQuery<ArticleResult>("ifadmin.SP_Article_SearchArticles @keyword, @orderString, @skip, @take", keywordParameter, orderStringParameter, skipParameter, takeParameter);
         }
 
         public IEnumerable<ArticleResult> GetListOfArticles(GetListOfArticlesParameters getListOfArticlesParameters)
@@ -66,7 +66,7 @@ namespace FindTech.Entities
 
             return
                 Database.SqlQuery<ArticleResult>(
-                    "SP_Article_GetListOfArticles @tags, @categories, @articleType, @whereClauseMore, @orderString, @skipArticleIds, @skip, @take",
+                    "ifadmin.SP_Article_GetListOfArticles @tags, @categories, @articleType, @whereClauseMore, @orderString, @skipArticleIds, @skip, @take",
                     tagsParameter, categoriesParameter, articleTypeParameter, whereClauseMoreParameter,
                     orderStringParameter, skipArticleIdsParameter, skipParameter, takeParameter).AsEnumerable();
         }

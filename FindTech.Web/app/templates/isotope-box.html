@@ -31,7 +31,7 @@
 
         <div class="clearfix"></div>
 
-        <div class="load-more-wrapper">
+        <div class="load-more-wrapper" ng-if="model.Articles.length >= model.skip + model.take">
             <button ladda="model.loadMoreLoading" ng-click="model.loadMore()" data-style="zoom-out" class="btn load-more unclicked">
                 Xem thêm
             </button>

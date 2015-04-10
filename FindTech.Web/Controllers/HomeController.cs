@@ -30,7 +30,7 @@ namespace FindTech.Web.Controllers
             ViewBag.HotArticles = JsonConvert.SerializeObject(hotArticles);
             var latestReviews = articleService.GetLatestReviews(0, 10).Select(Mapper.Map<ArticleViewModel>);
             ViewBag.LatestReviews = JsonConvert.SerializeObject(latestReviews);
-            var latestNewses = articleService.GetLatestNewses(0, 20).Select(Mapper.Map<ArticleViewModel>);
+            var latestNewses = articleService.GetLatestNewses(0, 10).Select(Mapper.Map<ArticleViewModel>);
             ViewBag.LatestNewses = JsonConvert.SerializeObject(latestNewses);
             var hotReviews = articleService.GetHotReviews(0, 4, "").Select(Mapper.Map<ArticleViewModel>);
             ViewBag.HotReviews = JsonConvert.SerializeObject(hotReviews);
