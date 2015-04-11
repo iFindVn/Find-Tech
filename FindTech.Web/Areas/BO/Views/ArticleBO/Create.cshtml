@@ -99,11 +99,10 @@
                                         <input type="text" class="form-control" id="boxSize" name="BoxSize" placeholder="Box size" value="@boxSize" />
                                     </div>
                                 </div>
-
                                 <div class="col-xs-6 col-md-6">
                                     <div class="form-group">
                                         <label for="tags">Published Date</label>
-                                        <input type='text' id="datetimepicker" name="PublishedDate" placeholder="Date create" value="@Model.PublishedDate" readonly="readonly" />
+                                        <input type='text' id="datetimepicker" name="PublishedDate" placeholder="Date create" value="@Model.PublishedDate" />
                                     </div>
                                     <div class="form-group">
                                         <label for="title">Priority</label>
@@ -444,8 +443,10 @@
         $('#datetimepicker').kendoDateTimePicker({
             format: "dd-MMM-yy h:mm:ss tt"
         });
+       /*  C# handle datetime.now , kendo ui don't give a hands
         var newDate = $("#datetimepicker").data("kendoDateTimePicker").value() == null || $("#datetimepicker").data("kendoDateTimePicker").value().getYear() == 101 ? new Date() : new Date($("#datetimepicker").data("kendoDateTimePicker").value());
         $("#datetimepicker").data("kendoDateTimePicker").value(newDate);
+         */
 
         $("#category").kendoDropDownList({
             optionLabel: "Select Category",

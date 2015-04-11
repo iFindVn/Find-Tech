@@ -75,10 +75,14 @@ namespace FindTech.Web.Areas.BO.Controllers
             var contentSections = new List<ContentSectionBOViewModel>();
             if (articleId != null)
             {
-                var article = articleService.Queryable().Include(a => a.ContentSections).FirstOrDefault(a =>a.ArticleId == articleId);
+                var article = articleService.Queryable().Include(a => a.ContentSections).FirstOrDefault(a => a.ArticleId == articleId);
                 articleBOViewModel = Mapper.Map<ArticleBOViewModel>(article);
                 if (article != null && article.ContentSections != null)
                     contentSections = article.ContentSections.Select(Mapper.Map<ContentSectionBOViewModel>).ToList();
+            }
+            else 
+            {
+                articleBOViewModel.PublishedDate = DateTime.Now;
             }
             ViewBag.ContentSections = contentSections;
             return View(articleBOViewModel);
@@ -328,6 +332,7 @@ namespace FindTech.Web.Areas.BO.Controllers
         [HttpPost]
         public ActionResult CreateOrUpdate(ArticleBOViewModel articleBOViewModel)
         {
+            
             articleBOViewModel.SeoTitle = articleBOViewModel.Title.GenerateSeoTitle();
             var articleId = 0;
             if (articleBOViewModel.ArticleId != 0)
