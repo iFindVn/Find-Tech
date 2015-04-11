@@ -21,7 +21,7 @@
     max-width: 200px;
   }
   .carousel .col-md-3 {
-    width: 298px;
+      width: 298px;
     max-width: 298px;
   }
   .carousel .col-md-4 {
@@ -52,14 +52,14 @@
     max-width: 1200px;
   }
   
-  .articles .col-md-3 {
+  /*.articles .col-md-3 {
     width: 298px;
     max-width: 298px;
   }
   .articles .col-md-6 {
     width: 596px;
     max-width: 596px;
-  }
+  }*/
   .boxed.padding-top {
     padding-top: 420px;
   }
@@ -105,8 +105,8 @@
   }
   
   .banner-set .banner {
-    padding: 19px 9px;
-    width: 235px;
+    /*padding: 19px 9px;*/
+    /*width: 235px;*/
   }
   .banner-set.banner-set-mini .banner {
     width: 144px;
@@ -810,7 +810,7 @@
   }
   
   .banner-set .banner {
-    width: 180px;
+    /*width: 180px;*/
   }
   .banner-set .banner .title {
     font-size: 18px;

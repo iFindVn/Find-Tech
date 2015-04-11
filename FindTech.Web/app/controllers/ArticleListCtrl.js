@@ -25,7 +25,7 @@
                 loadMore: $scope.loadMoreNewses,
                 loadMoreLoading: false,
                 skip: 0,
-                take: 20
+                take: 10
             };
             
             $scope.reviews = {
@@ -33,7 +33,7 @@
                 loadMore: $scope.loadMoreReviews,
                 loadMoreLoading: false,
                 skip: 0,
-                take: 20
+                take: 10
             };
             $scope.hotReviews = {
                 Title: 'Soi nóng',

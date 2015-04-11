@@ -104,7 +104,8 @@
                             </article><!-- .post -->
                             <large-slider-box model="relatedReviews"></large-slider-box>
                             <mini-slider-box model="relatedNewses"></mini-slider-box>
-                            <h4 class="title slim">{{commentManager.commentCount}} Bình luận</h4>
+                            <h4 class="title slim" ng-if="commentManager.commentCount > 0">{{commentManager.commentCount}} Bình luận</h4>
+                            <h4 class="title slim" ng-if="commentManager.commentCount == 0">Chưa có bình luận</h4>
                             <ul id="rootCommentList" class="commentlist" ng-if="commentManager.comments.length > 0">
                                 <li ng-repeat="comment in commentManager.comments">
                                     <div class="comment">

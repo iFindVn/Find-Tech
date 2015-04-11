@@ -11904,15 +11904,20 @@ padding-bottom: 20px;
 
 .sidebar .articles ul li .title {
     color: #1e1e1e;
-    display: inline-block;
     width: 100%;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: bold;
-    padding: 10px 10px 10px 82px;
-    margin: 0;
+    padding: 10px 10px 0px 82px;
+    margin-bottom: 10px;
     vertical-align: middle;
     text-decoration: none;
-    height: 72px;
+    height: 62px;
+    line-height: 13px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
 }
 
 .sidebar .articles ul li .article-avatar img{

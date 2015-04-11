@@ -94,10 +94,12 @@ angular.module("iso.controllers", ["iso.config", "iso.services"])
         });
       }
     };
-    $scope.refreshIso = function() {
+    $scope.refreshIso = function () {
+        var opts = optionsStore.retrieve();
+        opts.masonry.columnWidth = $('.iso-column-width').outerWidth();
         if (postInitialized) {
             isotopeContainer.imagesLoaded(function() {
-                return isotopeContainer.isotope();
+                return isotopeContainer.isotope(opts);
             });
         }
     };
@@ -262,6 +264,7 @@ angular.module("iso.directives")
         if (isoOptions) {
           linkOptions = $parse(isoOptions)(scope);
           if (angular.isObject(linkOptions)) {
+            linkOptions.masonry.columnWidth = $('.iso-column-width').outerWidth();
             scope.updateOptions(linkOptions);
           }
         }

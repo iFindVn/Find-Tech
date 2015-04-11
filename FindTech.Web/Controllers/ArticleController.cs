@@ -359,7 +359,7 @@ namespace FindTech.Web.Controllers
             return Json(articles.ToList(), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Search(string keyword, int skip = 0, int take = 20)
+        public ActionResult Search(string keyword, int skip = 0, int take = 10)
         {
             var searchResults = articleService.SearchArticles(keyword, "", skip, take).Select(Mapper.Map<ArticleViewModel>).ToList();
             var newses = searchResults.Where(a => a.ArticleType == ArticleType.News);
@@ -393,7 +393,7 @@ namespace FindTech.Web.Controllers
             return Json(articles.ToList(), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetList(string tags = "", string categories = "", ArticleType articleType = ArticleType.All, bool isHot = false, int skip = 0, int take = 20)
+        public ActionResult GetList(string tags = "", string categories = "", ArticleType articleType = ArticleType.All, bool isHot = false, int skip = 0, int take = 10)
         {
             var articles = articleService.GetListOfArticles(new GetListOfArticlesParameters
             {

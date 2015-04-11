@@ -38,7 +38,7 @@ app.run(function ($rootScope, $http) {
     };
 
     $rootScope.getBoxSizeClass = function (boxSize) {
-        return boxSize != 2 ? 'col-sm-6 col-md-3' : 'col-sm-12 col-md-6';
+        return boxSize != 2 ? 'col-sm-6 col-md-4 iso-column-width' : 'col-sm-12 col-md-8';
     };
 });
 
