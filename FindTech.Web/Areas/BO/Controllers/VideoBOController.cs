@@ -1,4 +1,6 @@
-﻿using FindTech.Services;
+﻿using AutoMapper;
+using FindTech.Services;
+using FindTech.Web.Areas.BO.Models;
 using Repository.Pattern.UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -22,6 +24,12 @@ namespace FindTech.Web.Areas.BO.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult GetVideos()
+        {
+            var videos = videoService.Query().Select();
+            return Json(videos.Select(Mapper.Map<VideoBOModel>), JsonRequestBehavior.AllowGet);
         }
     }
 }
