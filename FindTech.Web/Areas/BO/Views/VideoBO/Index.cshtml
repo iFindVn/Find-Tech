@@ -4,5 +4,81 @@
     Layout = "~/Areas/BO/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<div class="breadcrumb-box">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li><a href="@Url.Action("Index", "ArticleBO")">BO</a> </li>
+            <li class="active">Video</li>
+        </ul>
+    </div>
+</div>
+<div class="clearfix"></div>
+<section id="main">
+    <div class="container">
+        <div class="content">
+            <div class="row">
+                <div id="videoBOGrid"></div>
+            </div>
+        </div><!-- .content -->
+    </div>
+</section><!-- #main -->
+<script>
+    $(document).ready(function () {
+        var videoBOUrl = "/VideoBO",
+            dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: videoBOUrl + "/GetVideos",
+                        dataType: "json"
+                    },
+                    update: {
+                        url: videoBOUrl + "/Update",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    destroy: {
+                        url: videoBOUrl + "/Destroy",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    create: {
+                        url: videoBOUrl + "/Create",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation !== "read" && options.models) {
+                            return { models: kendo.stringify(options.models) };
+                        }
+                    }
+                },
+                batch: true,
+                pageSize: 20,
+                schema: {
+                    model: {
+                        id: "VideoId",
+                        fields: {
+                            VideoId: { editable: false, defaultValue: 0 },
+                            VideoName: { validation: { required: true } },
+                            Url: { type: "number" }
+                        }
+                    }
+                }
+            });
+
+        $("#videoBOGrid").kendoGrid({
+            dataSource: dataSource,
+            navigatable: true,
+            pageable: true,
+            height: 550,
+            toolbar: ["create", "save", "cancel"],
+            columns: [
+                { field: "VideoId", title: "Id", width: 50 },
+                { field: "VideoName", title: "Video Name", width: 120 },
+                { field: "Url", title: "Video Url", width: 70 },
+                { command: "destroy", title: "&nbsp;", width: 100 }],
+            editable: true
+        });
+    });
+</script>
 
