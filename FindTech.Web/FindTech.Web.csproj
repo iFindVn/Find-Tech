@@ -1694,6 +1694,7 @@
     <Content Include="UIFramework\Progressive\img\up.png" />
     <Content Include="UIFramework\Progressive\js\angular-isotope.js" />
     <Content Include="UIFramework\Progressive\js\angular-ladda.min.js" />
+    <Content Include="UIFramework\Progressive\js\angular.min.js" />
     <Content Include="UIFramework\Progressive\js\bootstrap-datepicker.js" />
     <Content Include="UIFramework\Progressive\js\bootstrap.min.js" />
     <Content Include="UIFramework\Progressive\js\bootstrapValidator.min.js" />

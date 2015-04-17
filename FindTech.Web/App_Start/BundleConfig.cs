@@ -148,7 +148,6 @@ namespace FindTech.Web
                     "~/UIFramework/Progressive/js/jquery.easing.1.3.js",
                     "~/UIFramework/Progressive/js/jquery.fancybox.pack.js",
                     "~/UIFramework/Progressive/js/isotope.pkgd.min.js",
-                    "~/UIFramework/Progressive/js/angular-isotope.js",
                     "~/UIFramework/Progressive/js/jquery.knob.js",
                     "~/UIFramework/Progressive/js/jquery.stellar.min.js",
                     "~/UIFramework/Progressive/js/jquery.selectBox.min.js",
@@ -158,7 +157,6 @@ namespace FindTech.Web
                     "~/UIFramework/Progressive/js/country.js",
                     "~/UIFramework/Progressive/js/spin.min.js",
                     "~/UIFramework/Progressive/js/ladda.min.js",
-                    "~/UIFramework/Progressive/js/angular-ladda.min.js",
                     "~/UIFramework/Progressive/js/masonry.pkgd.min.js",
                     "~/UIFramework/Progressive/js/morris.min.js",
                     "~/UIFramework/Progressive/js/raphael.min.js",
@@ -191,11 +189,14 @@ namespace FindTech.Web
                    "~/UIFramework/Progressive/js/jssorslider/jssor.slider.js",
                    "~/Content/Article/js/Detail.js"));
 
-            bundles.Add(new ScriptBundle("~/fo/angularjs").IncludeDirectory("~/app", "*.js", true));
+            bundles.Add(new Bundle("~/fo/angularjs").Include(
+                    "~/UIFramework/Progressive/js/angular-isotope.js",
+                    "~/UIFramework/Progressive/js/angular-ladda.min.js")
+                    .IncludeDirectory("~/app", "*.js", true));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862
-            BundleTable.EnableOptimizations = false;
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

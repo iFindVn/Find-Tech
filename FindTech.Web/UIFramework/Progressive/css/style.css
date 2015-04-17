@@ -11353,7 +11353,7 @@ padding-bottom: 20px;
     background: #f89406 !important;
 }
 #main {
-    padding: 46px 0;
+    padding: 40px 0;
 }
 
 .breadcrumb-box {
@@ -11652,12 +11652,12 @@ padding-bottom: 20px;
 }
 
 .articles .article {
-    margin-top: 40px;
+    margin-top: 30px;
     background: #f7f7f7;
     border-radius: 2px;
-    -webkit-box-shadow: 0px 0px 4px 1px rgba(196, 194, 194, .5);
-    -moz-box-shadow: 0px 0px 4px 1px rgba(196, 194, 194, .5);
-    box-shadow: 0px 0px 4px 1px rgba(196, 194, 194, .5)
+    -webkit-box-shadow: 0px 0px 4px 1px #acacac;
+    -moz-box-shadow: 0px 0px 4px 1px #acacac;
+    box-shadow: 0px 0px 4px 1px #acacac;
 }
 
 .articles .article .article-avatar img{
@@ -11700,6 +11700,11 @@ padding-bottom: 20px;
     -webkit-box-orient: vertical;
 }
 
+.articles {
+    margin-left: -12px;
+    margin-right: -12px;
+}
+
 .articles .article .article-description .title:hover {
     color: #00ade0;
 }
@@ -11727,6 +11732,7 @@ padding-bottom: 20px;
     height: 60px;
     width: 100%;
     border-top: 2px solid #00ade0;
+    background-color: #f2f2f2;
 }
 
 .articles .social > span, .articles .social > a{
@@ -11837,7 +11843,7 @@ padding-bottom: 20px;
 }
 
 .bottom-padding-mid {
-    margin-bottom: 46px;
+    margin-bottom: 40px;
 }
 
 .social-feed .isotope-item {
@@ -11927,7 +11933,7 @@ padding-bottom: 20px;
 }
 
 .sidebar .widget, .sidebar .widget:last-child {
-    margin: 0px 0px 60px;
+    margin: 0px 0px 40px;
 }
 
 .load-more {
@@ -12346,4 +12352,8 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
 
 .breadcrumb {
     font-size: 12px;
+}
+
+.title-box{
+    margin-bottom: 20px;
 }
