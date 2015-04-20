@@ -1731,6 +1731,7 @@
     <Content Include="UIFramework\Progressive\js\layerslider\layerslider.kreaturamedia.jquery.js" />
     <Content Include="UIFramework\Progressive\js\layerslider\layerslider.transitions.js" />
     <Content Include="UIFramework\Progressive\js\livicons-1.3.min.js" />
+    <Content Include="UIFramework\Progressive\js\livicons-1.4.min.js" />
     <Content Include="UIFramework\Progressive\js\main.js" />
     <Content Include="UIFramework\Progressive\js\masonry.pkgd.min.js" />
     <Content Include="UIFramework\Progressive\js\morris.min.js" />

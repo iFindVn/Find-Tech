@@ -12367,3 +12367,25 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
 .title-box{
     margin-bottom: 20px;
 }
+
+.header .pin-header .dropdown-toggle .icon{
+  margin: 0;
+}
+
+.header .pin-header .dropdown-toggle .icon .livicon{
+  position: absolute;
+  top: 2px;
+  left: 10px;
+}
+
+.header .pin-header .dropdown-toggle .icon svg path{
+    fill: #f89406 !important;
+}
+
+.header .pin-header .dropdown-toggle{
+    color: #f89406 !important;
+}
+
+.header .pin-header .dropdown-menu .product-name{
+    font-weight: bold;
+}

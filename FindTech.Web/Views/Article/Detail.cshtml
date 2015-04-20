@@ -174,7 +174,7 @@
                     <div class="sidebar col-sm-3 col-md-3">
                         <div class="row">
                             @*@{Html.RenderAction("_Pinned", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniList, Title = "Đã ghim", TitleStyleClass = "fa fa-thumb-tack background-warning", ClientId = "pinnedArticles" } });}*@
-                            <mini-list-box model="pinnedArticles"></mini-list-box>
+                            @*<mini-list-box model="pinnedArticles"></mini-list-box>*@
                             <mini-list-box model="sameCategoryNewses"></mini-list-box>
                             <mini-list-box model="hotNewses"></mini-list-box>
                             <mini-list-box model="hotReviews"></mini-list-box>

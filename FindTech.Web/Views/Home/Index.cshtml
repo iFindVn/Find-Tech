@@ -17,7 +17,7 @@
                 </div>
 
                 <div class="col-md-3 slider-banners">
-                    <a class="banner" href="#" ng-repeat="article in entertainmentChannelArticles.Articles">
+                    <a class="banner" href="#" ng-repeat="article in entertainmentChannelArticles.Articles track by $index" ng-if="$index < 3">
                         <img ng-src="{{article.RectangleAvatar | width:270:article.Avatar}}" width="270" height="150" alt="">
                     </a>
                 </div><!-- .slider-banners -->
@@ -70,7 +70,7 @@
                     </div>
                     <div class="sidebar col-sm-12 col-md-3">
                         <div class="row">
-                            <mini-list-box model="pinnedArticles"></mini-list-box>
+                            @*<mini-list-box model="pinnedArticles"></mini-list-box>*@
                             <mini-list-box model="hotReviews"></mini-list-box>
                             <mini-list-box model="productAndTechToyArticles"></mini-list-box>
                             <mini-list-box model="brandAndDigiLifeArticles"></mini-list-box>

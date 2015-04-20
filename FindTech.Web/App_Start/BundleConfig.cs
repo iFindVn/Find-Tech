@@ -162,7 +162,7 @@ namespace FindTech.Web
                     "~/UIFramework/Progressive/js/raphael.min.js",
                     "~/UIFramework/Progressive/js/video.js",
                     "~/UIFramework/Progressive/js/pixastic.custom.js",
-                    "~/UIFramework/Progressive/js/livicons-1.3.min.js",
+                    "~/UIFramework/Progressive/js/livicons-1.4.min.js",
                     "~/UIFramework/Progressive/js/layerslider/greensock.js",
                     "~/UIFramework/Progressive/js/layerslider/layerslider.transitions.js",
                     "~/UIFramework/Progressive/js/layerslider/layerslider.kreaturamedia.jquery.js",

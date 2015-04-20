@@ -22,7 +22,7 @@
                     </div>
                     <div class="sidebar col-sm-12 col-md-3">
                         <div class="row">
-                            <mini-list-box model="pinnedArticles"></mini-list-box>
+                            @*<mini-list-box model="pinnedArticles"></mini-list-box>*@
                             <mini-list-box model="hotNewses"></mini-list-box>
                             <mini-list-box model="hotReviews"></mini-list-box>
                             @*@{Html.RenderAction("_Pinned", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniList, Title = "Đã ghim", TitleStyleClass = "fa fa-thumb-tack background-warning", ClientId = "pinnedArticles" } });}*@
