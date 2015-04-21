@@ -385,7 +385,7 @@ nav ul {
   padding: 0;
 }
 .rating-box {
-  background-image: url("../img/svg/rating.svg"), none;
+  background-image: url("/UIFramework/Progressive/img/svg/rating.svg"), none;
   background-repeat: no-repeat;
   background-position: 0 0;
   height: 12px;
@@ -938,7 +938,7 @@ button {
   width: 100%;
 }
 .selectBox-arrow {
-  background: url("../img/svg/select.svg") 50% 50% no-repeat;
+  background: url("/UIFramework/Progressive/img/svg/select.svg") 50% 50% no-repeat;
   border-radius: 0 3px 3px 0;
   -moz-border-radius: 0 3px 3px 0;
   -khtml-border-radius: 0 3px 3px 0;
@@ -5030,7 +5030,7 @@ blockquote small {
 .slider.rs-slider .tp-loader {
   -webkit-animation: none;
   animation: none;
-  background-image: url("../img/svg/loader.svg"), none;
+  background-image: url("/UIFramework/Progressive/img/svg/loader.svg"), none;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 40px;
@@ -5093,7 +5093,7 @@ blockquote small {
   width: 100%;
 }
 .royal-slider.load {
-  background-image: url("../img/svg/loader.svg"), none;
+  background-image: url("/UIFramework/Progressive/img/svg/loader.svg"), none;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 40px;
@@ -5867,7 +5867,7 @@ blockquote small {
   padding-bottom: 0;
 }
 .load.banner-set .container {
-  background-image: url("../img/svg/loader.svg"), none;
+  background-image: url("/UIFramework/Progressive/img/svg/loader.svg"), none;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 40px;
@@ -6544,7 +6544,7 @@ a.big-icon:hover {
   float: right;
 }
 .load.carousel-box {
-  background-image: url("../img/svg/loader.svg"), none;
+  background-image: url("/UIFramework/Progressive/img/svg/loader.svg"), none;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 40px;
@@ -10484,7 +10484,7 @@ padding-bottom: 20px;
   Social Feed
 *******************************************************************************/
 .social-feed {
-  background-image: url("../img/svg/loader.svg"), none;
+  background-image: url("/UIFramework/Progressive/img/svg/loader.svg"), none;
   background-repeat: no-repeat;
   background-position: 50% 100px;
   background-size: 40px;
@@ -10761,7 +10761,7 @@ padding-bottom: 20px;
   Blur Pages
 *******************************************************************************/
 .blur-page {
-  background-image: url("../img/svg/loader.svg"), none;
+  background-image: url("/UIFramework/Progressive/img/svg/loader.svg"), none;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 40px;
