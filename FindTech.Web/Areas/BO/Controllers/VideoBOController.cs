@@ -51,15 +51,35 @@ namespace FindTech.Web.Areas.BO.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(string videoBOModel)
+        public ActionResult Update(string models)
         {
-            return Json(true);
+            List<VideoBOModel> videoBOModels = JsonConvert.DeserializeObject<List<VideoBOModel>>(models);
+            for (var i = 0; i < videoBOModels.Count; i++)
+            {
+                VideoBOModel videoBOModel = videoBOModels.ElementAt(i);
+                Video video = Mapper.Map<Video>(videoBOModel);
+                videoService.Update(video);
+                unitOfWork.SaveChanges();
+                videoBOModels.RemoveAt(i);
+                videoBOModels.Add(Mapper.Map<VideoBOModel>(video));
+            }
+            return Json(videoBOModels, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult Destroy(string videoBOModel)
+        public ActionResult Destroy(string models)
         {
-            return Json(true);
+            List<VideoBOModel> videoBOModels = JsonConvert.DeserializeObject<List<VideoBOModel>>(models);
+            for (var i = 0; i < videoBOModels.Count; i++)
+            {
+                VideoBOModel videoBOModel = videoBOModels.ElementAt(i);
+                Video video = Mapper.Map<Video>(videoBOModel);
+                videoService.Delete(video);
+                unitOfWork.SaveChanges();
+                videoBOModels.RemoveAt(i);
+                videoBOModels.Add(Mapper.Map<VideoBOModel>(video));
+            }
+            return Json(videoBOModels, JsonRequestBehavior.AllowGet);
         }
     }
 }

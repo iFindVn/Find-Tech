@@ -60,7 +60,7 @@
                         fields: {
                             VideoId: { editable: false, defaultValue: 0 },
                             VideoName: { validation: { required: true } },
-                            Url: { type: "number" }
+                            Url: { validation: { required: true } }
                         }
                     }
                 }
@@ -75,7 +75,7 @@
             columns: [
                 { field: "VideoId", title: "Id", width: 50 },
                 { field: "VideoName", title: "Video Name", width: 120 },
-                { field: "Url", title: "Video Url", width: 70 },
+                { field: "Url", title: "Video Url", width: 120 },
                 { command: "destroy", title: "&nbsp;", width: 100 }],
             editable: true
         });
