@@ -64,7 +64,7 @@ body {
   height: 100%;
 }
 body {
-  font-family: "Arimo", "myriad-pro-local";
+  font-family: 'Roboto Slab', serif;
   height: 100%;
   line-height: 1.6;
   -webkit-appearance: none;
@@ -91,7 +91,7 @@ input,
 button,
 select,
 textarea {
-  font-family: 'Arimo', sans-serif;
+  font-family: 'Roboto Slab', serif;
 }
 .page-box {
   min-height: 100%;
@@ -11420,7 +11420,6 @@ padding-bottom: 20px;
   transition: all .3s linear;
 }*/
 .header-wrapper {
-  background: #f2f2f2;
   min-height: 100px;
   padding: 2px 0;
 }
@@ -11432,8 +11431,7 @@ padding-bottom: 20px;
 }
 
 .main-menu {
-    background: #f2f2f2 !important;
-    padding: 15px 12px !important;
+    padding: 15px !important;
     position: relative;
 }
 
@@ -12388,4 +12386,40 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
 
 .header .pin-header .dropdown-menu .product-name{
     font-weight: bold;
+}
+
+.sliders-box a{
+    position: relative;
+}
+
+.sliders-box a h4{
+      position: absolute;
+  top: 0;
+  left: 30px;
+  width: 45%;
+  color: white;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  font-weight: normal;  
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+.slider-banners a{
+    position: relative;
+}
+
+.slider-banners a img{
+    max-width: 270px;
+    max-height: 150px;
+}
+
+.slider-banners a h5{
+    font-size: 12px;
+  color: white;
+  position: absolute;
+  top: 30px;
+  right: 15px;
+  width: 80%;
+  text-align: right;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }

@@ -5,25 +5,29 @@
 @{
 }
 <div ng-controller="HomeCtrl" ng-init="init(@ViewBag.HotArticles, @ViewBag.LatestReviews, @ViewBag.TrickAndTipArticles, @ViewBag.EntertainmentChannelArticles, @ViewBag.AppAndGameArticles, @ViewBag.ProductAndTechToyArticles, @ViewBag.BrandAndDigiLifeArticles, @ViewBag.LatestNewses, @ViewBag.HotReviews)">
-    @*<div class="slider progressive-slider progressive-slider-two cm-shop-2-slider load">
+    <div class="slider progressive-slider progressive-slider-two cm-shop-2-slider load">
         <div class="container">
             <div class="row slider-wrapper">
                 <div class="col-md-9 sliders-container">
                     <div class="sliders-box">
-                        <img ng-repeat="article in trickAndTipArticles.Articles" ng-src="{{article.RectangleAvatar | width:900:article.Avatar}}" width="900" height="450" alt="">
+                        <a ng-attr-href="/bai-viet/{{article.SeoTitle}}" ng-repeat="article in hotArticles.Articles track by $index" ng-if="$index < 4">
+                            <img ng-src="{{article.RectangleAvatar | width:900:article.Avatar}}" width="900" height="450" alt="">
+                            <h4 class="title">{{article.Title}}</h4>
+                        </a>
                     </div><!-- .sliders-box -->
 
                     <div class="pagination switches"></div>
                 </div>
 
                 <div class="col-md-3 slider-banners">
-                    <a class="banner" href="#" ng-repeat="article in entertainmentChannelArticles.Articles track by $index" ng-if="$index < 3">
+                    <a ng-attr-href="/bai-viet/{{article.SeoTitle}}" ng-repeat="article in entertainmentChannelArticles.Articles track by $index" ng-if="$index < 4">
                         <img ng-src="{{article.RectangleAvatar | width:270:article.Avatar}}" width="270" height="150" alt="">
+                        <h5 class="title">{{article.Title}}</h5>
                     </a>
                 </div><!-- .slider-banners -->
             </div>
         </div>
-    </div><!-- .progressive-slider -->*@
+    </div><!-- .progressive-slider -->
     <div class="banner-set load">
         <div class="container">
             <div class="banners">
@@ -60,7 +64,7 @@
                                     <h2 class="title">Mỗi ngày một Video</h2>
                                 </div>
                                 <div class="video-box youtube">
-                                    <iframe frameborder="0" allowfullscreen="" src="//www.youtube.com/embed/96WjArBXbvA?showinfo=0&amp;wmode=opaque"></iframe>
+                                    <iframe frameborder="0" allowfullscreen="" src="//www.youtube.com/embed/lsViP9LIrN0?showinfo=0&amp;wmode=opaque"></iframe>
                                 </div>
                             </div>
                         </article>

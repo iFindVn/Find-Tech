@@ -17,7 +17,7 @@
     <link rel="shortcut icon" href="~/UIFramework/Progressive/img/favicon.ico">
 
     <!-- Font -->
-    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic'>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:700,400&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="https://code.angularjs.org/snapshot/angular-csp.css">
     @Styles.Render("~/fo/progressive/css")
     <!--[if lt IE 9]>
@@ -31,7 +31,7 @@
     @*<script src="//use.typekit.net/eds7sto.js"></script>
     <script>try { Typekit.load(); } catch (e) { }</script>*@
 </head>
-<body ng-cloak>
+<body ng-cloak class="hidden-top">
     <div class="page-box">
         <div class="page-box-content">
             <div id="top-box">
@@ -43,7 +43,7 @@
                                     <a class="btn dropdown-toggle btn-default" role="button" data-toggle="dropdown" href="#">
                                         <span class="hidden-xs">Language</span><span class="visible-xs">Ngôn ngữ</span>
                                         <!--
-                                -->
+                                        -->
                                         : Tiếng Việt
                                         <span class="caret"></span>
                                     </a>
@@ -53,7 +53,6 @@
                                     </ul>
                                 </div>
                             </div>
-
                             <div class="col-xs-3 col-sm-7">
                                 <div class="navbar navbar-inverse top-navbar top-navbar-right" role="navigation">
                                     <button type="button" class="navbar-toggle btn-navbar collapsed" data-toggle="collapse" data-target=".top-navbar .navbar-collapse">
@@ -61,7 +60,6 @@
                                         <span class="icon-bar"></span>
                                         <span class="icon-bar"></span>
                                     </button>
-
                                     <nav class="collapse collapsing navbar-collapse">
                                         <ul class="nav navbar-nav navbar-right">
                                             <li><a href="#">Đăng nhập <i class="fa fa-lock after"></i></a></li>
@@ -85,20 +83,20 @@
                                 </div>
                             </div><!-- .logo-box -->
                             @*<div class="col-xs-6 col-md-10 col-lg-6 right-box">
-                                <div class="right-box-wrapper">
-                                    <form name="search-form" class="search-form" action="{{'/tim-kiem/' + keyword}}">
-                                        <input class="search-string form-control" type="search" placeholder="Tìm kiếm điện thoại, máy tính bản..." ng-model="keyword">
-                                        <button class="search-submit">
-                                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-                                            <path fill="#00ade0" d="M12.001,10l-0.5,0.5l-0.79-0.79c0.806-1.021,1.29-2.308,1.29-3.71c0-3.313-2.687-6-6-6C2.687,0,0,2.687,0,6
-				  s2.687,6,6,6c1.402,0,2.688-0.484,3.71-1.29l0.79,0.79l-0.5,0.5l4,4l2-2L12.001,10z M6,10c-2.206,0-4-1.794-4-4s1.794-4,4-4
-				  s4,1.794,4,4S8.206,10,6,10z"></path>
-                                            <image src="img/png-icons/search-icon.png" alt="" width="16" height="16" style="vertical-align: top;">
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>*@
+                                              <div class="right-box-wrapper">
+                                                  <form name="search-form" class="search-form" action="{{'/tim-kiem/' + keyword}}">
+                                                      <input class="search-string form-control" type="search" placeholder="Tìm kiếm điện thoại, máy tính bản..." ng-model="keyword">
+                                                      <button class="search-submit">
+                                                          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                                                          <path fill="#00ade0" d="M12.001,10l-0.5,0.5l-0.79-0.79c0.806-1.021,1.29-2.308,1.29-3.71c0-3.313-2.687-6-6-6C2.687,0,0,2.687,0,6
+                                s2.687,6,6,6c1.402,0,2.688-0.484,3.71-1.29l0.79,0.79l-0.5,0.5l4,4l2-2L12.001,10z M6,10c-2.206,0-4-1.794-4-4s1.794-4,4-4
+                                s4,1.794,4,4S8.206,10,6,10z"></path>
+                                                          <image src="img/png-icons/search-icon.png" alt="" width="16" height="16" style="vertical-align: top;">
+                                                          </svg>
+                                                      </button>
+                                                  </form>
+                                              </div>
+                                          </div>*@
                             <div class="col-xs-6 col-md-10 col-lg-10 main-menu">
                                 <div class="right-box-wrapper">
                                     <div class="header-icons">
@@ -114,7 +112,7 @@
                                         </div>
                                         <!-- .search-header
 
-                    -->
+                                        -->
                                         <div class="phone-header hidden-600">
                                             <a href="#">
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
@@ -127,7 +125,7 @@
                                         </div>
                                         <!-- .phone-header
 
-                    -->
+                                        -->
                                         <div class="btn-group cart-header pin-header">
                                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                                 <div class="icon" title="Ghi nhớ bài viết">
@@ -146,14 +144,14 @@
                                                                 <div class="livicon" data-n="trash" data-s="24"></div>
                                                             </div>
                                                             @*<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-                                                            <g>
-                                                            <path d="M6,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S5,6.447,5,7v5C5,12.553,5.447,13,6,13z"></path>
-                                                            <path d="M10,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S9,6.447,9,7v5C9,12.553,9.447,13,10,13z"></path>
-                                                            <path d="M14,3h-1V1c0-0.552-0.447-1-1-1H4C3.448,0,3,0.448,3,1v2H2C1.447,3,1,3.447,1,4s0.447,1,1,1
-							c0,0.273,0,8.727,0,9c0,1.104,0.896,2,2,2h8c1.104,0,2-0.896,2-2c0-0.273,0-8.727,0-9c0.553,0,1-0.447,1-1S14.553,3,14,3z M5,2h6v1
-							H5V2z M12,14H4V5h8V14z"></path>
-						  </g>
-						</svg>*@
+                                                                                                    <g>
+                                                                                                    <path d="M6,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S5,6.447,5,7v5C5,12.553,5.447,13,6,13z"></path>
+                                                                                                    <path d="M10,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S9,6.447,9,7v5C9,12.553,9.447,13,10,13z"></path>
+                                                                                                    <path d="M14,3h-1V1c0-0.552-0.447-1-1-1H4C3.448,0,3,0.448,3,1v2H2C1.447,3,1,3.447,1,4s0.447,1,1,1
+                                                                    c0,0.273,0,8.727,0,9c0,1.104,0.896,2,2,2h8c1.104,0,2-0.896,2-2c0-0.273,0-8.727,0-9c0.553,0,1-0.447,1-1S14.553,3,14,3z M5,2h6v1
+                                                                    H5V2z M12,14H4V5h8V14z"></path>
+                                                                  </g>
+                                                                </svg>*@
                                                         </a><!-- .product-remove -->
                                                         <h4 class="product-name"><a ng-attr-href="/bai-viet/{{article.SeoTitle}}" title="">{{article.Title}}</a></h4>
                                                         <div class="clearfix"></div>
@@ -197,11 +195,11 @@
                                 </div>
                             </div><!-- .logo-box -->
                             <div class="phone-active col-sm-10 col-md-10">
-                                <a href="#" class="close"><span>close</span>×</a>
+                                <a href="#" class="close"><span>đóng</span>×</a>
                                 <span class="title">Đường dây nóng</span> <strong>+84 986 111 680</strong>
                             </div>
-                            <div class="search-active col-sm-9 col-md-9">
-                                <a href="#" class="close"><span>close</span>×</a>
+                            <div class="search-active col-sm-10 col-md-10">
+                                <a href="#" class="close"><span>đóng</span>×</a>
                                 <form name="search-form" class="search-form" action="{{'/tim-kiem/' + keyword}}">
                                     <input class="search-string form-control" type="search" placeholder="Tìm kiếm điện thoại, máy tính bản..." ng-model="keyword">
                                     <button class="search-submit">
@@ -248,7 +246,6 @@
                     <div class="copyright col-xs-12 col-sm-3 col-md-3">
                         Bản quyền thuộc © ifind.vn, 2015
                     </div>
-
                     <div class="phone col-xs-6 col-sm-3 col-md-3">
                         <div class="footer-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
@@ -257,10 +254,9 @@
 				M11.001,12H5V2h6V12z"></path>
                                 </svg>
                         </div>
-                        <strong class="title">Liên hệ quảng cáo:</strong> +84 (986) 111-680 <br>
+                        <strong class="title">Đường dây nóng:</strong> +84 (986) 111-680 <br>
                         <strong class="title">Email:</strong> hi@ifind.vn
                     </div>
-
                     <div class="address col-xs-6 col-sm-3 col-md-3">
                         <div class="footer-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
@@ -278,7 +274,6 @@
                         </div>
                         26/41/39 Võ Văn Vân, Phường Tân Tạo, Quận Bình Tân<br> TPHCM, VN
                     </div>
-
                     <div class="col-xs-12 col-sm-3 col-md-3">
                         <a href="#" class="up">
                             <span class="glyphicon glyphicon-arrow-up"></span>

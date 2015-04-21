@@ -499,7 +499,8 @@ function progressiveSlider() {
 		  pauseOnHover : true
         },
 		items      : {
-		  visible : 1,
+		    visible: 1,
+		    height: 450
 		},
 		swipe     : {
 		  onMouse : false,
@@ -579,6 +580,22 @@ function progressiveSlider() {
   
   slider.find('.sliders-box').each(function () {
 	$(this).carouFredSel(parameters).parents('.slider').removeClass('load');
+  });
+
+  slider.find('.slider-banners').each(function () {
+      $(this).carouFredSel({
+          items: {
+              visible: 3,
+              height: 150
+          },
+          direction: "up",
+          scroll: {
+              items: 1,
+              pauseOnHover: true
+          },
+          height: 450,
+          width: 300
+      });
   });
 }
 

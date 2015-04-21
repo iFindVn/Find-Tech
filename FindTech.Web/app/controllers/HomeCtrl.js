@@ -68,6 +68,7 @@
             $scope.$on('onRepeatLast', function (scope, element, attrs) {
                 bannerSetCarousel();
                 carousel();
+                progressiveSlider();
             });
         }
     ]);
