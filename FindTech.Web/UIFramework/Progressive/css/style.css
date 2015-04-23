@@ -12427,3 +12427,10 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
 .caroufredsel_wrapper {
   margin: 0!important;
 }
+
+.header-wrapper{
+  margin-bottom: 2px;
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,.15);
+  -moz-box-shadow: 0 0 5px rgba(0,0,0,.15);
+  box-shadow: 0 0 5px rgba(0,0,0,.15);
+}
