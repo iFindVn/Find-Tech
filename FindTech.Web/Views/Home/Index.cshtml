@@ -32,6 +32,24 @@
         <div class="container">
             <div class="banners">
                 <a on-last-repeat ng-repeat="article in hotArticles.Articles" ng-attr-href="/bai-viet/{{article.SeoTitle}}" class="banner">
+                    <img ng-src="{{article.RectangleAvatar | width:253:article.Avatar}}" width="253" height="158" alt="">
+                    <h2 class="title">{{article.Title}}</h2>
+                </a>
+            </div><!-- .banners -->
+            <div class="clearfix"></div>
+        </div>
+        <div class="nav-box">
+            <div class="container">
+                <a class="prev" href="#"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                <div class="pagination switches"></div>
+                <a class="next" href="#"><span class="glyphicon glyphicon-arrow-right"></span></a>
+            </div>
+        </div>
+    </div><!-- .banner-set -->
+    @*<div class="banner-set load">
+        <div class="container">
+            <div class="banners">
+                <a on-last-repeat ng-repeat="article in hotArticles.Articles" ng-attr-href="/bai-viet/{{article.SeoTitle}}" class="banner">
                     <div class="box">
                         <img ng-src="{{article.SquareAvatar | width:270:article.Avatar}}" width="275" height="275" alt="">
                         <div class="overlay">
@@ -49,7 +67,7 @@
                 <a class="next" href="#"><span class="glyphicon glyphicon-arrow-right"></span></a>
             </div>
         </div>
-    </div><!-- .banner-set -->
+    </div><!-- .banner-set -->*@
     <section id="main">
         <div class="container">
             <div class="content">
