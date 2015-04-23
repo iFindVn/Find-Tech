@@ -11759,6 +11759,10 @@ padding-bottom: 20px;
     text-decoration: none;
 }
 
+.articles .social .opinion{
+    padding: 15px;
+}
+
 .articles .social .opinion > span {
     font-size: 12px;
     font-weight: bold;
