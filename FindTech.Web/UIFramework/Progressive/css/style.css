@@ -12423,3 +12423,7 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
   text-align: right;
   text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
+
+.caroufredsel_wrapper {
+  margin: 0!important;
+}
