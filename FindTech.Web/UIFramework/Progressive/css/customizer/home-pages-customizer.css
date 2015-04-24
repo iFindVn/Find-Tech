@@ -182,7 +182,7 @@
     border-color: #00ade0;
   }
 }
-.top-navbar .nav > li a,
+.top-navbar .nav > li > a,
 .btn-group.btn-select .dropdown-toggle,
 .product .product-hover,
 .employee .employee-hover,

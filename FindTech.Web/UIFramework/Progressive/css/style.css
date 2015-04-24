@@ -2899,7 +2899,7 @@ blockquote small {
   margin-top: -5px;
   margin-bottom: -5px;
 }
-.top-navbar .nav > li a {
+.top-navbar .nav > li > a {
   font-size: 12px;
   line-height: 22px;
   padding: 9px 15px 9px;
@@ -12443,4 +12443,51 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
     -webkit-box-shadow: 0 0 5px rgba(0,0,0,.15);
   -moz-box-shadow: 0 0 5px rgba(0,0,0,.15);
   box-shadow: 0 0 5px rgba(0,0,0,.15);
+}
+
+#top-box .header .pin-header{
+    margin: 0;
+}
+
+#top-box .header{
+    width: auto;
+  background: #f89406;
+}
+
+#top-box .header .cart-header .dropdown-toggle{
+    padding: 9px 15px 9px;
+    border-width: 0;
+}
+#top-box .header .cart-header.open .dropdown-toggle{
+    border-radius: 0;
+}
+#top-box .header .pin-header .dropdown-toggle{
+    color: #fff !important;
+}
+
+#top-box .header .pin-header.open .dropdown-toggle{
+    color: #f89406 !important;
+}
+
+#top-box .top-navbar .nav > li a .count{
+    background: white;
+    color: #f89406;
+}
+
+#top-box .top-navbar .nav > li:hover a .count{
+    background: #f89406;
+    color: white;
+}
+
+#top-box .dropdown-menu{
+      border-radius: 0 0px 3px 3px;
+}
+
+#top-box .header .cart-header .dropdown-menu{
+    margin: 0;
+}
+
+#top-box .header .cart-header.open .dropdown-toggle:after{
+    left: 0;
+    right: 1px;
 }
