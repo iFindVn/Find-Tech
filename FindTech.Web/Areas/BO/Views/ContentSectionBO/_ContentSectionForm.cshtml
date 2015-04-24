@@ -41,12 +41,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-md-8">
-                        <div class="form-group">
-                            <label for="SectionContent">Nội dung bài viết</label>
-                            <textarea id="section-content-@Model.ContentSectionId" name="SectionContent" rows="10" cols="30" style="width:100%;height:286px">@Html.Raw(Model.SectionContent)</textarea>
-                        </div>
-                    </div>
+                    
                     @if (Model.ContentSectionId > 0)
                     {
                         <div class="col-xs-12 col-md-12" id="images-@Model.ContentSectionId">
@@ -91,6 +86,12 @@
                         }
                         <button type="button" class="btn btn-primary" onclick="submitContentSection($(this).closest('form'))">Save</button>
                         <button type="button" class="btn btn-danger" onclick="deleteContentSection($(this).closest('form'))">Delete</button>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-md-12">
+                    <div class="form-group">
+                        <label for="SectionContent">Nội dung bài viết</label>
+                        <textarea id="section-content-@Model.ContentSectionId" name="SectionContent" rows="10" cols="30" style="width:100%;height:600px">@Html.Raw(Model.SectionContent)</textarea>
                     </div>
                 </div>
             </form>
