@@ -38,7 +38,9 @@ namespace FindTech.Web
                     "~/Areas/BO/UIFramework/KendoUI/styles/kendo.bootstrap.min.css",
                     "~/Areas/BO/UIFramework/KendoUI/styles/kendo.custom.css",
                     "~/Areas/BO/UIFramework/KendoUI/styles/kendo.dataviz.min.css",
-                    "~/Areas/BO/UIFramework/KendoUI/styles/kendo.dataviz.default.min.css"));
+                    "~/Areas/BO/UIFramework/KendoUI/styles/kendo.dataviz.default.min.css",
+                    "~/Areas/BO/UIFramework/KendoUI/styles/kendo.default.min.css",
+                    "~/Areas/BO/UIFramework/KendoUI/styles/kendo.common.min.css"));
 
             bundles.Add(new StyleBundle("~/bo/validation/css").Include(
                 "~/Areas/BO/UIFramework/Validation/styles/formValidation.css"));
