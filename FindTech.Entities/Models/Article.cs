@@ -21,7 +21,6 @@ namespace FindTech.Entities.Models
         public string Avatar { get; set; }
         public string SquareAvatar { get; set; }
         public string RectangleAvatar { get; set; }
-        public string BannerAvatar { get; set; }
         public DateTime PublishedDate { get; set; }
         public string Author { get; set; }
         public BoxSize BoxSize { get; set; }

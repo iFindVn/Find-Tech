@@ -47,7 +47,7 @@
                                         <input type="hidden" id="avatarHidden" name="Avatar" value="@Model.Avatar" />
                                         <input type="hidden" id="squareAvatarHidden" name="squareAvatar" value="@Model.SquareAvatar"/>
                                         <input type="hidden" id="rectangleAvatarHidden" name="rectangleAvatar" value="@Model.RectangleAvatar"/>
-                                        <input type="hidden" id="bannerAvatarHidden" name="bannerAvatar" value="@Model.BannerAvatar"></div>
+                                    </div>
                                 </div>
                                 <div class="col-xs-6 col-md-9">
                                     <div class="form-group">
@@ -289,8 +289,8 @@
 
         picture4.on('load', function () {
             // Initialize plugin (with custom event)
-            
-            picture4.guillotine({ eventOnChange: 'guillotinechange', height: 400, width: 800 });
+            var ratio = document.getElementById("thumbnail_banner").width / document.getElementById("thumbnail_banner").height;
+            picture4.guillotine({ eventOnChange: 'guillotinechange', height: 576, width: 576 * ratio });
             picture4.guillotine('fit');
 
             // Display inital data
@@ -377,8 +377,6 @@
             document.getElementById("thumbnail_square").src = imageUrl;
             document.getElementById("thumbnail_rectangle").src = imageUrl;
             document.getElementById("thumbnail_avatar").src = imageUrl;
-            document.getElementById("imgCrop_banner").src = imageUrl;
-            document.getElementById("thumbnail_banner").src = imageUrl;
         });
         var tags = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -727,7 +725,6 @@
         var datas = $('#imgCrop_sq').guillotine('getData');
         var datar = $('#imgCrop_rec').guillotine('getData');
         var dataa = $('#imgCrop_ava').guillotine('getData');
-        var datab = $('#imgCrop_banner').guillotine('getData');
         var data = {};
         //square data
         data.scales = datas.scale;
@@ -748,13 +745,6 @@
         data.xa = dataa.x;
         data.ya = dataa.y;
 
-        //banner data
-        data.scaleb = datab.scale;
-        data.wb = datab.w;
-        data.hb = datab.h;
-        data.xb = datab.x;
-        data.yb = datab.y;
-
 
         var imagePath = $("#imgCrop_sq").attr("src");
         imagePath = imagePath.split('/ImageBO/Image?path=')[1];
@@ -774,7 +764,6 @@
                 document.getElementById("avatarHidden").value = data.avatar;
                 document.getElementById("squareAvatarHidden").value = data.squareAvatar;
                 document.getElementById("rectangleAvatarHidden").value = data.rectangleAvatar;
-                document.getElementById("bannerAvatarHidden").value = data.bannerAvatar;
 
             },
             error: function (data) { }

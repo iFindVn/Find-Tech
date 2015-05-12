@@ -373,7 +373,7 @@ namespace FindTech.Web.Areas.BO.Controllers
             return CanAccess(path) && IsValidFile(Path.GetExtension(path));
         }
 
-        public ActionResult CropImage(string imagePath, float scales, int ws, int hs, int xs, int ys, float scaler, int wr, int hr, int xr, int yr, float scalea, float wa, float ha, int xa, int ya, float scaleb, float wb, float hb, int xb, int yb)
+        public ActionResult CropImage(string imagePath, float scales, int ws, int hs, int xs, int ys, float scaler, int wr, int hr, int xr, int yr, float scalea, float wa, float ha, int xa, int ya)
         {
             ws = (int)Math.Round((ws / scales), 0);
             hs = (int)Math.Round((hs / scales), 0);
@@ -391,11 +391,6 @@ namespace FindTech.Web.Areas.BO.Controllers
             xa = (int)Math.Round((xa / scalea));
             ya = (int)Math.Round((ya / scalea));
 
-            wb = (int)Math.Round((wb / scaleb));
-            hb = (int)Math.Round((hb / scaleb));
-            xb = (int)Math.Round((xb / scaleb));
-            yb = (int)Math.Round((yb / scaleb));
-
             string urls = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(ws).Height(hs).Crop("crop").X(xs).Y(ys)
                 .Chain().Width(270).Crop("fill"))
                 .BuildUrl(imagePath);
@@ -405,16 +400,12 @@ namespace FindTech.Web.Areas.BO.Controllers
             string avartar = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width((int)wa).Height((int)ha).Crop("crop").X(xa).Y(ya)
                 .Chain().Width(270).Crop("fill"))
                 .BuildUrl(imagePath);
-            string banner = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width((int)wa).Height((int)ha).Crop("crop").X(xa).Y(ya)
-                .Chain().Width(900).Crop("fill"))
-                .BuildUrl(imagePath);
             Object obj = new
             {
                 displayAvatar = urls,
                 avatar = avartar,
                 squareAvatar = urls.Replace("c_fill,w_270", "c_fill,w_{width}"),
-                rectangleAvatar = urlr.Replace("c_fill,w_150", "c_fill,w_{width}"),
-                bannerAvatar = banner.Replace("c_fill,w_270", "c_fill,w_{width}")
+                rectangleAvatar = urlr.Replace("c_fill,w_150", "c_fill,w_{width}")
             };
             return Json(obj);
 
@@ -498,4 +489,3 @@ namespace FindTech.Web.Areas.BO.Controllers
         }
     }
 }
-
