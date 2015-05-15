@@ -20,7 +20,7 @@
                 </div>
 
                 <div class="col-md-3 slider-banners">
-                    <a ng-attr-href="/bai-viet/{{article.SeoTitle}}" ng-repeat="article in entertainmentChannelArticles.Articles track by $index" ng-if="$index < 4">
+                    <a ng-attr-href="/bai-viet/{{article.SeoTitle}}" ng-repeat="article in latestReviews.Articles track by $index" ng-if="$index < 4">
                         <img ng-src="{{article.RectangleAvatar | width:270:article.Avatar}}" width="270" height="150" alt="">
                         <h5 class="title">{{article.Title}}</h5>
                     </a>
@@ -31,7 +31,7 @@
     <div class="banner-set load">
         <div class="container">
             <div class="banners">
-                <a on-last-repeat ng-repeat="article in hotArticles.Articles" ng-attr-href="/bai-viet/{{article.SeoTitle}}" class="banner">
+                <a on-last-repeat ng-repeat="article in hotArticles.Articles track by $index" ng-if="$index >= 4" ng-attr-href="/bai-viet/{{article.SeoTitle}}" class="banner">
                     <img ng-src="{{article.RectangleAvatar | width:253:article.Avatar}}" width="253" height="158" alt="">
                     <h2 class="title">{{article.Title}}</h2>
                 </a>
@@ -72,9 +72,11 @@
             <div class="content">
                 <div class="row">
                     <div class="col-sm-12 col-md-9">
-                        <large-slider-box model="latestReviews"></large-slider-box>
+                        @*<large-slider-box model="latestReviews"></large-slider-box>*@
                         @*@{Html.RenderPartial("_LargeSliderBox", new ArticleListViewModel { Articles = latestReviews, Title = "Đánh giá & So sánh" });}*@
                         <isotope-box model="latestNewses"></isotope-box>
+                        <mini-slider-box model="trickAndTipArticles"></mini-slider-box>
+                        <mini-slider-box model="entertainmentChannelArticles"></mini-slider-box>
                         <article class="content">
                             <div class="bottom-padding bottom-padding-mid">
                                 <div class="title-box">
@@ -85,8 +87,6 @@
                                 </div>
                             </div>
                         </article>
-                        <mini-slider-box model="trickAndTipArticles"></mini-slider-box>
-                        <mini-slider-box model="entertainmentChannelArticles"></mini-slider-box>
                         @*@{Html.RenderAction("_Widget", "Article", new { articleListViewModel = new ArticleListViewModel { WidgetType = WidgetType.MiniSlider, Title = "Thủ thuật" }, searchType = SearchType.Category, keyword = "tin-tong-hop" });}*@
                     </div>
                     <div class="sidebar col-sm-12 col-md-3">
