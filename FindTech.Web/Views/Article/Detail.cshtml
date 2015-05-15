@@ -58,9 +58,9 @@
                                 </div>
                                 <div class="article-paging" ng-if="contentSectionPageManager.contentSectionPages.length > 0">
 
-                                    <a ng-if="contentSectionPageManager.nextPage != null" ng-attr-href="/bai-viet/{{article.SeoTitle}}/{{contentSectionPageManager.nextPage.PageNumber}}" class="next-page"><strong>Trang kế</strong> <i class="fa fa-chevron-right"></i> {{contentSectionPageManager.nextPage.PageName}}</a>
+                                    <a ng-if="contentSectionPageManager.nextPage != null" ng-attr-href="/bai-viet/{{article.SeoTitle}}/{{contentSectionPageManager.nextPage.PageNumber}}" class="next-page col-sm-12 col-md-9"><strong>Trang kế</strong> <i class="fa fa-chevron-right"></i> {{contentSectionPageManager.nextPage.PageName}}</a>
 
-                                    <div class="pagination-box pull-right">
+                                    <div class="pagination-box pull-right col-sm-12 col-md-3">
                                         <ul class="pagination">
                                             @*<li class="disabled"><a href="#"><i class="fa fa-angle-left"></i></a></li>*@
 
@@ -77,18 +77,18 @@
                                     </div>
                                 </div>
                                 <div class="article-footer">
-                                    <div class="opinion col-md-7 col-sm-12">
+                                    <div class="opinion col-md-8 col-sm-12">
                                         <span class="title">Đánh giá bài viết: </span>
                                         <span ng-show="states.ratedOpinion" ng-repeat="opinion in article.Opinions" ng-class="opinion.OpinionBackground" class="opinion-level">{{opinion.OpinionText}}<span class="count">{{opinion.OpinionCount}}</span></span>
                                         <a ng-show="!states.ratedOpinion" ng-repeat="opinion in article.Opinions" href="#" ng-click="rateOpinion(article.ArticleId, opinion.OpinionLevel)" ng-class="opinion.OpinionBackground + '-hover'">{{opinion.OpinionText}}</a>
                                     </div>
-                                    <div class="no-padding col-md-5 col-sm-12">
+                                    <div class="no-padding col-md-4 col-sm-12">
                                         <div class="source">
                                             <span class="blurry-text">Tác giả: </span><strong>{{article.Author}}</strong><br />
                                             <span class="blurry-text">Nguồn: </span><strong>{{article.SourceName}}</strong>
                                         </div>
                                     </div>
-                                    <div class="no-padding col-md-7 col-sm-12">
+                                    <div class="no-padding col-md-8 col-sm-12">
                                         <div class="addthis_sharing_toolbox"></div>
                                         <div class="social">
                                             <a class="fa fa-share-alt" id="zclip" ng-attr-href="{{absUrl}}"></a>
@@ -97,7 +97,7 @@
                                             <input type="text" readonly="readonly" placeholder="Link" onclick="$(this).select();" value="{{absUrl}}">
                                         </div>
                                     </div>
-                                    <div class="no-padding col-md-5 col-sm-12">
+                                    <div class="no-padding col-md-4 col-sm-12">
                                         <div class="addthis_native_toolbox no-margin pull-right"></div>
                                     </div>
                                 </div>

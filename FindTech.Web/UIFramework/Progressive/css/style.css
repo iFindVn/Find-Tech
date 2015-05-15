@@ -11582,7 +11582,6 @@ padding-bottom: 20px;
 
 .banner-set .banner .title {
   /*color: white;
-  font-size: 16px;
   font-weight: normal;
   line-height: 1.2;
   margin: 0;
@@ -11590,12 +11589,13 @@ padding-bottom: 20px;
   text-decoration: none;
   -webkit-transition: all .2s linear;
   transition: all .2s linear;*/
-  display: -webkit-box;
+  font-size: 16px;
+    display: -webkit-box;
   -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  height: 76px;
+  height: 60px;
 }
 
 .banner-set .banner:hover .title {
@@ -12132,12 +12132,16 @@ padding-bottom: 20px;
 }
 
 .article-paging .next-page {
-    display: inline-block;
-    background: #00ade0;
-    color: white;
-    padding: 5px 20px;
-    font-size: 18px;
-    text-decoration: none;
+    display: -webkit-box;
+  background: #00ade0;
+  color: white;
+  padding: 5px 20px 7px 20px;
+  font-size: 18px;
+  text-decoration: none;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
 }
 
 .article-paging .next-page strong{
@@ -12146,7 +12150,9 @@ padding-bottom: 20px;
 
 .article-paging .pagination-box {
     display: inline-block;
-    margin: 14px 0 0;
+  margin: 14px 0 0;
+  text-align: right;
+  padding-right: 0;
 }
 
 .article-paging .pagination-box .pagination {
@@ -12185,7 +12191,12 @@ padding-bottom: 20px;
 }
 
 .article-footer .link {
-    padding-top: 5px;
+      padding-top: 5px;
+  width: 100%;
+  padding-left: 155px;
+  position: absolute;
+  left: 0;
+  z-index: -1;
 }
 
 .article-footer .link input{
@@ -12193,7 +12204,7 @@ padding-bottom: 20px;
     height: 32px;
     background-color: rgb(235, 235, 228);
     padding: 0 10px;
-    width: 200px;
+    width: 100%;
 }
 
 .post .source {
@@ -12404,8 +12415,8 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
 
 .sliders-box a h4{
      position: absolute;
-  top: 0;
-  left: 0;
+  bottom: -150px;
+  left: 15px;
   width: 50%;
   color: white;
   font-weight: normal;  
@@ -12427,11 +12438,14 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
     font-size: 12px;
   color: white;
   position: absolute;
-  top: 30px;
-  right: 15px;
+  bottom: -80px;
+  right: 10px;
   width: 80%;
   text-align: right;
   text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  padding: 10px 10px 10px 10px;
+  background: rgba(0, 0, 0, .5);
+  font-weight: normal;
 }
 
 .caroufredsel_wrapper {
@@ -12490,4 +12504,13 @@ ul.commentlist > li > div.comment:hover > .meta > .button-list {
 #top-box .header .cart-header.open .dropdown-toggle:after{
     left: 0;
     right: 1px;
+}
+
+.progressive-slider-two .pagination {
+  bottom: 0;
+  left: 0;
+  margin: 0 0 10px;
+  position: absolute;
+  right: 15px;
+  text-align: right;
 }
