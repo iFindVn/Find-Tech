@@ -45,6 +45,7 @@ namespace FindTech.Web.Mappers
                 Mapper.CreateMap<SpecGroupBOViewModel, SpecGroup>();
                 Mapper.CreateMap<SpecBOViewModel, Spec>();
                 Mapper.CreateMap<BenchmarkGroupBOViewModel, BenchmarkGroup>();
+                Mapper.CreateMap<VideoBOModel, Video>();
             }
         }
 
@@ -102,6 +103,7 @@ namespace FindTech.Web.Mappers
                 Mapper.CreateMap<Spec, SpecBOViewModel>();
                 Mapper.CreateMap<BenchmarkGroup, BenchmarkGroupBOViewModel>()
                     .ForMember(a => a.Parent, o => o.ResolveUsing(x => Mapper.Map<BenchmarkGroupBOViewModel>(x.Parent) ?? new BenchmarkGroupBOViewModel { BenchmarkGroupId = 0, BenchmarkGroupName = "Root" }));
+                Mapper.CreateMap<Video, VideoBOModel>();
             }
 
             private string GetOpinionText(OpinionLevel? opinionLevel)

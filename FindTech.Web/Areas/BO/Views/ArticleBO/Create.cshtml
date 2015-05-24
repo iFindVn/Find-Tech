@@ -105,7 +105,8 @@
                                         <input type='text' id="datetimepicker" name="PublishedDate" placeholder="Date create" value="@Model.PublishedDate" />
                                     </div>
                                     <div class="form-group">
-                                        <label for="title">Priority</label>
+                                        <label for="title">
+                                        </label>
                                         <input type="text" class="form-control" id="priority" name="Priority" placeholder="Input Priority" data-fv-integer="true"
                                                data-fv-integer-message="The value is not an integer" value="@Model.Priority" />
                                     </div>
@@ -486,7 +487,7 @@
          */
 
         $("#category").kendoDropDownList({
-            optionLabel: "Select Category",
+            //optionLabel: "Select Category",
             dataTextField: "ArticleCategoryName",
             dataValueField: "ArticleCategoryId",
             dataSource: {
@@ -502,7 +503,7 @@
 
 
         $("#source").kendoDropDownList({
-            optionLabel: "Select Source",
+            //optionLabel: "Select Source",
             dataTextField: "SourceName",
             dataValueField: "SourceId",
             dataSource: {
@@ -513,11 +514,13 @@
                     }
                 }
             },
-            change: onChangeSource
+            change: onChangeSource,
+            index: 2
         });
 
+
         $("#articleType").kendoDropDownList({
-            optionLabel: "Select Article Type",
+            //optionLabel: "Select Article Type",
             dataTextField: "text",
             dataValueField: "value",
             dataSource: [
@@ -528,7 +531,7 @@
         });
 
         $("#boxSize").kendoDropDownList({
-            optionLabel: "Select Box Size",
+            //optionLabel: "Select Box Size",
             dataTextField: "text",
             dataValueField: "value",
             dataSource: [
@@ -628,6 +631,11 @@
                     validators: {
                         notEmpty: {
                             message: 'The username is required and can\'t be empty'
+                        },
+                        stringLength: {
+                            min: 70,
+                            max: 160,
+                            message: 'The decription must be more than 70 and less than 160 characters long'
                         }
                     }
                 },

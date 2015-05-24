@@ -45,7 +45,7 @@ namespace FindTech.Web.Areas.BO.Controllers
                 videoService.Insert(video);
                 unitOfWork.SaveChanges();
                 videoBOModels.RemoveAt(i);
-                videoBOModels.Add(Mapper.Map<VideoBOModel>(video));
+                videoBOModels.Add(videoBOModel);
             }
             return Json(videoBOModels, JsonRequestBehavior.AllowGet);
         }
