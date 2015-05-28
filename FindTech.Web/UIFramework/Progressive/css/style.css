@@ -12122,7 +12122,7 @@ padding-bottom: 20px;
 
 .article-footer {
     margin-top: 20px;
-    height: 50px;
+    display: inline-block;
 }
 
 .article-footer > div > div {
@@ -12194,6 +12194,7 @@ padding-bottom: 20px;
       padding-top: 5px;
   width: 100%;
   padding-left: 155px;
+  padding-right: 300px;
   position: absolute;
   left: 0;
   z-index: -1;
@@ -12206,7 +12207,9 @@ padding-bottom: 20px;
     padding: 0 10px;
     width: 100%;
 }
-
+.article-footer div{
+    display: inline-block;
+}
 .post .source {
     float: right;
     margin-right: 0;
@@ -12256,7 +12259,7 @@ border-bottom: 1px solid #e1e1e1;
 }
 
 .blog-post .post {
-    margin-bottom: 60px;
+    margin-bottom: 16px;
 }
 
 .blog-post .commentlist {
