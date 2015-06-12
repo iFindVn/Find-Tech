@@ -10,6 +10,14 @@
     var articleType = (int) Model.ArticleType;
     var contentSectionIds = String.Join(",", contentSections.Select(a => a.ContentSectionId));
 }
+
+<script src="~/Areas/BO/UIFramework/Guillotine/js/jquery.guillotine.js"></script>
+<link rel="stylesheet" href="~/Areas/BO/UIFramework/Guillotine/css/jquery.guillotine.css" type="text/css" />
+<link rel="stylesheet" href="~/Areas/BO/UIFramework/KendoUI/styles/kendo.common.min.css" />
+<link rel="stylesheet" href="~/Areas/BO/UIFramework/KendoUI/styles/kendo.default.min.css" />
+<link rel="stylesheet" href="~/Areas/BO/UIFramework/KendoUI/styles/kendo.dataviz.min.css" />
+<link rel="stylesheet" href="~/Areas/BO/UIFramework/KendoUI/styles/kendo.dataviz.default.min.css" />
+
 <div class="breadcrumb-box">
     <div class="container">
         <ul class="breadcrumb">
@@ -227,8 +235,8 @@
             picture.guillotine('fit');
 
             // Display inital data
-            var data = picture.guillotine('getData');
-            for (var key in data) { $('#' + key).html(data[key]); }
+            //var data = picture.guillotine('getData');
+            //for (var key in data) { $('#' + key).html(data[key]); }
 
             // Bind button actions
             
@@ -249,8 +257,8 @@
             picture2.guillotine('fit');
 
             // Display inital data
-            var data = picture2.guillotine('getData');
-            for (var key in data) { $('#' + key).html(data[key]); }
+            //var data = picture2.guillotine('getData');
+            //for (var key in data) { $('#' + key).html(data[key]); }
 
             // Bind button actions
 
@@ -272,8 +280,8 @@
             picture3.guillotine('fit');
 
             // Display inital data
-            var data = picture3.guillotine('getData');
-            for (var key in data) { $('#' + key).html(data[key]); }
+            //var data = picture3.guillotine('getData');
+            //for (var key in data) { $('#' + key).html(data[key]); }
 
             // Bind button actions
 
@@ -295,8 +303,8 @@
             picture4.guillotine('fit');
 
             // Display inital data
-            var data = picture4.guillotine('getData');
-            for (var key in data) { $('#' + key).html(data[key]); }
+            //var data = picture4.guillotine('getData');
+            //for (var key in data) { $('#' + key).html(data[key]); }
 
             // Bind button actions
 
@@ -371,7 +379,8 @@
             $('#rootwizard').bootstrapWizard('disable', 1);
         }
         window.applyImageBrowser($('#avatar'), function (imageName, imageUrl, thumbnailUrl, button) {
-            $('#imgCroper').modal({ backdrop: 'static' });
+            //Don't show modal, call DropImage controller
+            /*$('#imgCroper').modal({ backdrop: 'static' });
             document.getElementById("imgCrop_sq").src = imageUrl;
             document.getElementById("imgCrop_rec").src = imageUrl;
             document.getElementById("imgCrop_ava").src = imageUrl;
@@ -379,7 +388,8 @@
             document.getElementById("thumbnail_rectangle").src = imageUrl;
             document.getElementById("thumbnail_avatar").src = imageUrl;
             document.getElementById("imgCrop_banner").src = imageUrl;
-            document.getElementById("thumbnail_banner").src = imageUrl;
+            document.getElementById("thumbnail_banner").src = imageUrl;*/
+            getcropimgdata(imageUrl);
         });
         var tags = new Bloodhound({
             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
@@ -731,13 +741,13 @@
         });
     };
 
-    function getcropimgdata() {
+    function getcropimgdata(imagePath) {
         var datas = $('#imgCrop_sq').guillotine('getData');
         var datar = $('#imgCrop_rec').guillotine('getData');
         var dataa = $('#imgCrop_ava').guillotine('getData');
         var datab = $('#imgCrop_banner').guillotine('getData');
         var data = {};
-        //square data
+        /*//square data
         data.scales = datas.scale;
         data.ws = datas.w;
         data.hs = datas.h;
@@ -762,14 +772,14 @@
         data.hb = datab.h;
         data.xb = datab.x;
         data.yb = datab.y;
+        */
 
-
-        var imagePath = $("#imgCrop_sq").attr("src");
+        //var imagePath = $("#imgCrop_sq").attr("src");
         imagePath = imagePath.split('/ImageBO/Image?path=')[1];
         data.imagePath = imagePath;
 
         $.ajax({
-            url: '/ImageBO/CropImage',
+            url: '/ImageBO/CropImage1',
             type: 'POST',
             data: data,
             success: function (data) {
@@ -842,9 +852,4 @@
 
 </script>
 
-<script src="~/Areas/BO/UIFramework/Guillotine/js/jquery.guillotine.min.js"></script>
-<link rel="stylesheet" href="~/Areas/BO/UIFramework/Guillotine/css/jquery.guillotine.css" type="text/css" />
-<link rel="stylesheet" href="~/Areas/BO/UIFramework/KendoUI/styles/kendo.common.min.css" />
-<link rel="stylesheet" href="~/Areas/BO/UIFramework/KendoUI/styles/kendo.default.min.css" />
-<link rel="stylesheet" href="~/Areas/BO/UIFramework/KendoUI/styles/kendo.dataviz.min.css" />
-<link rel="stylesheet" href="~/Areas/BO/UIFramework/KendoUI/styles/kendo.dataviz.default.min.css" />
+

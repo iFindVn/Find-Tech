@@ -11,7 +11,8 @@
                 <div class="col-md-9 sliders-container">
                     <div class="sliders-box">
                         <a ng-attr-href="/bai-viet/{{article.SeoTitle}}" ng-repeat="article in hotArticles.Articles track by $index" ng-if="$index < 4">
-                            <img ng-src="{{article.RectangleAvatar | width:900:article.Avatar}}" width="900" height="450" alt="">
+                            @*<img ng-src="{{article.RectangleAvatar | width:900:article.Avatar}}" width="900" height="450" alt="">*@
+                            <img ng-src="{{article.BannerAvatar}}" width="900" height="450" alt="">
                             <h4 class="title">{{article.Title}}</h4>
                         </a>
                     </div><!-- .sliders-box -->

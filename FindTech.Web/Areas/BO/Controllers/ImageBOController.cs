@@ -91,8 +91,9 @@ namespace FindTech.Web.Areas.BO.Controllers
                 Type = "upload",
                 MaxResults = 100
             };
-            //var listResource = cloudinary.ListResources(listResourceParams).Resources;
-            var listResource = cloudinary.ListResourcesByTag("user_upload").Resources;
+            var listResource = cloudinary.ListResources(listResourceParams).Resources;
+            //var listResource = cloudinary.ListResourcesByTag("user_upload").Resources;
+            
 
             var result = listResource.Select(f => new
             {
@@ -371,6 +372,27 @@ namespace FindTech.Web.Areas.BO.Controllers
         public virtual bool AuthorizeImage(string path)
         {
             return CanAccess(path) && IsValidFile(Path.GetExtension(path));
+        }
+
+        public ActionResult CropImage1(string imagePath)
+        {
+            string urls = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(270).Height(270).Crop("fill"))
+                .BuildUrl(imagePath);
+            string urlr = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(150).Height(100).Crop("fill"))
+                .BuildUrl(imagePath);
+            string avartar = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(270).Crop("fill"))
+                .BuildUrl(imagePath);
+            string banner = cloudinary.Api.UrlImgUp.Transform(new Transformation().Width(900).Height(450).Crop("fill"))
+                .BuildUrl(imagePath);
+            Object obj = new
+            {
+                displayAvatar = urls,
+                avatar = avartar,
+                squareAvatar = urls.Replace("c_fill,w_270", "c_fill,w_{width}"),
+                rectangleAvatar = urlr.Replace("c_fill,w_150", "c_fill,w_{width}"),
+                bannerAvatar = banner.Replace("c_fill,w_270", "c_fill,w_{width}")
+            };
+            return Json(obj);
         }
 
         public ActionResult CropImage(string imagePath, float scales, int ws, int hs, int xs, int ys, float scaler, int wr, int hr, int xr, int yr, float scalea, float wa, float ha, int xa, int ya, float scaleb, float wb, float hb, int xb, int yb)

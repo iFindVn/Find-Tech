@@ -27,6 +27,7 @@ namespace FindTech.Web.Areas.BO.Models
         public int ArticleCategoryId { get; set; }
         public string SquareAvatar { get; set; }
         public string RectangleAvatar { get; set; }
+        public string BannerAvatar { get; set; }
     }
 
     public class ArticleTypeDropDown
