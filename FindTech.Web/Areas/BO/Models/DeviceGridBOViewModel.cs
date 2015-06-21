@@ -17,11 +17,15 @@ namespace FindTech.Web.Areas.BO.Models
         public DateTime? ReleasedDate { get; set; }
         public int ViewCount { get; set; }
         public BoxSizeDropDown BoxSize { get; set; }
+        public int Priority { get; set; }
+        public int Brand { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public int Article_ArticleId { get; set; }
         public bool IsHot { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }
-        public int Priority { get; set; }
-        public virtual BrandBOViewModel Brand { get; set; }
+       
+        
     }
 
     public class MarketStatusDropDown

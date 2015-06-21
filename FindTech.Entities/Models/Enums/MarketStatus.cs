@@ -2,6 +2,6 @@
 {
     public enum MarketStatus
     {
-        Saled, CommingSoon
+          Saled = 1, CommingSoon = 2
     }
 }

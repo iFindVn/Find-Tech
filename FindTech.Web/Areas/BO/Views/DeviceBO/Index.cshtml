@@ -36,7 +36,7 @@
 </section><!-- #main -->
 <script type="text/x-kendo-template" id="deviceToolbarTemplate">
     <div class="toolbar">
-        <button class="k-button k-grid-save-changes">Save</button>
+        <button class="k-button k-grid-save-changes">Save</button>  
         <button class="k-button k-grid-cancel-changes">Cancel</button>
         <button id="active" class="k-button">Active</button>
         <button id="viewDetail" class="k-button">View Detail</button>
@@ -81,8 +81,9 @@
                         fields: {
                             DeviceId: { editable: false, nullable: true },
                             DeviceName: { validation: { required: true } },
-                            MarketStatus: { type: "string" },
                             Priority: { type: "string" },
+                            BrandId: { type: "string" },
+                            Article_ArticelId: { type: "string" },
                             IsHot: {type: "boolean"},
                             IsDeleted: { type: "boolean" },
                             IsActived: { type: "boolean" },
@@ -108,8 +109,8 @@
             toolbar: kendo.template($("#deviceToolbarTemplate").html()),
             columns: [
                 { field: "DeviceId", title: "Id", width: 50 },
-                { field: "DeviceName", title: "Device Name", width: 150},
-                { field: "MarketStatus", title: "Market Status", width: 50 },
+                { field: "DeviceName", title: "Device Name", width: 150 },
+                { field: "MarketStatus", title: "Market Status", width: 80, editor: marketDropDownEditor, template: "#=MarketStatus.MarketStatusName#" },
                 { field: "Priority", title: "Priority", width: 80 },
                 { field: "BoxSize", title: "Box Size", width: 80, editor: boxSizeDropDownEditor, template: "#=BoxSize.BoxSizeName#" },
                 { field: "IsHot", title: "IsHot", width: 80 },
@@ -130,6 +131,19 @@
                       { BoxSizeName: "Box1", BoxSizeId: "1" },
                       { BoxSizeName: "Box2", BoxSizeId: "2" },
                       { BoxSizeName: "Box3", BoxSizeId: "3" }
+                    ]
+                });
+        }
+        
+
+        function marketDropDownEditor(container, options) {
+            $('<input required data-text-field="MarketStatusName" data-value-field="MarketStatusId" data-bind="value:' + options.field + '"/>')
+                .appendTo(container)
+                .kendoDropDownList({
+                    autoBind: false,
+                    dataSource: [
+                      { MarketStatusName: "Saled", MarketStatusId: "1" },
+                      { MarketStatusName: "CommingSoon", MarketStatusId: "2" },
                     ]
                 });
         }

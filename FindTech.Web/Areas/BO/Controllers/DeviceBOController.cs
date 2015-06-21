@@ -117,7 +117,7 @@ namespace FindTech.Web.Areas.BO.Controllers
         [ValidateInput(false)]
         public ActionResult Destroy(string models)
         {
-            var deviceBOViewModel = JsonConvert.DeserializeObject<DeviceBOViewModel>(models);
+            var deviceBOViewModel = JsonConvert.DeserializeObject<DeviceGridBOViewModel>(models);
             var device = Mapper.Map<Device>(deviceBOViewModel);
             device.IsDeleted = true;
             deviceService.Update(device);
@@ -128,7 +128,7 @@ namespace FindTech.Web.Areas.BO.Controllers
         [ValidateInput(false)]
         public ActionResult Update(string models)
         {
-            var deviceBOViewModel = JsonConvert.DeserializeObject<DeviceBOViewModel>(models);
+            var deviceBOViewModel = JsonConvert.DeserializeObject<DeviceGridBOViewModel>(models);
             var device = Mapper.Map<Device>(deviceBOViewModel);
             deviceService.Update(device);
             var result = unitOfWork.SaveChanges();
