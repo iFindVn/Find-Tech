@@ -89,7 +89,9 @@ namespace FindTech.Web.App_Start
                 .RegisterType<IRepositoryAsync<Video>, Repository<Video>>()
                 .RegisterType<IVideoService, VideoService>()
                 .RegisterType<IFindTechStoredProcedures, FindTechContext>(new PerRequestLifetimeManager())
-                .RegisterType<IStoredProcedureService, StoredProcedureService>();
+                .RegisterType<IStoredProcedureService, StoredProcedureService>()
+                .RegisterType<IDeviceService, DeviceService>()
+                .RegisterType<IRepositoryAsync<Device>, Repository<Device>>();
         }
     }
 }

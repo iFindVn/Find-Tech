@@ -49,9 +49,33 @@
                     </div>
                     
                 </div>
+                <div class="row">
+                    <div class="spec" id="spec">
+
+                    </div>
+                </div>
 
                 <script>
                     $(document).ready(function () {
+
+                        $.ajax({
+                            url: '/SpecGroupBO/GetSpecGroups',
+                            success: function (data) {
+                                for (i = 0; i < data.length; i++) {
+                                    //add data item to html
+                                }
+                                alert(data);
+                            },
+                            statusCode: {
+                                404: function (content) { alert('cannot find resource'); },
+                                500: function (content) { alert('internal server error'); }
+                            },
+                            error: function (req, status, errorObj) {
+                                // handle status === "timeout"
+                                // handle other errors
+                            }
+                        });
+
 
                         var specDetailBOUrl = "/DeviceBO",
             dataSource = new kendo.data.DataSource({
@@ -88,7 +112,7 @@
                         id: "SpecDetailId",
                         fields: {
                             SpecName: { validation: { required: true } },
-                            Value: {validation:{required:true}},
+                            Value: { validation: { required: true } },
                             Hightlight: { type: "boolean" },
                             CreatedDate: { type: "string" }
                         }
@@ -96,32 +120,32 @@
                 }
             });
 
-                    $("#specGrid").kendoGrid({
-                        navigatable: true,
-                        pageable: true,
-                        height: 550,
-                        toolbar: ["create", "save", "cancel"],
-                        columns: [
-                            { field: "SpecName", title: "Spec Name", width: 120, editor: specDropDownEditor },
-                            { field: "Hightlight", title: "Hightlight", width: 70 },
-                            { field: "CreatedDate", title: "Created Date", width: 70 },
-                            { command: "destroy", title: "&nbsp;", width: 100 }],
-                        editable: true
-                    });
+                        $("#specGrid").kendoGrid({
+                            navigatable: true,
+                            pageable: true,
+                            height: 550,
+                            toolbar: ["create", "save", "cancel"],
+                            columns: [
+                                { field: "SpecName", title: "Spec Name", width: 120, editor: specDropDownEditor },
+                                { field: "Hightlight", title: "Hightlight", width: 70 },
+                                { field: "CreatedDate", title: "Created Date", width: 70 },
+                                { command: "destroy", title: "&nbsp;", width: 100 }],
+                            editable: true
+                        });
 
-                    $("#txtBrand").kendoDropDownList({
-                        optionLabel: "Select Brand",
-                        dataTextField: "BrandName",
-                        dataValueField: "BrandId",
-                        dataSource: {
-                            transport: {
-                                read: {
-                                    dataType: "json",
-                                    url: "../BrandBO/GetBrands",
+                        $("#txtBrand").kendoDropDownList({
+                            optionLabel: "Select Brand",
+                            dataTextField: "BrandName",
+                            dataValueField: "BrandId",
+                            dataSource: {
+                                transport: {
+                                    read: {
+                                        dataType: "json",
+                                        url: "../BrandBO/GetBrands",
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
                     });
 
                     function specDropDownEditor(container, options) {
