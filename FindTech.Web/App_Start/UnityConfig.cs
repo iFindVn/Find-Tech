@@ -72,6 +72,8 @@ namespace FindTech.Web.App_Start
                 .RegisterType<IOpinionService, OpinionService>()
                 .RegisterType<IRepositoryAsync<Brand>, Repository<Brand>>()
                 .RegisterType<IBrandService, BrandService>()
+                .RegisterType<IRepositoryAsync<Device>, Repository<Device>>()
+                .RegisterType<IDeviceService, DeviceService>()
                 .RegisterType<IRepositoryAsync<SpecGroup>, Repository<SpecGroup>>()
                 .RegisterType<ISpecGroupService, SpecGroupService>()
                 .RegisterType<IRepositoryAsync<Spec>, Repository<Spec>>()

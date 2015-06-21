@@ -16,9 +16,9 @@ namespace FindTech.Entities.Models
         public int ViewCount { get; set; }
         public BoxSize BoxSize { get; set; }
         public int Priority { get; set; }
-        public bool isHot { get; set; }
-        public bool isDeleted { get; set; }
-        public bool isActive { get; set; }
+        public bool IsHot { get; set; }
+        public bool IsDeleted { get; set; }
+        public bool IsActive { get; set; }
         public int BrandId { get; set; }
         public virtual Brand Brand { get; set; }
         public virtual ICollection<Benchmark> Benchmarks { get; set; }

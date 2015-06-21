@@ -1,4 +1,8 @@
-﻿using AutoMapper;
+﻿using System.Data.SqlClient;
+using System.Globalization;
+using System.Text;
+using AutoMapper;
+using FindTech.Entities.Models;
 using FindTech.Web.Areas.BO.Models;
 using System;
 using System.Collections.Generic;
@@ -6,6 +10,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FindTech.Services;
+using Newtonsoft.Json;
 using Repository.Pattern.UnitOfWork;
 
 namespace FindTech.Web.Areas.BO.Controllers
@@ -15,92 +20,120 @@ namespace FindTech.Web.Areas.BO.Controllers
         private IDeviceService deviceService { get; set; }
         private IUnitOfWorkAsync unitOfWork { get; set; }
 
-        //public DeviceBOController(IDeviceService deviceService, IUnitOfWorkAsync unitOfWork)
-        //{
-        //    this.deviceService = deviceService;
-        //    this.unitOfWork = unitOfWork;
-        //}
+        public DeviceBOController(IDeviceService deviceService, IUnitOfWorkAsync unitOfWork)
+        {
+            this.deviceService = deviceService;
+            this.unitOfWork = unitOfWork;
+        }
         // GET: BO/DevicesBO
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: BO/DevicesBO/Details/5
-        public ActionResult Details(int id)
+        public ActionResult GetDevices(int skip, int take, String filter)
         {
-            return View();
-        }
 
-        // GET: BO/DevicesBO/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+            var total = deviceService.Query().Select().Count(a => a.IsDeleted != true);
+            var devices = new List<Device>();
 
-        // POST: BO/DevicesBO/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
+            if (filter != null)
             {
-                // TODO: Add insert logic here
+                var deviceGridFilterBOViewModel = JsonConvert.DeserializeObject<DeviceGridListFiltersBOViewModel>(filter);
+                var listParame = new List<string>();
+                var query = BuildingWhereClause(deviceGridFilterBOViewModel, listParame);
 
-                return RedirectToAction("Index");
+
+                var whereClause = new SqlParameter
+                {
+                    ParameterName = "whereClause",
+                    Value = query.ToString(),
+
+                };
+
+                var paramSkip = new SqlParameter
+                {
+                    ParameterName = "skip",
+                    Value = skip.ToString(CultureInfo.InvariantCulture)
+                };
+
+                var paramTake = new SqlParameter
+                {
+                    ParameterName = "take",
+                    Value = take.ToString(CultureInfo.InvariantCulture)
+                };
+
+                devices = deviceService.SelectQuery("exec ifadmin.SP_Article_BO_getDevicesByFiltersPaging @whereClause, @skip, @take", whereClause, paramSkip, paramTake).ToList();
             }
-            catch
+            else
             {
-                return View();
+                devices = deviceService.Queryable().Where(a => a.IsDeleted != true).OrderByDescending(a => a.CreatedDate).Skip(skip).Take(take).ToList();
             }
+            return Json(new { devices = devices.Select(Mapper.Map<DeviceGridBOViewModel>), totalCount = total }, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: BO/DevicesBO/Edit/5
-        public ActionResult Edit(int id)
+        private StringBuilder BuildingWhereClause(DeviceGridListFiltersBOViewModel deviceGridListFiltersBOViewModel, List<String> Params)
         {
-            return View();
-        }
+            var query = new StringBuilder();
+            query.Append(" ( ");
 
-        // POST: BO/DevicesBO/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
+            for (int i = 0; i < deviceGridListFiltersBOViewModel.Filters.Count; i++)
             {
-                // TODO: Add update logic here
+                var filter = deviceGridListFiltersBOViewModel.Filters[i];
+                if (i > 0)
+                {
+                    query.Append(" ");
+                    query.Append(deviceGridListFiltersBOViewModel.Logic);
+                    query.Append(" ");
+                }
+                query.Append(filter.Field);
+                query.Append(" ");
+                if (filter.Operator.Equals("eq"))
+                {
+                    query.Append(" = '" + filter.Value + "'");
+                }
+                else if (filter.Operator.Equals("ne"))
+                {
+                    query.Append(" <>'" + filter.Value + "'");
+                }
+                else if (filter.Operator.Equals("contains"))
+                {
+                    query.Append("Like N'%" + filter.Value + "%' ");
+                }
+                else if (filter.Operator.Equals("startswith"))
+                {
+                    query.Append("Like N'%" + filter.Value + "'");
+                }
+                else if (filter.Operator.Equals("endswith"))
+                {
+                    query.Append("Like N'" + filter.Value + "%' ");
+                }
+            }
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            query.Append(" ) ");
+            return query;
         }
 
-        // GET: BO/DevicesBO/Delete/5
-        public ActionResult Delete(int id)
+        [ValidateInput(false)]
+        public ActionResult Destroy(string models)
         {
-            return View();
+            var deviceBOViewModel = JsonConvert.DeserializeObject<DeviceBOViewModel>(models);
+            var device = Mapper.Map<Device>(deviceBOViewModel);
+            device.IsDeleted = true;
+            deviceService.Update(device);
+            var result = unitOfWork.SaveChanges();
+            return Json(result);
         }
 
-        // POST: BO/DevicesBO/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [ValidateInput(false)]
+        public ActionResult Update(string models)
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            var deviceBOViewModel = JsonConvert.DeserializeObject<DeviceBOViewModel>(models);
+            var device = Mapper.Map<Device>(deviceBOViewModel);
+            deviceService.Update(device);
+            var result = unitOfWork.SaveChanges();
+            return Json(result);
         }
 
-        public ActionResult GetDeviceSpec()
-        {
-            return Json(true);
-        }
     }
 }

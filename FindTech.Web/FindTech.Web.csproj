@@ -222,11 +222,15 @@
     <Compile Include="Areas\BO\Controllers\ContentSectionBOController.cs" />
     <Compile Include="Areas\BO\Controllers\VideoBOController.cs" />
     <Compile Include="Areas\BO\Controllers\XpathBOController.cs" />
+    <Compile Include="Areas\BO\DeviceGridFilterBOViewModel.cs" />
+    <Compile Include="Areas\BO\DeviceGridListFiltersBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\ArticleGridListFiltersBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\ArticleGridBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\BrandBOViewModel.cs" />
+    <Compile Include="Areas\BO\Models\Common\BoxSizeDropDown.cs" />
     <Compile Include="Areas\BO\Models\DeviceBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\ArticleGridFilterBOViewModel.cs" />
+    <Compile Include="Areas\BO\Models\DeviceGridBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\SpecBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\BenchmarkGroupBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\SpecDetailBOViewModel.cs" />

@@ -5,8 +5,10 @@ using FindTech.Entities.Models;
 using FindTech.Entities.Models.Enums;
 using FindTech.Entities.StoredProcedures.Models;
 using FindTech.Web.Areas.BO.Models;
+using FindTech.Web.Areas.BO.Models.Common;
 using FindTech.Web.Models;
 using Microsoft.Ajax.Utilities;
+
 
 namespace FindTech.Web.Mappers
 {
@@ -42,6 +44,9 @@ namespace FindTech.Web.Mappers
                 Mapper.CreateMap<SourceBOViewModel, Source>();
                 Mapper.CreateMap<XpathBOViewModel, Xpath>();
                 Mapper.CreateMap<BrandBOViewModel, Brand>();
+                Mapper.CreateMap<DeviceGridBOViewModel, Device>()
+                    .ForMember(a => a.BoxSize, o => o.MapFrom(x => x.BoxSize.BoxSizeId))
+                    .ForMember(a => a.MarketStatus, o => o.MapFrom(x => x.MarketStatus.MarketStatusId));
                 Mapper.CreateMap<SpecGroupBOViewModel, SpecGroup>();
                 Mapper.CreateMap<SpecBOViewModel, Spec>();
                 Mapper.CreateMap<BenchmarkGroupBOViewModel, BenchmarkGroup>();
@@ -99,6 +104,9 @@ namespace FindTech.Web.Mappers
                 Mapper.CreateMap<Source, SourceBOViewModel>();
                 Mapper.CreateMap<Xpath, XpathBOViewModel>();
                 Mapper.CreateMap<Brand, BrandBOViewModel>();
+                Mapper.CreateMap<Device, DeviceGridBOViewModel>()
+                    .ForMember(a => a.BoxSize, o => o.MapFrom(x => new BoxSizeDropDown { BoxSizeId = (int)x.BoxSize, BoxSizeName = x.BoxSize.ToString() }))
+                    .ForMember(a => a.MarketStatus, o => o.MapFrom(x => new MarketStatusDropDown { MarketStatusId = (int)x.MarketStatus, MarketStatusName = x.MarketStatus.ToString() })); 
                 Mapper.CreateMap<SpecGroup, SpecGroupBOViewModel>();
                 Mapper.CreateMap<Spec, SpecBOViewModel>();
                 Mapper.CreateMap<BenchmarkGroup, BenchmarkGroupBOViewModel>()

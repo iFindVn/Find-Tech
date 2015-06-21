@@ -1,5 +1,6 @@
 ﻿using System;
 using FindTech.Entities.Models.Enums;
+using FindTech.Web.Areas.BO.Models.Common;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -36,9 +37,5 @@ namespace FindTech.Web.Areas.BO.Models
         public String ArticleTypeName { get; set; }
     }
 
-    public class BoxSizeDropDown
-    {
-        public int BoxSizeId { get; set; }
-        public String BoxSizeName { get; set; }
-    }
+    
 }

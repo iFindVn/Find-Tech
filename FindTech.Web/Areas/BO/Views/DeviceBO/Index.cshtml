@@ -1,15 +1,194 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Areas/BO/Views/Shared/_Layout.cshtml";
 }
-
 <div class="breadcrumb-box">
     <div class="container">
         <ul class="breadcrumb">
-            <li><a href="@Url.Action("Index", "ArticleBO")">BO</a> </li>
-            <li class="active">Brand</li>
+            <li><a href="@Url.Action("Index", "DeviceBO")">BO</a> </li>
+            <li class="active">Device</li>
         </ul>
     </div>
 </div>
+<div class="clearfix"></div>
+<section id="main">
+    <div class="container" id="container">
+        <div class="content">
+            <div class="row">
 
+
+                <div id="articleToolbar"></div>
+                <div id="deviceGrid"></div>
+            </div>
+        </div><!-- .content -->
+    </div>
+
+    <div class="modal fade" id="waitDialog" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">
+        <div class="modal-dialog modal-m">
+            <div class="modal-content">
+                <div class="modal-header"><h3 style="margin:0;">Please wait ...</h3></div>
+                <div class="modal-body">
+                    <div class="progress progress-striped active" style="margin-bottom:0;"><div class="progress-bar" style="width: 100%"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- #main -->
+<script type="text/x-kendo-template" id="deviceToolbarTemplate">
+    <div class="toolbar">
+        <button class="k-button k-grid-save-changes">Save</button>
+        <button class="k-button k-grid-cancel-changes">Cancel</button>
+        <button id="active" class="k-button">Active</button>
+        <button id="viewDetail" class="k-button">View Detail</button>
+        <button id="readRss" class="k-button pull-right">Read Rss</button>
+    </div>
+</script>
+<script>
+    $(document).ready(function () {
+        var deviceUrl = "/BO/DeviceBO",
+            dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: deviceUrl + "/GetDevices",
+                        dataType: "json"
+                    },
+                    update: {
+                        url: deviceUrl + "/Update",
+                        dataType: "json",
+                        type: "post"
+                    },
+                    destroy: {
+                        url: deviceUrl + "/Destroy",
+                        dataType: "json",
+                        type: "post"
+                    },
+                    create: {
+                        url: deviceUrl + "/Create",
+                        dataType: "json",
+                        type: "post"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation !== "read" && options) {
+                            return { models: kendo.stringify(options) };
+                        } else {
+                            return {skip: options.skip, take: options.take, filter: kendo.stringify(options.filter)};
+                        }
+                    }
+                },
+                schema: {
+                    model: {
+                        id: "DeviceId",
+                        fields: {
+                            DeviceId: { editable: false, nullable: true },
+                            DeviceName: { validation: { required: true } },
+                            MarketStatus: { type: "string" },
+                            Priority: { type: "string" },
+                            IsHot: {type: "boolean"},
+                            IsDeleted: { type: "boolean" },
+                            IsActived: { type: "boolean" },
+                            
+                        }
+                    },
+                    data: "devices",
+                    total: "totalCount"
+                },
+                pageSize: 10,
+                serverPaging: true,
+                serverFiltering: true,
+                serverSorting: true
+            });
+
+        $("#deviceGrid").kendoGrid({
+            dataSource: dataSource,
+            navigatable: true,
+            pageable: true,
+            filterable: true,
+            height: 550,
+            selectable: "multiple",
+            toolbar: kendo.template($("#deviceToolbarTemplate").html()),
+            columns: [
+                { field: "DeviceId", title: "Id", width: 50 },
+                { field: "DeviceName", title: "Device Name", width: 150},
+                { field: "MarketStatus", title: "Market Status", width: 50 },
+                { field: "Priority", title: "Priority", width: 80 },
+                { field: "BoxSize", title: "Box Size", width: 80, editor: boxSizeDropDownEditor, template: "#=BoxSize.BoxSizeName#" },
+                { field: "IsHot", title: "IsHot", width: 80 },
+                { field: "IsDeleted", title: "IsDeleted", width: 80 },
+                { field: "IsActived", title: "IsActived", width: 80 },
+                { command: [{ text: "Details", click: showDetails}, "destroy"], title: "&nbsp;", width: 186 }],
+            editable: true
+        });
+
+
+       
+        function boxSizeDropDownEditor(container, options) {
+            $('<input required data-text-field="BoxSizeName" data-value-field="BoxSizeId" data-bind="value:' + options.field + '"/>')
+                .appendTo(container)
+                .kendoDropDownList({
+                    autoBind: false,
+                    dataSource: [
+                      { BoxSizeName: "Box1", BoxSizeId: "1" },
+                      { BoxSizeName: "Box2", BoxSizeId: "2" },
+                      { BoxSizeName: "Box3", BoxSizeId: "3" }
+                    ]
+                });
+        }
+
+
+
+
+
+        $("#readRss").click(function () {
+            $('.loading').show();
+            $.ajax({
+                url: '/DeviceBO/ReadRss',
+                type: "POST",
+                data: { url: '' },
+                dataType: "json",
+                success: function (result) {
+                    if (result) {
+                        $('.loading').hide();
+                        $('#deviceGrid').data("kendoGrid").dataSource.read();
+                    }
+                }
+            });
+        });
+
+        $("#active").click(function () {
+            var grid = $("#deviceGrid").data("kendoGrid");
+            var ids = [];
+            grid.select().each(function () {
+                var dataItem = grid.dataItem($(this));
+                if (dataItem.DeviceId) {
+                    ids.push(dataItem.DeviceId);
+                }
+            });
+
+            $.post('@Url.Action("ActiveDevice", "DeviceBO")', { deviceIds: ids.join(',') }, function (data) {
+                grid.dataSource.read();
+            });
+        });
+
+        $("#viewDetail").click(function () {
+            var grid = $("#deviceGrid").data("kendoGrid");
+            var ids = [];
+            grid.select().each(function () {
+                var dataItem = grid.dataItem($(this));
+                if (dataItem.DeviceId) {
+                    ids.push(dataItem.DeviceId);
+
+                }
+            });
+
+            for (var i = 0; i < ids.length; i++) {
+                setTimeout(window.open('@Url.Action("Create","DeviceBO")?deviceId=' + ids[i], '_blank'), (i + 1) * 200);
+            }
+        });
+
+    });
+    function showDetails(e) {
+        e.preventDefault();
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        window.open('@Url.Action("Create","DeviceBO")?deviceId=' + dataItem.DeviceId, '_blank');
+    }
+</script>

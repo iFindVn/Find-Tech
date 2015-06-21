@@ -13,7 +13,7 @@ namespace FindTech.Services
     public interface IDeviceService : IService<Device>
     {
     }
-    class DeviceService: Service<Device>, IDeviceService
+    public class DeviceService: Service<Device>, IDeviceService
     {
         public DeviceService(IRepositoryAsync<Device> deviceRepository)
             : base(deviceRepository)
