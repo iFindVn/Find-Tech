@@ -18,7 +18,7 @@ namespace FindTech.Web.Areas.BO.Models
         public int ViewCount { get; set; }
         public BoxSizeDropDown BoxSize { get; set; }
         public int Priority { get; set; }
-        public int Brand { get; set; }
+        public int BrandId { get; set; }
         public DateTime? CreatedDate { get; set; }
         public int Article_ArticleId { get; set; }
         public bool IsHot { get; set; }

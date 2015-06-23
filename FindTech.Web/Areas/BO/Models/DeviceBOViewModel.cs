@@ -16,6 +16,7 @@ namespace FindTech.Web.Areas.BO.Models
         public DateTime? ReleasedDate { get; set; }
         public int ViewCount { get; set; }
         public BoxSize BoxSize { get; set; }
+        public int BrandId { get; set; }
         public bool IsHot { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }
