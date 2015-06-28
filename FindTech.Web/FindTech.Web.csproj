@@ -234,6 +234,7 @@
     <Compile Include="Areas\BO\Models\SpecBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\BenchmarkGroupBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\SpecDetailBOViewModel.cs" />
+    <Compile Include="Areas\BO\Models\SpecDetailGridBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\SpecGroupBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\VideoBOModel.cs" />
     <Compile Include="Areas\BO\Models\XpathBOViewModel.cs" />

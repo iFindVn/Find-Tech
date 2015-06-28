@@ -1,5 +1,7 @@
 ﻿using System;
 using FindTech.Entities.Models.Enums;
+using System.Collections.Generic;
+using FindTech.Entities.Models;
 
 namespace FindTech.Web.Areas.BO.Models
 {

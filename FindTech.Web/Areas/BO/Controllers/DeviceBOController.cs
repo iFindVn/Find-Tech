@@ -18,12 +18,14 @@ namespace FindTech.Web.Areas.BO.Controllers
     public class DeviceBOController : Controller
     {
         private IDeviceService deviceService { get; set; }
+        private ISpecService specService { get; set; }
         private IUnitOfWorkAsync unitOfWork { get; set; }
 
-        public DeviceBOController(IDeviceService deviceService, IUnitOfWorkAsync unitOfWork)
+        public DeviceBOController(IDeviceService deviceService, ISpecService specService, IUnitOfWorkAsync unitOfWork)
         {
             this.deviceService = deviceService;
             this.unitOfWork = unitOfWork;
+            this.specService = specService;
         }
         // GET: BO/DevicesBO
         public ActionResult Index()
@@ -133,6 +135,17 @@ namespace FindTech.Web.Areas.BO.Controllers
             deviceService.Update(device);
             var result = unitOfWork.SaveChanges();
             return Json(result);
+        }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        public ActionResult GetSpecs()
+        {
+            var specs = specService.Query().Include(a => a.SpecGroup).Select();
+            return Json(specs.Select(Mapper.Map<SpecDetailGridBOViewModel>), JsonRequestBehavior.AllowGet);
         }
 
     }

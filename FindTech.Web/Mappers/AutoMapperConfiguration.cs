@@ -112,6 +112,9 @@ namespace FindTech.Web.Mappers
                 Mapper.CreateMap<BenchmarkGroup, BenchmarkGroupBOViewModel>()
                     .ForMember(a => a.Parent, o => o.ResolveUsing(x => Mapper.Map<BenchmarkGroupBOViewModel>(x.Parent) ?? new BenchmarkGroupBOViewModel { BenchmarkGroupId = 0, BenchmarkGroupName = "Root" }));
                 Mapper.CreateMap<Video, VideoBOModel>();
+                Mapper.CreateMap<Spec, SpecDetailGridBOViewModel>()
+                    .ForMember(a => a.SpecGroupName, o => o.MapFrom(x => x.SpecGroup.SpecGroupName))
+                    .ForMember(a => a.SpecGroupId, o => o.MapFrom(x => x.SpecGroup.SpecGroupId));
             }
 
             private string GetOpinionText(OpinionLevel? opinionLevel)

@@ -42,60 +42,91 @@
                     </div>
                 </div>
 
-                <div class="row">
+                @*<div class="row">
                     <div class="form-group">
                         <label for="lbSpecifications">Specifications</label>
                         <div id="specGrid"></div>
                     </div>
                     
-                </div>
+                </div>*@
                 <div class="row">
-                    <div class="spec" id="spec">
+                    
+                    <div class="spec" id="specGrid">
 
                     </div>
                 </div>
 
-                <script>
-                    $(document).ready(function () {
+                
+                @*<form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="email">Email:</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="email" placeholder="Enter email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="pwd">Password:</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                                <label><input type="checkbox"> Remember me</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </div>
+                </form>*@
+                    
 
-                        $.ajax({
-                            url: '/SpecGroupBO/GetSpecGroups',
-                            success: function (data) {
-                                for (i = 0; i < data.length; i++) {
-                                    //add data item to html
-                                }
-                                alert(data);
-                            },
-                            statusCode: {
-                                404: function (content) { alert('cannot find resource'); },
-                                500: function (content) { alert('internal server error'); }
-                            },
-                            error: function (req, status, errorObj) {
-                                // handle status === "timeout"
-                                // handle other errors
-                            }
-                        });
+
+    <script>
+        $(document).ready(function () {
+
+            //$.ajax({
+            //    url: '/SpecBO/GetSpecs',
+            //    success: function (data) {
+            //        for (i = 0; i < data.length; i++) {
+            //            $(spec).append('<h2 id="spec' + data[i].SpecId + ' ' +
+            //            '" >' + data[i].SpecName + '</h2>');
+            //        }
+            //    },
+            //    statuscode: {
+            //        404: function (content) { alert('cannot find resource'); },
+            //        500: function (content) { alert('internal server error'); }
+            //    },
+            //    error: function (req, status, errorobj) {
+            //        // handle status === "timeout"
+            //        // handle other errors
+            //    }
+            //});
 
 
-                        var specDetailBOUrl = "/DeviceBO",
+            var deviceBOUrl = "/DeviceBO",
             dataSource = new kendo.data.DataSource({
                 transport: {
                     read: {
-                        url: specDetailBOUrl + "/GetDeviceSpec",
+                        url: deviceBOUrl + "/GetSpecs",
                         dataType: "json"
                     },
                     update: {
-                        url: specDetailBOUrl + "/UpdateSpec",
+                        url: deviceBOUrl + "/Update",
                         dataType: "json",
                         type: "POST"
                     },
                     destroy: {
-                        url: specDetailBOUrl + "/DestroySpec",
+                        url: deviceBOUrl + "/Destroy",
                         dataType: "json",
                         type: "POST"
                     },
                     create: {
-                        url: specDetailBOUrl + "/CreateSpec",
+                        url: deviceBOUrl + "/Create",
                         dataType: "json",
                         type: "POST"
                     },
@@ -107,68 +138,75 @@
                 },
                 batch: true,
                 pageSize: 20,
+                group: {
+                    field: "SpecGroupName",
+                    dir: "asc"
+                },
                 schema: {
                     model: {
-                        id: "SpecDetailId",
+                        id: "SpecId",
                         fields: {
+                            SpecId: { editable: false, defaultValue: 0 },
                             SpecName: { validation: { required: true } },
-                            Value: { validation: { required: true } },
-                            Hightlight: { type: "boolean" },
-                            CreatedDate: { type: "string" }
+                            Priority: { type: "number" },
+                            IsMain: { type: "boolean" },
+                            HightLight: { type: "boolean" },
+                            SpecGroupId: { type: "number" },
+                            SpecGroupName: { }
                         }
                     }
                 }
             });
 
-                        $("#specGrid").kendoGrid({
-                            navigatable: true,
-                            pageable: true,
-                            height: 550,
-                            toolbar: ["create", "save", "cancel"],
-                            columns: [
-                                { field: "SpecName", title: "Spec Name", width: 120, editor: specDropDownEditor },
-                                { field: "Hightlight", title: "Hightlight", width: 70 },
-                                { field: "CreatedDate", title: "Created Date", width: 70 },
-                                { command: "destroy", title: "&nbsp;", width: 100 }],
-                            editable: true
-                        });
-
-                        $("#txtBrand").kendoDropDownList({
-                            optionLabel: "Select Brand",
-                            dataTextField: "BrandName",
-                            dataValueField: "BrandId",
-                            dataSource: {
-                                transport: {
-                                    read: {
-                                        dataType: "json",
-                                        url: "../BrandBO/GetBrands",
-                                    }
-                                }
-                            }
-                        });
-                    });
-
-                    function specDropDownEditor(container, options) {
-                        $('<input required data-text-field="SpecName" data-value-field="SpecId" />')
-                            .appendTo(container)
-                            .kendoDropDownList({
-                                optionLabel: "Select spec...",
-                                autoBind: false,
-                                dataTextField: "SpecName",
-                                dataValueField:"SpecId",
+            $("#specGrid").kendoGrid({
+                dataSource: dataSource,
+                navigatable: true,
+                pageable: true,
+                height: 550,
+                toolbar: ["create", "save", "cancel"],
+                columns: [
+                    { field: "SpecName", title: "SpecName", width: 70, editable: false },
+                    { field: "Value", title: "Value", width: 120 },
+                    { field: "HighLight", title: "HighLight", width: 70 },
+                    { command: "destroy", title: "&nbsp;", width: 100 }],
+                editable: true
+            });
+                            $("#txtBrand").kendoDropDownList({
+                                optionLabel: "Select Brand",
+                                dataTextField: "BrandName",
+                                dataValueField: "BrandId",
                                 dataSource: {
                                     transport: {
                                         read: {
-                                            url: "/SpecBO/GetSpecs",
-                                            dataType: "json"
+                                            dataType: "json",
+                                            url: "../BrandBO/GetBrands",
                                         }
                                     }
                                 }
                             });
-                    }
-                </script>
+                        });
 
-            </form>
+                        function specDropDownEditor(container, options) {
+                            $('<input required data-text-field="SpecName" data-value-field="SpecId" />')
+                                .appendTo(container)
+                                .kendoDropDownList({
+                                    optionLabel: "Select spec...",
+                                    autoBind: false,
+                                    dataTextField: "SpecName",
+                                    dataValueField: "SpecId",
+                                    dataSource: {
+                                        transport: {
+                                            read: {
+                                                url: "/SpecBO/GetSpecs",
+                                                dataType: "json"
+                                            }
+                                        }
+                                    }
+                                });
+                        }
+                    </script>
+
+</form>
         </div><!-- .content -->
     </div>
 </section>
