@@ -34,6 +34,7 @@ namespace FindTech.Entities
         DbSet<Source> Sources { get; set; }
         DbSet<Xpath> Xpaths { get; set; }
         DbSet<ContentSection> ContentSections { get; set; }
+        DbSet<DeviceImage> DeviceImages { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new BenchmarkGroupMap());

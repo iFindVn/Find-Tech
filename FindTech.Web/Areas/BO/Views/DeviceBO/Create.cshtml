@@ -1,111 +1,143 @@
-﻿
+﻿@using FindTech.Entities.Models.Enums
+@using FindTech.Web.Areas.BO.Controllers
+@using FindTech.Web.Areas.BO.Models
+@model DeviceBOViewModel
 @{
     ViewBag.Title = "Create";
     Layout = "~/Areas/BO/Views/Shared/_Layout.cshtml";
-}
+    var boxSize = (int)Model.BoxSize;
+}     
 
 <style>
-   
-
-   
-</style>         
+    .k-dropdown .k-dropdown-wrap {
+        height: 38px;
+    }
+</style> 
 
 <section id="main">
     <div class="container">
         <div class="content">
-            <form role="form" method="POST" action="">
-                <div class="row">
-                    <div class="col-md-3">
-                        <a href="#" class="thumbnail" id="avatar">
-                            <img data-src="holder.js/100%x300" alt="100%x300" id="imgAvatar" src="" />
-                        </a>
-                        <input type="hidden" name="Avatar" value="" />
-                    </div>
 
-                    <div class="col-xs-6 col-md-9">
-
-                        <div class="form-group">
-                            <label for="lbDeviceName">Device Name</label>
-                            <input type="text" class="form-control" id="txtDeviceName" name="deviceName" placeholder="Device Name" />
+            <div id="rootwizard">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <ul>
+                                <li><a href="#tab1" data-toggle="tab">Device</a></li>
+                                <li><a href="#tab2" data-toggle="tab">Spec</a></li>
+                            </ul>
                         </div>
-
-                        <div class="form-group">
-                            <label for="lbBrand">Brand</label>
-                            <input class="form-control" id="txtBrand" name="Brand" placeholder="Brand"/>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lbDescription">Description</label>
-                            <textarea class="form-control" id="txtDescription" name="Description" placeholder="Description"></textarea>
-                        </div>
-
                     </div>
                 </div>
+                <div class="tab-content">
+                    <div class="tab-pane" id="tab1">
+                        <form role="form" method="POST" action="@Url.Action("CreateOrUpdate", "DeviceBO")">
 
-                @*<div class="row">
-                    <div class="form-group">
-                        <label for="lbSpecifications">Specifications</label>
-                        <div id="specGrid"></div>
-                    </div>
-                    
-                </div>*@
-                <div class="row">
-                    
-                    <div class="spec" id="specGrid">
+                            <input type="hidden" id="deviceId" name="DeviceId" value="@Model.DeviceId" />
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <a href="#" class="thumbnail" id="avatar">
+                                        <img data-src="holder.js/300x300" alt="300x300" id="imgAvatar" src="" />
+                                    </a>
+                                    <input type="hidden" name="Avatar" value="" />
+                                </div>
 
-                    </div>
-                </div>
+                                <div class="col-xs-6 col-md-9">
+                                    <div class="row">
+                                        <div class="form-group col-md-8">
+                                            <label for="lbDeviceName">Device Name</label>
+                                            <input type="text" class="form-control" id="txtDeviceName" name="deviceName" placeholder="Device Name" value="@Model.DeviceName"/>
+                                        </div>
 
-                
-                @*<form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="email">Email:</label>
-                        <div class="col-sm-10">
-                            <input type="email" class="form-control" id="email" placeholder="Enter email">
-                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="lbBrand">Brand</label>
+                                            <input class="form-control" id="txtBrand" name="Brand" placeholder="Brand" value="@Model.BrandId"/>
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label">Anounced</label>
+                                                <input type='text' id="dpAnounced" name="AnouncedDate" placeholder="Anounced Date" value="@Model.ReleasedDate"/>
+                                            </div>
+                                            @*<div class="col-md-6">
+                                                <label class="control-label">Rating</label>
+                                                <input type='text' id="txtRating" class="form-control" name="Rating" placeholder="Rating" value=""/>
+                                            </div>*@
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label">Priority</label>
+                                                <input type="text" class="form-control" id="txtPriority" name="Priority" value="@Model.Priority"/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label">Box Size</label>
+                                                <input type="text" class="form-control" id="boxSize" name="BoxSize" placeholder="Box size" value="@boxSize" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="form-group">
+                                        <label for="lbDescription">Description</label>
+                                        <textarea class="form-control" id="txtDescription" name="Description" placeholder="Description">@Model.Description</textarea>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-default">Create</button>
+
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-2" for="pwd">Password:</label>
-                        <div class="col-sm-10">
-                            <input type="password" class="form-control" id="pwd" placeholder="Enter password">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <div class="checkbox">
-                                <label><input type="checkbox"> Remember me</label>
+                    <div class="tab-pane" id="tab2">
+                        <div class="row">
+
+                            <div class="spec" id="specGrid">
+
                             </div>
                         </div>
+                        
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-10">
-                            <button type="submit" class="btn btn-default">Submit</button>
-                        </div>
-                    </div>
-                </form>*@
+                </div>
+            </div>
+                
                     
 
 
     <script>
         $(document).ready(function () {
 
-            //$.ajax({
-            //    url: '/SpecBO/GetSpecs',
-            //    success: function (data) {
-            //        for (i = 0; i < data.length; i++) {
-            //            $(spec).append('<h2 id="spec' + data[i].SpecId + ' ' +
-            //            '" >' + data[i].SpecName + '</h2>');
-            //        }
-            //    },
-            //    statuscode: {
-            //        404: function (content) { alert('cannot find resource'); },
-            //        500: function (content) { alert('internal server error'); }
-            //    },
-            //    error: function (req, status, errorobj) {
-            //        // handle status === "timeout"
-            //        // handle other errors
-            //    }
-            //});
+            $('#rootwizard').bootstrapWizard({
+                
+            });
+
+            $('#dpAnounced').kendoDateTimePicker({
+                format: "dd-MMM-yy h:mm:ss tt"
+            });
+
+            $("#boxSize").kendoDropDownList({
+                //optionLabel: "Select Box Size",
+                dataTextField: "text",
+                dataValueField: "value",
+                dataSource: [
+                  { text: "Box1", value: "1" },
+                  { text: "Box2", value: "2" },
+                  { text: "Box3", value: "3" }
+                ],
+                change: onChangeBoxSize
+            });
+
+            $('#submit').click(function () {
+                var checkBoxSize = onChangeBoxSize();
+                var checkBrand = onChangeBrand();
+            });
+
+            
 
 
             var deviceBOUrl = "/DeviceBO",
@@ -171,7 +203,8 @@
                     { command: "destroy", title: "&nbsp;", width: 100 }],
                 editable: true
             });
-                            $("#txtBrand").kendoDropDownList({
+
+            $("#txtBrand").kendoDropDownList({
                                 optionLabel: "Select Brand",
                                 dataTextField: "BrandName",
                                 dataValueField: "BrandId",
@@ -182,7 +215,8 @@
                                             url: "../BrandBO/GetBrands",
                                         }
                                     }
-                                }
+                                },
+                                change: "onChangeBrand"
                             });
                         });
 
@@ -204,9 +238,31 @@
                                     }
                                 });
                         }
+
+                        function onChangeBoxSize() {
+                            if ($('#boxSize').val() == '') {
+                                $('#boxSize').parent().parent().removeClass('has-feedback').removeClass('has-success').addClass('has-error-dropdown');
+                                return false;
+                            } else {
+                                $('#boxSize').parent().parent().removeClass('has-error-dropdown').removeClass('has-feedback').addClass('has-success');
+                                return true;
+                            }
+
+                        };
+
+                        function onChangeBrand() {
+                            if ($('#txtBrand').val() == '') {
+                                $('#txtBrand').parent().parent().removeClass('has-feedback').removeClass('has-success').addClass('has-error-dropdown');
+                                return false;
+                            } else {
+                                $('#txtBrand').parent().parent().removeClass('has-error-dropdown').removeClass('has-feedback').addClass('has-success');
+                                return true;
+                            }
+
+                        };
                     </script>
 
-</form>
+
         </div><!-- .content -->
     </div>
 </section>

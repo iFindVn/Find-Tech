@@ -10,6 +10,7 @@ namespace FindTech.Entities.Models
         public string Color { get; set; }
         public int DeviceId { get; set; }
         public virtual Device Device { get; set; }
-        public virtual ICollection<Image> Images { get; set; } 
+        public virtual ICollection<DeviceImage> DeviceImages { get; set; }
     }
 }
+

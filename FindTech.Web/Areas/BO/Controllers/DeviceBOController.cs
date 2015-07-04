@@ -137,9 +137,35 @@ namespace FindTech.Web.Areas.BO.Controllers
             return Json(result);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int? deviceId)
         {
-            return View();
+            var deviceBOViewModel = new DeviceBOViewModel();
+            return View(deviceBOViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult CreateOrUpdate(DeviceBOViewModel deviceBOViewModel)
+        {
+            var deviceId = 0;
+            if(deviceBOViewModel.DeviceId != 0)
+            {
+
+            }
+            else
+            {
+                var newDevice = Mapper.Map<Device>(deviceBOViewModel);
+                deviceId = deviceBOViewModel.DeviceId;
+
+                newDevice.CreatedDate = DateTime.Now;
+                newDevice.IsHot = false;
+                newDevice.IsDeleted = false;
+                newDevice.IsActive = true;
+                newDevice.ViewCount = 0;
+
+                deviceService.Insert(newDevice);
+                unitOfWork.SaveChanges();
+            }
+            return Json(false);
         }
 
         public ActionResult GetSpecs()

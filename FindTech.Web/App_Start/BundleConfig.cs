@@ -195,6 +195,7 @@ namespace FindTech.Web
                     "~/UIFramework/Progressive/js/angular-isotope.js",
                     "~/UIFramework/Progressive/js/angular-ladda.min.js")
                     .IncludeDirectory("~/app", "*.js", true));
+            
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

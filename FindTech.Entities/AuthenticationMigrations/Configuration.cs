@@ -5,7 +5,7 @@ namespace FindTech.Entities.AuthenticationMigrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<FindTech.Entities.AuthenticationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<FindTech.Entities.FindTechContext>
     {
         public Configuration()
         {
@@ -13,7 +13,7 @@ namespace FindTech.Entities.AuthenticationMigrations
             MigrationsDirectory = @"AuthenticationMigrations";
         }
 
-        protected override void Seed(FindTech.Entities.AuthenticationDbContext context)
+        protected override void Seed(FindTech.Entities.FindTechContext context)
         {
             //  This method will be called after migrating to the latest version.
 
