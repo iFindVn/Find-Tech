@@ -13,6 +13,7 @@ namespace FindTech.Web.Areas.BO.Controllers
     public class SpecDetailBOController: Controller
     {
         private ISpecDetailService specDetailService { get; set; }
+        private ISpecService specService { get; set; }
         private IUnitOfWorkAsync unitOfWork { get; set; }
         public SpecDetailBOController(ISpecDetailService specDetailService, IUnitOfWorkAsync unitOfWork)
         {
@@ -24,6 +25,17 @@ namespace FindTech.Web.Areas.BO.Controllers
         {
             var specDetails = specDetailService.Query().Select();
             return Json(specDetails.Select(Mapper.Map<SpecDetailBOViewModel>), JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Create(string models)
+        {
+            return Json(false);
+        }
+
+        public ActionResult GetSpecsForGrid()
+        {
+            var specs = specService.Query().Include(a => a.SpecGroup).Select();
+            return Json(specs.Select(Mapper.Map<SpecDetailGridBOViewModel>), JsonRequestBehavior.AllowGet);
         }
     }
 }

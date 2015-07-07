@@ -51,20 +51,20 @@
 
                                         <div class="form-group col-md-4">
                                             <label for="lbBrand">Brand</label>
-                                            <input class="form-control" id="txtBrand" name="Brand" placeholder="Brand" value="@Model.BrandId"/>
+                                            <input class="form-control" id="txtBrand" name="BrandId" placeholder="Brand" value="@Model.BrandId"/>
                                         </div>
 
                                     </div>
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label class="control-label">Anounced</label>
-                                                <input type='text' id="dpAnounced" name="AnouncedDate" placeholder="Anounced Date" value="@Model.ReleasedDate"/>
+                                                <label class="control-label">Release Date</label>
+                                                <input type='text' id="dpAnounced" name="ReleasedDate" placeholder="Release Date" value="@Model.ReleasedDate" />
                                             </div>
-                                            @*<div class="col-md-6">
+                                            <div class="col-md-6">
                                                 <label class="control-label">Rating</label>
                                                 <input type='text' id="txtRating" class="form-control" name="Rating" placeholder="Rating" value=""/>
-                                            </div>*@
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -90,7 +90,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-default">Create</button>
+                            <button type="submit" class="btn btn-default pull-right">Create</button>
 
                         </form>
                     </div>
@@ -205,20 +205,20 @@
             });
 
             $("#txtBrand").kendoDropDownList({
-                                optionLabel: "Select Brand",
-                                dataTextField: "BrandName",
-                                dataValueField: "BrandId",
-                                dataSource: {
-                                    transport: {
-                                        read: {
-                                            dataType: "json",
-                                            url: "../BrandBO/GetBrands",
-                                        }
-                                    }
-                                },
-                                change: "onChangeBrand"
-                            });
-                        });
+                optionLabel: "Select Brand",
+                dataTextField: "BrandName",
+                dataValueField: "BrandId",
+                dataSource: {
+                    transport: {
+                        read: {
+                            dataType: "json",
+                            url: "../BrandBO/GetBrands",
+                        }
+                    }
+                },
+                change: onChangeBrand
+            });
+        });
 
                         function specDropDownEditor(container, options) {
                             $('<input required data-text-field="SpecName" data-value-field="SpecId" />')
@@ -251,6 +251,7 @@
                         };
 
                         function onChangeBrand() {
+                            alert($('#txtBrand').val());
                             if ($('#txtBrand').val() == '') {
                                 $('#txtBrand').parent().parent().removeClass('has-feedback').removeClass('has-success').addClass('has-error-dropdown');
                                 return false;

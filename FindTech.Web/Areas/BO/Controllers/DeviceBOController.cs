@@ -140,6 +140,11 @@ namespace FindTech.Web.Areas.BO.Controllers
         public ActionResult Create(int? deviceId)
         {
             var deviceBOViewModel = new DeviceBOViewModel();
+            if (deviceId != null)
+            {
+                var device = deviceService.Queryable().FirstOrDefault(a => a.DeviceId == deviceId);
+                deviceBOViewModel = Mapper.Map<DeviceBOViewModel>(device);
+            }
             return View(deviceBOViewModel);
         }
 
@@ -149,7 +154,15 @@ namespace FindTech.Web.Areas.BO.Controllers
             var deviceId = 0;
             if(deviceBOViewModel.DeviceId != 0)
             {
+                var count = deviceService.Queryable().Count(a => a.DeviceId == deviceBOViewModel.DeviceId);
+                if (count > 0)
+                {
+                    var existedDevice = Mapper.Map<Device>(deviceBOViewModel);
 
+                    deviceService.Update(existedDevice);
+                    unitOfWork.SaveChanges();
+                    deviceId = existedDevice.DeviceId;
+                }
             }
             else
             {
@@ -164,8 +177,14 @@ namespace FindTech.Web.Areas.BO.Controllers
 
                 deviceService.Insert(newDevice);
                 unitOfWork.SaveChanges();
+
+                deviceId = newDevice.DeviceId;
             }
-            return Json(false);
+
+            return RedirectToAction("Create", new { deviceId });
+
+            //var url = Url.Action("Create", "DeviceBO", new { deviceId }, Request.Url.Scheme);
+            //return Json(url, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetSpecs()

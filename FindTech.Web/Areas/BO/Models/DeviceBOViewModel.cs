@@ -21,6 +21,6 @@ namespace FindTech.Web.Areas.BO.Models
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }
         public int Priority { get; set; }
-        public virtual BrandBOViewModel Brand { get; set; }
+        //public virtual BrandBOViewModel Brand { get; set; }
     }
 }
