@@ -37,7 +37,14 @@ namespace FindTech.Web.Areas.BO.Controllers
             {
                 var specDetailBO = specDetailBOViewModels.ElementAt(i);
                 var spec = Mapper.Map<SpecDetail>(specDetailBO);
-                specDetailService.Insert(spec);
+                if (spec.SpecDetailId > 0)
+                {
+                    specDetailService.Update(spec);
+                }
+                else
+                {
+                    specDetailService.Insert(spec);
+                }
                 
                 //specDetailBOViewModels.RemoveAt(i);
                 //specDetailBOViewModels.Add(Mapper.Map<SpecDetailGridBOViewModel>(spec));

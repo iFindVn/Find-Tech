@@ -40,9 +40,9 @@
                             <div class="row">
                                 <div class="col-md-3">
                                     <a href="#" class="thumbnail" id="avatar">
-                                        <img data-src="holder.js/300x300" alt="300x300" id="imgAvatar" src="" />
+                                        <img data-src="holder.js/300x300" alt="300x300" id="imgAvatar" src="@Model.Avatar" />
                                     </a>
-                                    <input type="hidden" name="Avatar" value="" />
+                                    <input type="hidden" id="hiddenAvatar" name="Avatar" value="@Model.Avatar" />
                                 </div>
 
                                 <div class="col-xs-6 col-md-9">
@@ -123,6 +123,11 @@
 
     <script>
         $(document).ready(function () {
+            //upload image
+            window.applyImageBrowser($('#avatar'), function (imageName, imageUrl, thumbnailUrl, button) {
+                $("#imgAvatar").attr('src', imageUrl);
+                $("#hiddenAvatar").val(imageUrl);
+            });
 
             $('#rootwizard').bootstrapWizard({
                 onTabShow: function (tab, navigation, index) {
