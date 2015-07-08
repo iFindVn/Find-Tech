@@ -48,6 +48,7 @@ namespace FindTech.Web.Mappers
                     .ForMember(a => a.BoxSize, o => o.MapFrom(x => x.BoxSize.BoxSizeId))
                     .ForMember(a => a.MarketStatus, o => o.MapFrom(x => x.MarketStatus.MarketStatusId));
                 Mapper.CreateMap<DeviceBOViewModel, Device>();
+                Mapper.CreateMap<DeviceColorsBOViewModel, DeviceColor>();
                 Mapper.CreateMap<SpecGroupBOViewModel, SpecGroup>();
                 Mapper.CreateMap<SpecBOViewModel, Spec>();
                 Mapper.CreateMap<BenchmarkGroupBOViewModel, BenchmarkGroup>();
@@ -110,6 +111,7 @@ namespace FindTech.Web.Mappers
                     .ForMember(a => a.BoxSize, o => o.MapFrom(x => new BoxSizeDropDown { BoxSizeId = (int)x.BoxSize, BoxSizeName = x.BoxSize.ToString() }))
                     .ForMember(a => a.MarketStatus, o => o.MapFrom(x => new MarketStatusDropDown { MarketStatusId = (int)x.MarketStatus, MarketStatusName = x.MarketStatus.ToString() }));
                 Mapper.CreateMap<Device, DeviceBOViewModel>();
+                Mapper.CreateMap<DeviceColor, DeviceColorsBOViewModel>();
                 Mapper.CreateMap<SpecGroup, SpecGroupBOViewModel>();
                 Mapper.CreateMap<Spec, SpecBOViewModel>();
                 Mapper.CreateMap<BenchmarkGroup, BenchmarkGroupBOViewModel>()

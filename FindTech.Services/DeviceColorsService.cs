@@ -15,7 +15,7 @@ namespace FindTech.Services
 
     }
 
-    class DeviceColorsService : Service<DeviceColor>, IDeviceColorsService
+    public class DeviceColorsService : Service<DeviceColor>, IDeviceColorsService
     {
          private readonly IRepositoryAsync<DeviceColor> _deviceColorsRepository;
          public DeviceColorsService(IRepositoryAsync<DeviceColor> deviceColorsRepository)

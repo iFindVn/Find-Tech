@@ -201,7 +201,7 @@
                         var deviceColorIds = '@deviceColorIds'.split(',');
                         deviceColorIds.forEach(function (deviceColorId) {
                             $.ajax({
-                                url: '@Url.Action("_DeviceColorIdsForm", "DeviceColorsBO")?deviceId=' + $("#deviceId").val() + '&deviceColorId=' + deviceColorId,
+                                url: '@Url.Action("DeviceColorsForm", "DeviceColorsBO")?deviceId=' + $("#deviceId").val() + '&deviceColorId=' + deviceColorId,
                                 success: function (data) {
                                     $('#accordion').append(data);
                                    
@@ -326,7 +326,7 @@
                         
 
         $("#addNewDeviceColors").click(function () {
-            $.get('@Url.Action("_DeviceColorsForm", "DeviceColorsBO")?deviceId=' + $("#deviceId").val(), function (data) {
+            $.get('@Url.Action("DeviceColorsForm", "DeviceColorsBO")?deviceId=' + $("#deviceId").val(), function (data) {
                 $('#accordion').append(data);
                 accordions();
             });

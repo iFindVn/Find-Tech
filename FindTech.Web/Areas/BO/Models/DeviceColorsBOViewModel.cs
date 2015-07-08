@@ -17,8 +17,6 @@ namespace FindTech.Web.Areas.BO.Models
         public string Color { get; set; }
         public int DeviceId { get; set; }
         public virtual DeviceBOViewModel Device { get; set; }
-        public int CreatedDate { get; set; }
-
         public virtual ICollection<DeviceImage> DeviceImage { get; set; } 
         
     }

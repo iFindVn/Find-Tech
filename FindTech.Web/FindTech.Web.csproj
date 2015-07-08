@@ -1814,7 +1814,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\BO\Views\Base\" />
-    <Folder Include="Areas\BO\Views\DeviceColorsBO\" />
     <Folder Include="Views\Comment\" />
     <Folder Include="Views\Like\" />
   </ItemGroup>
@@ -1970,6 +1969,7 @@
     <Content Include="Areas\BO\Views\ContentSectionBO\_ContentSectionForm.cshtml" />
     <Content Include="Areas\BO\Views\VideoBO\Index.cshtml" />
     <Content Include="Areas\BO\Views\DeviceImages\Index.cshtml" />
+    <Content Include="Areas\BO\Views\DeviceColorsBO\DeviceColorsForm.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Article\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\FindTech.pubxml" />

@@ -52,6 +52,7 @@
     <Compile Include="ArticleCategoryService.cs" />
     <Compile Include="CommentService.cs" />
     <Compile Include="DeviceColorsService.cs" />
+    <Compile Include="DeviceImageService.cs" />
     <Compile Include="LikeService.cs" />
     <Compile Include="OpinionService.cs" />
     <Compile Include="ContentSectionService.cs" />
