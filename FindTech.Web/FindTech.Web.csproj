@@ -212,6 +212,7 @@
     <Compile Include="Areas\BO\Controllers\BaseController.cs" />
     <Compile Include="Areas\BO\Controllers\BrandBOController.cs" />
     <Compile Include="Areas\BO\Controllers\DeviceBOController.cs" />
+    <Compile Include="Areas\BO\Controllers\DeviceColorsBOController.cs" />
     <Compile Include="Areas\BO\Controllers\SpecBOController.cs" />
     <Compile Include="Areas\BO\Controllers\BenchmarkGroupBOController.cs" />
     <Compile Include="Areas\BO\Controllers\SpecDetailBOController.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="Areas\BO\Models\DeviceBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\ArticleGridFilterBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\DeviceGridBOViewModel.cs" />
+    <Compile Include="Areas\BO\Models\DeviceColorsBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\SpecBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\BenchmarkGroupBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\SpecDetailBOViewModel.cs" />
@@ -1812,6 +1814,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\BO\Views\Base\" />
+    <Folder Include="Areas\BO\Views\DeviceColorsBO\" />
     <Folder Include="Views\Comment\" />
     <Folder Include="Views\Like\" />
   </ItemGroup>
@@ -1966,6 +1969,7 @@
     <Content Include="Areas\BO\Views\DeviceBO\Index.cshtml" />
     <Content Include="Areas\BO\Views\ContentSectionBO\_ContentSectionForm.cshtml" />
     <Content Include="Areas\BO\Views\VideoBO\Index.cshtml" />
+    <Content Include="Areas\BO\Views\DeviceImages\Index.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Article\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\FindTech.pubxml" />

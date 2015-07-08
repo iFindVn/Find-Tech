@@ -8,7 +8,7 @@
     var contentSections = (List<ContentSectionBOViewModel>)ViewBag.ContentSections;
     var boxSize = (int) Model.BoxSize;
     var articleType = (int) Model.ArticleType;
-    var contentSectionIds = String.Join(",", contentSections.Select(a => a.ContentSectionId));
+    var contentSectionIds = String.Join(",", contentSections.Select(a => a.ContentSectionId));  
 }
 
 <script src="~/Areas/BO/UIFramework/Guillotine/js/jquery.guillotine.js"></script>
@@ -787,7 +787,7 @@
                 //document.getElementById("imgAvatar").src = '/ImageBO/Image?path=' + data;
                 //document.getElementById("avatarHidden").value = '/ImageBO/Image?path=' + data;
                 //var result = JSON.parse(data);
-
+                
                 document.getElementById("imgAvatar").src = data.displayAvatar;
                 document.getElementById("avatarHidden").value = data.avatar;
                 document.getElementById("squareAvatarHidden").value = data.squareAvatar;

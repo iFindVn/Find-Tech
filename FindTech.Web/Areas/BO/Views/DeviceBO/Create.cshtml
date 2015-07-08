@@ -6,6 +6,8 @@
     ViewBag.Title = "Create";
     Layout = "~/Areas/BO/Views/Shared/_Layout.cshtml";
     var boxSize = (int)Model.BoxSize;
+    var listDeviceColors = (List<DeviceColorsBOViewModel>)ViewBag.DeviceColors;
+    var deviceColorIds = String.Join(",", listDeviceColors.Select(a => a.DeviceColorId));  
 }     
 
 <style>
@@ -25,6 +27,7 @@
                             <ul>
                                 <li><a href="#tab1" data-toggle="tab">Device</a></li>
                                 <li><a href="#tab2" data-toggle="tab">Spec</a></li>
+                                <li><a href="#tab3" data-toggle="tab">Colors</a></li>
                             </ul>
                         </div>
                     </div>
@@ -103,6 +106,15 @@
                         </div>
                         
                     </div>
+                    <div class="tab-pane" id="tab3">
+                        <div class="panel-group" id="accordion">
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12 text-right">
+                                <button type="button" class="btn btn-primary" id="addNewDeviceColors">Add new device colors </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
                 
@@ -115,56 +127,56 @@
             $('#rootwizard').bootstrapWizard({
                 onTabShow: function (tab, navigation, index) {
                     if (index == 1) {
-                        var deviceBOUrl = "/DeviceBO", specDetailBOUrl = "/SpecDetailBO",
-            dataSource = new kendo.data.DataSource({
-                transport: {
-                    read: {
-                        url: specDetailBOUrl + "/GetSpecsForGrid?deviceId=" + $("#deviceId").val(),
-                        dataType: "json"
-                    },
-                    update: {
-                        url: specDetailBOUrl + "/Create",
-                        dataType: "json",
-                        type: "POST"
-                    },
-                    destroy: {
-                        url: deviceBOUrl + "/Destroy",
-                        dataType: "json",
-                        type: "POST"
-                    },
-                    create: {
-                        url: specDetailBOUrl + "/Create",
-                        dataType: "json",
-                        type: "POST"
-                    },
-                    parameterMap: function (options, operation) {
-                        if (operation !== "read" && options.models) {
-                            return { models: kendo.stringify(options.models) };
-                        }
-                    }
-                },
-                batch: true,
-                pageSize: 20,
-                group: {
-                    field: "SpecGroupName",
-                    dir: "asc"
-                },
-                schema: {
-                    model: {
-                        id: "SpecId",
-                        fields: {
-                            SpecId: { editable: false, defaultValue: 0 },
-                            SpecName: { validation: { required: true } },
-                            Priority: { type: "number" },
-                            IsMain: { type: "boolean" },
-                            HightLight: { type: "boolean" },
-                            SpecGroupId: { type: "number" },
-                            SpecGroupName: {},
-                            DeviceId: { type: "number" }
-                        }
-                    }
-                }
-            });
+                        var deviceBOUrl = "/DeviceBO", specDetailBOUrl = "/SpecDetailBO"
+                        dataSource = new kendo.data.DataSource({
+                            transport: {
+                                read: {
+                                    url: specDetailBOUrl + "/GetSpecsForGrid?deviceId=" + $("#deviceId").val(),
+                                    dataType: "json"
+                                },
+                                update: {
+                                    url: specDetailBOUrl + "/Create",
+                                    dataType: "json",
+                                    type: "POST"
+                                },
+                                destroy: {
+                                    url: deviceBOUrl + "/Destroy",
+                                    dataType: "json",
+                                    type: "POST"
+                                },
+                                create: {
+                                    url: specDetailBOUrl + "/Create",
+                                    dataType: "json",
+                                    type: "POST"
+                                },
+                                parameterMap: function (options, operation) {
+                                    if (operation !== "read" && options.models) {
+                                        return { models: kendo.stringify(options.models) };
+                                    }
+                                }
+                            },
+                            batch: true,
+                            pageSize: 20,
+                            group: {
+                                field: "SpecGroupName",
+                                dir: "asc"
+                            },
+                            schema: {
+                                model: {
+                                    id: "SpecId",
+                                    fields: {
+                                        SpecId: { editable: false, defaultValue: 0 },
+                                        SpecName: { validation: { required: true } },
+                                        Priority: { type: "number" },
+                                        IsMain: { type: "boolean" },
+                                        HightLight: { type: "boolean" },
+                                        SpecGroupId: { type: "number" },
+                                        SpecGroupName: {},
+                                        DeviceId: { type: "number" }
+                                    }
+                                }
+                            }
+                        });
 
                         $("#specGrid").kendoGrid({
                             dataSource: dataSource,
@@ -180,9 +192,48 @@
                             editable: true
                         });
                     }
+                    if (index == 2) {
+                        var deviceColorIds = '@deviceColorIds'.split(',');
+                        deviceColorIds.forEach(function (deviceColorId) {
+                            $.ajax({
+                                url: '@Url.Action("_DeviceColorIdsForm", "DeviceColorsBO")?deviceId=' + $("#deviceId").val() + '&deviceColorId=' + deviceColorId,
+                                success: function (data) {
+                                    $('#accordion').append(data);
+                                   
+                                    },
+                                async: false
+                            });
+                          
+                            });
+                    }
                 }
-                
             });
+
+            $('#dpAnounced').kendoDateTimePicker({
+                format: "dd-MMM-yy h:mm:ss tt"
+            });
+
+            $("#boxSize").kendoDropDownList({
+                //optionLabel: "Select Box Size",
+                dataTextField: "text",
+                dataValueField: "value",
+                dataSource: [
+                  { text: "Box1", value: "1" },
+                  { text: "Box2", value: "2" },
+                  { text: "Box3", value: "3" }
+                ],
+                change: onChangeBoxSize
+            });
+
+            $('#submit').click(function () {
+                var checkBoxSize = onChangeBoxSize();
+                var checkBrand = onChangeBrand();
+            });
+
+            
+
+
+            
 
             $('#dpAnounced').kendoDateTimePicker({
                 format: "dd-MMM-yy h:mm:ss tt"
@@ -226,48 +277,94 @@
             });
         });
 
-                        function specDropDownEditor(container, options) {
-                            $('<input required data-text-field="SpecName" data-value-field="SpecId" />')
-                                .appendTo(container)
-                                .kendoDropDownList({
-                                    optionLabel: "Select spec...",
-                                    autoBind: false,
-                                    dataTextField: "SpecName",
-                                    dataValueField: "SpecId",
-                                    dataSource: {
-                                        transport: {
-                                            read: {
-                                                url: "/SpecBO/GetSpecs",
-                                                dataType: "json"
-                                            }
-                                        }
-                                    }
-                                });
+        function specDropDownEditor(container, options) {
+            $('<input required data-text-field="SpecName" data-value-field="SpecId" />')
+                .appendTo(container)
+                .kendoDropDownList({
+                    optionLabel: "Select spec...",
+                    autoBind: false,
+                    dataTextField: "SpecName",
+                    dataValueField: "SpecId",
+                    dataSource: {
+                        transport: {
+                            read: {
+                                url: "/SpecBO/GetSpecs",
+                                dataType: "json"
+                            }
                         }
+                    }
+                });
+        }
 
-                        function onChangeBoxSize() {
-                            if ($('#boxSize').val() == '') {
-                                $('#boxSize').parent().parent().removeClass('has-feedback').removeClass('has-success').addClass('has-error-dropdown');
-                                return false;
-                            } else {
-                                $('#boxSize').parent().parent().removeClass('has-error-dropdown').removeClass('has-feedback').addClass('has-success');
-                                return true;
-                            }
+        function onChangeBoxSize() {
+            if ($('#boxSize').val() == '') {
+                $('#boxSize').parent().parent().removeClass('has-feedback').removeClass('has-success').addClass('has-error-dropdown');
+                return false;
+            } else {
+                $('#boxSize').parent().parent().removeClass('has-error-dropdown').removeClass('has-feedback').addClass('has-success');
+                return true;
+            }
 
-                        };
+        };
 
-                        function onChangeBrand() {
-                            alert($('#txtBrand').val());
-                            if ($('#txtBrand').val() == '') {
-                                $('#txtBrand').parent().parent().removeClass('has-feedback').removeClass('has-success').addClass('has-error-dropdown');
-                                return false;
-                            } else {
-                                $('#txtBrand').parent().parent().removeClass('has-error-dropdown').removeClass('has-feedback').addClass('has-success');
-                                return true;
-                            }
+        function onChangeBrand() {
+            alert($('#txtBrand').val());
+            if ($('#txtBrand').val() == '') {
+                $('#txtBrand').parent().parent().removeClass('has-feedback').removeClass('has-success').addClass('has-error-dropdown');
+                return false;
+            } else {
+                $('#txtBrand').parent().parent().removeClass('has-error-dropdown').removeClass('has-feedback').addClass('has-success');
+                return true;
+            }
 
-                        };
-                    </script>
+        };
+                        
+
+        $("#addNewDeviceColors").click(function () {
+            $.get('@Url.Action("_DeviceColorsForm", "DeviceColorsBO")?deviceId=' + $("#deviceId").val(), function (data) {
+                $('#accordion').append(data);
+                accordions();
+            });
+        });
+        if ($("#deviceId").val() == 0) {
+            $('#rootwizard').bootstrapWizard('disable', 1);
+        }
+        
+        function submitDeviceColors(form) {
+            $.post(form.attr('action'), form.serialize(), function (data) {
+                $('#deviceColorsAlert').html('<strong>Saved success!</strong>');
+                $('#deviceColorsAlert').show(0).delay(3000).hide(0);
+                var deviceColorsId = form.find('input[name=DeviceColorsId]').val();
+                if ($('#panel-' + deviceColorsId).length > 0) {
+                    $('#panel-' + deviceColorsId).remove();
+                    $('#accordion').append(data);
+                }
+            });
+        };
+
+        function deleteDeviceColors(form) {
+            if (confirm("Are you sure to delete this content section!")) {
+                var deviceColorsId = form.find('input[name="DeviceColorsId"]').val();
+                if (deviceColorsId > 0) {
+                    $.post('@Url.Action("Destroy", "DeviceColorsBO")', { deviceColorsId: deviceColorsId }, function (data) {
+                        form.closest('.panel').remove();
+                        $('#deviceColorsAlert').html('<strong>Deleted success!</strong>');
+                        $('#deviceColorsAlert').show(0).delay(3000).hide(0);
+                    });
+                } else {
+                    form.closest('.panel').remove();
+                }
+            }
+        };
+
+        function deleteImage(imageId, deviceColorsId) {
+            $.post('@Url.Action("DeleteImage", "DeviceColorsBO")', { imageId: imageId, deviceColorsId: deviceColorsId }, function (data) {
+                $('#image-box-' + imageId).remove();
+                carousel();
+            });
+        };
+                        
+        </script>
 
 
         </div><!-- .content -->
