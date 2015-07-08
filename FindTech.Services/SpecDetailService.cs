@@ -13,7 +13,7 @@ namespace FindTech.Services
     {
 
     }
-    class SpecDetailService: Service <SpecDetail>, ISpecDetailService
+    public class SpecDetailService: Service <SpecDetail>, ISpecDetailService
     {
         public SpecDetailService(IRepositoryAsync<SpecDetail> specDetailRepository)
             : base(specDetailRepository)

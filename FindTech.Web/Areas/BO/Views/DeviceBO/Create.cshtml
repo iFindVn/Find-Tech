@@ -113,6 +113,74 @@
         $(document).ready(function () {
 
             $('#rootwizard').bootstrapWizard({
+                onTabShow: function (tab, navigation, index) {
+                    if (index == 1) {
+                        var deviceBOUrl = "/DeviceBO", specDetailBOUrl = "/SpecDetailBO",
+            dataSource = new kendo.data.DataSource({
+                transport: {
+                    read: {
+                        url: specDetailBOUrl + "/GetSpecsForGrid?deviceId=" + $("#deviceId").val(),
+                        dataType: "json"
+                    },
+                    update: {
+                        url: specDetailBOUrl + "/Create",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    destroy: {
+                        url: deviceBOUrl + "/Destroy",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    create: {
+                        url: specDetailBOUrl + "/Create",
+                        dataType: "json",
+                        type: "POST"
+                    },
+                    parameterMap: function (options, operation) {
+                        if (operation !== "read" && options.models) {
+                            return { models: kendo.stringify(options.models) };
+                        }
+                    }
+                },
+                batch: true,
+                pageSize: 20,
+                group: {
+                    field: "SpecGroupName",
+                    dir: "asc"
+                },
+                schema: {
+                    model: {
+                        id: "SpecId",
+                        fields: {
+                            SpecId: { editable: false, defaultValue: 0 },
+                            SpecName: { validation: { required: true } },
+                            Priority: { type: "number" },
+                            IsMain: { type: "boolean" },
+                            HightLight: { type: "boolean" },
+                            SpecGroupId: { type: "number" },
+                            SpecGroupName: {},
+                            DeviceId: { type: "number" }
+                        }
+                    }
+                }
+            });
+
+                        $("#specGrid").kendoGrid({
+                            dataSource: dataSource,
+                            navigatable: true,
+                            pageable: true,
+                            height: 550,
+                            toolbar: ["create", "save", "cancel"],
+                            columns: [
+                                { field: "SpecName", title: "SpecName", width: 70, editable: false },
+                                { field: "Value", title: "Value", width: 120 },
+                                { field: "HighLight", title: "HighLight", width: 70 },
+                                { command: "destroy", title: "&nbsp;", width: 100 }],
+                            editable: true
+                        });
+                    }
+                }
                 
             });
 
@@ -140,69 +208,7 @@
             
 
 
-            var deviceBOUrl = "/DeviceBO",
-            dataSource = new kendo.data.DataSource({
-                transport: {
-                    read: {
-                        url: deviceBOUrl + "/GetSpecs",
-                        dataType: "json"
-                    },
-                    update: {
-                        url: deviceBOUrl + "/Update",
-                        dataType: "json",
-                        type: "POST"
-                    },
-                    destroy: {
-                        url: deviceBOUrl + "/Destroy",
-                        dataType: "json",
-                        type: "POST"
-                    },
-                    create: {
-                        url: deviceBOUrl + "/Create",
-                        dataType: "json",
-                        type: "POST"
-                    },
-                    parameterMap: function (options, operation) {
-                        if (operation !== "read" && options.models) {
-                            return { models: kendo.stringify(options.models) };
-                        }
-                    }
-                },
-                batch: true,
-                pageSize: 20,
-                group: {
-                    field: "SpecGroupName",
-                    dir: "asc"
-                },
-                schema: {
-                    model: {
-                        id: "SpecId",
-                        fields: {
-                            SpecId: { editable: false, defaultValue: 0 },
-                            SpecName: { validation: { required: true } },
-                            Priority: { type: "number" },
-                            IsMain: { type: "boolean" },
-                            HightLight: { type: "boolean" },
-                            SpecGroupId: { type: "number" },
-                            SpecGroupName: { }
-                        }
-                    }
-                }
-            });
-
-            $("#specGrid").kendoGrid({
-                dataSource: dataSource,
-                navigatable: true,
-                pageable: true,
-                height: 550,
-                toolbar: ["create", "save", "cancel"],
-                columns: [
-                    { field: "SpecName", title: "SpecName", width: 70, editable: false },
-                    { field: "Value", title: "Value", width: 120 },
-                    { field: "HighLight", title: "HighLight", width: 70 },
-                    { command: "destroy", title: "&nbsp;", width: 100 }],
-                editable: true
-            });
+            
 
             $("#txtBrand").kendoDropDownList({
                 optionLabel: "Select Brand",

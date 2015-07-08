@@ -14,5 +14,6 @@ namespace FindTech.Web.Areas.BO.Models
         public bool HighLight { get; set; }
         public int SpecGroupId { get; set; }
         public string SpecGroupName { get; set; }
+        public int DeviceId { get; set; }
     }
 }

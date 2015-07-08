@@ -91,7 +91,9 @@ namespace FindTech.Web.App_Start
                 .RegisterType<IFindTechStoredProcedures, FindTechContext>(new PerRequestLifetimeManager())
                 .RegisterType<IStoredProcedureService, StoredProcedureService>()
                 .RegisterType<IDeviceService, DeviceService>()
-                .RegisterType<IRepositoryAsync<Device>, Repository<Device>>();
+                .RegisterType<IRepositoryAsync<Device>, Repository<Device>>()
+                .RegisterType<ISpecDetailService, SpecDetailService>()
+                .RegisterType<IRepositoryAsync<SpecDetail>, Repository<SpecDetail>>();
         }
     }
 }
