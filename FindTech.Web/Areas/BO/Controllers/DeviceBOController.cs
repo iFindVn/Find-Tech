@@ -140,11 +140,18 @@ namespace FindTech.Web.Areas.BO.Controllers
         public ActionResult Create(int? deviceId)
         {
             var deviceBOViewModel = new DeviceBOViewModel();
+            var deviceColors = new List<DeviceColorsBOViewModel>();
             if (deviceId != null)
             {
                 var device = deviceService.Queryable().FirstOrDefault(a => a.DeviceId == deviceId);
                 deviceBOViewModel = Mapper.Map<DeviceBOViewModel>(device);
+                if (device != null && device.DeviceColors != null)
+                {
+                    deviceColors = device.DeviceColors.Select(Mapper.Map<DeviceColorsBOViewModel>).ToList();
+                   
+                }
             }
+            ViewBag.DeviceColors = deviceColors;
             return View(deviceBOViewModel);
         }
 
