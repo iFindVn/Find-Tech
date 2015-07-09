@@ -363,7 +363,7 @@
         };
 
         function deleteImage(imageId, deviceColorsId) {
-            $.post('@Url.Action("DeleteImage", "DeviceColorsBO")', { imageId: imageId, deviceColorsId: deviceColorsId }, function (data) {
+            $.post('@Url.Action("DeleteImage", "DeviceColorsBO")', { deviceImageId: imageId, deviceColorID: deviceColorsId }, function (data) {
                 $('#image-box-' + imageId).remove();
                 carousel();
             });

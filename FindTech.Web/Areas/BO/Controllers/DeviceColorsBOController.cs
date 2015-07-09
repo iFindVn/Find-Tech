@@ -80,9 +80,9 @@ namespace FindTech.Web.Areas.BO.Controllers
 
 
         [HttpPost]
-        public ActionResult AddImage(DeviceImage deviceImage, int deviceColorsId)
+        public ActionResult AddImage(DeviceImage deviceImage, int deviceColorId)
         {
-            var deviceColors = deviceColorsService.Queryable().FirstOrDefault(a => a.DeviceColorId == deviceColorsId);
+            var deviceColors = deviceColorsService.Queryable().FirstOrDefault(a => a.DeviceColorId == deviceColorId);
             if (deviceColors != null)
             {
                 deviceImageService.Insert(deviceImage);

@@ -78,7 +78,7 @@
 <script>
     $(document).ready(function () {
         window.applyImageBrowser($('#add-image-@Model.DeviceColorId'), function (imageName, imageUrl, thumbnailUrl, button) {
-            $.post('@Url.Action("AddImage", "DeviceColorsBO")', { ImageName: imageName, Url: imageUrl, Thumbnail: thumbnailUrl, contentSectionId: @Model.DeviceColorId }, function (imageId) {
+            $.post('@Url.Action("AddImage", "DeviceColorsBO")', { DeviceImageName: imageName, Url: imageUrl, Thumbnail: thumbnailUrl, deviceColorId: @Model.DeviceColorId }, function (imageId) {
                 var imageBox = '<div class="col-sm-4 col-md-2" id="image-box-' + imageId + '">' +
                         '<a class="gallery-images" rel="fancybox" href="' + imageUrl + '">' +
                             '<img src="' + thumbnailUrl + '" width="270" height="135" alt="">' +

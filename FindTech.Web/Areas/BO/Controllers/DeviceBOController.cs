@@ -1,4 +1,5 @@
-﻿using System.Data.SqlClient;
+﻿using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Text;
 using AutoMapper;
@@ -143,7 +144,7 @@ namespace FindTech.Web.Areas.BO.Controllers
             var deviceColors = new List<DeviceColorsBOViewModel>();
             if (deviceId != null)
             {
-                var device = deviceService.Queryable().FirstOrDefault(a => a.DeviceId == deviceId);
+                var device = deviceService.Queryable().Include(a => a.DeviceColors).FirstOrDefault(a => a.DeviceId == deviceId);
                 deviceBOViewModel = Mapper.Map<DeviceBOViewModel>(device);
                 if (device != null && device.DeviceColors != null)
                 {
