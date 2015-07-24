@@ -26,7 +26,7 @@
       <link rel='stylesheet' href="css/ie/ie8.css">
     <![endif]-->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     @*<script src="//use.typekit.net/eds7sto.js"></script>
     <script>try { Typekit.load(); } catch (e) { }</script>*@
@@ -37,53 +37,53 @@
             <div id="top-box">
                 <div class="top-box-wrapper">
                     <div class="container">
-                        <div class="row">
-                            <div class="col-xs-3 col-sm-7">
-                                <div class="navbar navbar-inverse top-navbar top-navbar-right" role="navigation">
-                                    <button type="button" class="navbar-toggle btn-navbar collapsed" data-toggle="collapse" data-target=".top-navbar .navbar-collapse">
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
-                                    </button>
-                                    <nav class="collapse collapsing navbar-collapse">
-                                        <ul class="nav navbar-nav navbar-right">
-                                            <li><a href="#">Đăng nhập <i class="fa fa-lock after"></i></a></li>
-                                            <li class="header">
-                                                <div class=" btn-group cart-header pin-header">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-thumb-tack"></i> Ghim <span class="count">{{pinnedArticles.Articles.length}}</span></a>
-                                                    <div class="dropdown-menu">
-                                                        <strong>Những bài đã nhớ</strong>
-                                                        <ul class="list-unstyled">
-                                                            <li class="pinTips" ng-if="pinnedArticles.Articles.length == 0">Bấm <span class="fa fa-thumb-tack"></span> để ghim bài viết</li>
-                                                            <li ng-repeat="article in pinnedArticles.Articles track by $index" ng-if="$index < 4">
-                                                                <a ng-attr-href="/bai-viet/{{article.SeoTitle}}" class="product-image"><img ng-src="{{article.SquareAvatar | width:70:article.Avatar}}" width="70" height="70" alt=""></a>
-                                                                <a href="#" class="product-remove" ng-click="pinArticle(article.ArticleId)">
-                                                                    <div class="icon" title="Xóa">
-                                                                        <div class="livicon" data-n="trash" data-s="24"></div>
-                                                                    </div>
-                                                                    @*<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
-                                                                    <g>
-                                                                    <path d="M6,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S5,6.447,5,7v5C5,12.553,5.447,13,6,13z"></path>
-                                                                    <path d="M10,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S9,6.447,9,7v5C9,12.553,9.447,13,10,13z"></path>
-                                                                    <path d="M14,3h-1V1c0-0.552-0.447-1-1-1H4C3.448,0,3,0.448,3,1v2H2C1.447,3,1,3.447,1,4s0.447,1,1,1
-                                    c0,0.273,0,8.727,0,9c0,1.104,0.896,2,2,2h8c1.104,0,2-0.896,2-2c0-0.273,0-8.727,0-9c0.553,0,1-0.447,1-1S14.553,3,14,3z M5,2h6v1
-                                    H5V2z M12,14H4V5h8V14z"></path>
-                                  </g>
-                                </svg>*@
-                                                                </a><!-- .product-remove -->
-                                                                <h4 class="product-name"><a ng-attr-href="/bai-viet/{{article.SeoTitle}}" title="">{{article.Title}}</a></h4>
-                                                                <div class="clearfix"></div>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="cart-button" ng-if="pinnedArticles.Articles.length > 4">
-                                                            <a class="btn btn-warning" href="{{model.Url}}">Xem tất cả</a>
-                                                        </div>
+                        <div class="col-xs-9 col-sm-5">
+                        </div>
+                        <div class="col-xs-3 col-sm-7">
+                            <div class="navbar navbar-inverse top-navbar top-navbar-right" role="navigation">
+                                <button type="button" class="navbar-toggle btn-navbar collapsed" data-toggle="collapse" data-target=".top-navbar .navbar-collapse">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <nav class="collapse collapsing navbar-collapse">
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li><a href="#">Đăng nhập <i class="fa fa-lock after"></i></a></li>
+                                        <li class="header">
+                                            <div class=" btn-group cart-header pin-header">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-thumb-tack"></i> Ghim <span class="count">{{pinnedArticles.Articles.length}}</span></a>
+                                                <div class="dropdown-menu">
+                                                    <strong>Những bài đã nhớ</strong>
+                                                    <ul class="list-unstyled">
+                                                        <li class="pinTips" ng-if="pinnedArticles.Articles.length == 0">Bấm <span class="fa fa-thumb-tack"></span> để ghim bài viết</li>
+                                                        <li ng-repeat="article in pinnedArticles.Articles track by $index" ng-if="$index < 4">
+                                                            <a ng-attr-href="/bai-viet/{{article.SeoTitle}}" class="product-image"><img ng-src="{{article.SquareAvatar | width:70:article.Avatar}}" width="70" height="70" alt=""></a>
+                                                            <a href="#" class="product-remove" ng-click="pinArticle(article.ArticleId)">
+                                                                <div class="icon" title="Xóa">
+                                                                    <div class="livicon" data-n="trash" data-s="24"></div>
+                                                                </div>
+                                                                @*<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="16px" height="16px" viewBox="0 0 16 16" enable-background="new 0 0 16 16" xml:space="preserve">
+                                                                                    <g>
+                                                                                    <path d="M6,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S5,6.447,5,7v5C5,12.553,5.447,13,6,13z"></path>
+                                                                                    <path d="M10,13c0.553,0,1-0.447,1-1V7c0-0.553-0.447-1-1-1S9,6.447,9,7v5C9,12.553,9.447,13,10,13z"></path>
+                                                                                    <path d="M14,3h-1V1c0-0.552-0.447-1-1-1H4C3.448,0,3,0.448,3,1v2H2C1.447,3,1,3.447,1,4s0.447,1,1,1
+                                                    c0,0.273,0,8.727,0,9c0,1.104,0.896,2,2,2h8c1.104,0,2-0.896,2-2c0-0.273,0-8.727,0-9c0.553,0,1-0.447,1-1S14.553,3,14,3z M5,2h6v1
+                                                    H5V2z M12,14H4V5h8V14z"></path>
+                                                  </g>
+                                                </svg>*@
+                                                            </a><!-- .product-remove -->
+                                                            <h4 class="product-name"><a ng-attr-href="/bai-viet/{{article.SeoTitle}}" title="">{{article.Title}}</a></h4>
+                                                            <div class="clearfix"></div>
+                                                        </li>
+                                                    </ul>
+                                                    <div class="cart-button" ng-if="pinnedArticles.Articles.length > 4">
+                                                        <a class="btn btn-warning" href="{{model.Url}}">Xem tất cả</a>
                                                     </div>
                                                 </div>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
