@@ -45,13 +45,9 @@ namespace FindTech.Web.Areas.BO.Controllers
                 {
                     specDetailService.Insert(spec);
                 }
-                
-                //specDetailBOViewModels.RemoveAt(i);
-                //specDetailBOViewModels.Add(Mapper.Map<SpecDetailGridBOViewModel>(spec));
             }
             unitOfWork.SaveChanges();
             return Json(specDetailBOViewModels, JsonRequestBehavior.AllowGet);
-            //return Json(false);
         }
 
         public ActionResult GetSpecsForGrid(int deviceId)
@@ -69,15 +65,8 @@ namespace FindTech.Web.Areas.BO.Controllers
                             SpecDetailId = (subSpec == null ? 0 : subSpec.SpecDetailId),
                             HighLight = (subSpec == null ? false : subSpec.HighLight)
                         }).ToList();
-            //var specDetails = specs.Select(Mapper.Map<SpecDetailGridBOViewModel>);
-
-            //if (deviceId > 0)
-            //{
-            //    specDetails = specDetails.Select(a => { a.DeviceId = deviceId; return a; });
-            //}
             
             return Json(query, JsonRequestBehavior.AllowGet);
-            //return Json(specs.Select(Mapper.Map<SpecDetailGridBOViewModel>), JsonRequestBehavior.AllowGet);
         }
     }
 }

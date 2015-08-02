@@ -50,6 +50,7 @@ namespace FindTech.Web.Areas.BO.Controllers
                 var spec = Mapper.Map<Spec>(specBOViewModel);
                 spec.SpecGroupId = specBOViewModel.SpecGroup.SpecGroupId;
                 specService.Insert(spec);
+                unitOfWork.SaveChanges();
                 
                 specBOViewModels.RemoveAt(i);
                 specBOViewModels.Add(Mapper.Map<SpecBOViewModel>(spec));
