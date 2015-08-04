@@ -74,6 +74,7 @@
     <Compile Include="Models\Mapping\ContentSectionMap.cs" />
     <Compile Include="Models\Mapping\BenchmarkGroupMap.cs" />
     <Compile Include="Models\Opinion.cs" />
+    <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Source.cs" />
     <Compile Include="Models\BenchmarkGroup.cs" />
     <Compile Include="Models\Benchmark.cs" />
@@ -94,6 +95,8 @@
     <Compile Include="Models\Spec.cs" />
     <Compile Include="Models\SpecDetail.cs" />
     <Compile Include="Models\SpecGroup.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Models\Xpath.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
