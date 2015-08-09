@@ -9,6 +9,7 @@ namespace FindTech.Entities.Models
 {
     class User:Entity
     {
+        public string Id { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
         public string FirstName { get; set; }
@@ -16,5 +17,6 @@ namespace FindTech.Entities.Models
         public DateTime BirthDay { get; set; }
         public string Email { get; set; }
         public DateTime CreateDate { get; set; }
+        public bool IsActive { get; set; }
     }
 }

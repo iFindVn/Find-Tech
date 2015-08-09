@@ -70,6 +70,7 @@
     <Compile Include="Models\Enums\Gender.cs" />
     <Compile Include="Models\Enums\BrandType.cs" />
     <Compile Include="Models\Enums\ArticleType.cs" />
+    <Compile Include="Models\Enums\OwnerType.cs" />
     <Compile Include="Models\FindTechUser.cs" />
     <Compile Include="Models\Mapping\ContentSectionMap.cs" />
     <Compile Include="Models\Mapping\BenchmarkGroupMap.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Models\SpecDetail.cs" />
     <Compile Include="Models\SpecGroup.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserDevice.cs" />
     <Compile Include="Models\UserRole.cs" />
     <Compile Include="Models\Video.cs" />
     <Compile Include="Models\Xpath.cs" />
