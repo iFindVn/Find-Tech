@@ -10,5 +10,6 @@ namespace FindTech.Entities.Models
         public bool? IsMain { get; set; }
         public int SpecGroupId { get; set; }
         public virtual SpecGroup SpecGroup { get; set; }
+        public string Icon { get; set; }
     }
 }

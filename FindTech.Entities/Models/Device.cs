@@ -24,5 +24,7 @@ namespace FindTech.Entities.Models
         public virtual ICollection<Benchmark> Benchmarks { get; set; }
         public virtual ICollection<DeviceColor> DeviceColors { get; set; }
         public virtual ICollection<SpecDetail> SpecDetails { get; set; }
+        public string Pros { get; set; }
+        public string Cons { get; set; }
     }
 }
