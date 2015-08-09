@@ -14,6 +14,7 @@ namespace FindTech.Web.Areas.BO.Models
         }
         public int DeviceColorId { get; set; }
         public string DeviceColorName { get; set; }
+        public string DeviceColorCode { get; set; }
         public string Color { get; set; }
         public int DeviceId { get; set; }
         public virtual DeviceBOViewModel Device { get; set; }

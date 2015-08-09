@@ -1,2 +1,6 @@
 Update-Database -configuration FindTech.Entities.AuthenticationMigrations.Configuration
 Update-Database -configuration FindTech.Entities.Migrations.Configuration
+
+
+Config db local: Minh pc
+<add name="FindTechContext" connectionString="Data Source=JAMES\SQLEXPRESS; Initial Catalog=FindTech; User ID=sa; Password=sa; Persist Security Info=True;" providerName="System.Data.SqlClient" />
