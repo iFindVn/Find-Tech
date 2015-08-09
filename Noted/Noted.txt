@@ -1,0 +1,2 @@
+Update-Database -configuration FindTech.Entities.AuthenticationMigrations.Configuration
+Update-Database -configuration FindTech.Entities.Migrations.Configuration
