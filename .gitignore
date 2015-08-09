@@ -160,3 +160,10 @@ packages/Moment.js.2.9.0/Content/Scripts/moment.min.js
 packages/Moment.js.2.9.0/Content/Scripts/moment.min.js
 packages/Moment.js.2.9.0/Content/Scripts/moment.js
 FindTech.Web/web.config
+packages/EntityFramework.6.1.3/lib/net40/EntityFramework.dll
+*.dll
+packages/EntityFramework.6.1.3/tools/EntityFramework.psd1
+*.psm1
+packages/EntityFramework.6.1.3/tools/init.ps1
+*.exe
+packages/EntityFramework.6.1.3/tools/install.ps1
