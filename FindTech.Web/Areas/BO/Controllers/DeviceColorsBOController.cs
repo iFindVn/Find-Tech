@@ -45,7 +45,7 @@ namespace FindTech.Web.Areas.BO.Controllers
 
         public ActionResult DeviceColorsForm(int? deviceColorId, int deviceId)
         {
-            var deviceColors = new DeviceColorsBOViewModel { DeviceId = deviceId };
+            var deviceColors = new DeviceColorsBOViewModel();
             if (deviceColorId != null)
             {
                 deviceColors = Mapper.Map<DeviceColorsBOViewModel>(deviceColorsService.Queryable().Include(a => a.DeviceImages).FirstOrDefault(a => a.DeviceColorId == deviceColorId));
