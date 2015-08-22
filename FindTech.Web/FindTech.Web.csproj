@@ -1970,6 +1970,7 @@
     <Content Include="Areas\BO\Views\VideoBO\Index.cshtml" />
     <Content Include="Areas\BO\Views\DeviceImages\Index.cshtml" />
     <Content Include="Areas\BO\Views\DeviceColorsBO\DeviceColorsForm.cshtml" />
+    <Content Include="Areas\BO\Views\DeviceBO\DemoAutoComplete.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Article\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\FindTech.pubxml" />

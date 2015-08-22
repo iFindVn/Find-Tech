@@ -61,8 +61,7 @@ namespace FindTech.Web.Areas.BO.Controllers
            
             if (deviceColors.DeviceColorId != 0)
             {
-                var count =
-                    deviceColorsService.Queryable().Count(a => a.DeviceColorId == deviceColors.DeviceColorId);
+                var count = deviceColorsService.Queryable().Count(a => a.DeviceColorId == deviceColors.DeviceColorId);
                 if (count > 0)
                 {
                     deviceColorsService.Update(deviceColors);

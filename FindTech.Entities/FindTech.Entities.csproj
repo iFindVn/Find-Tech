@@ -75,6 +75,7 @@
     <Compile Include="Models\Mapping\ContentSectionMap.cs" />
     <Compile Include="Models\Mapping\BenchmarkGroupMap.cs" />
     <Compile Include="Models\Opinion.cs" />
+    <Compile Include="Models\RivalProducts.cs" />
     <Compile Include="Models\Role.cs" />
     <Compile Include="Models\Source.cs" />
     <Compile Include="Models\BenchmarkGroup.cs" />

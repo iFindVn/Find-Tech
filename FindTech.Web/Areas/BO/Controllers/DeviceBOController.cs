@@ -201,5 +201,10 @@ namespace FindTech.Web.Areas.BO.Controllers
             return Json(specs.Select(Mapper.Map<SpecDetailGridBOViewModel>), JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult DemoAutoComplete()
+        {
+            return View("DemoAutoComplete");
+        }
+
     }
 }
