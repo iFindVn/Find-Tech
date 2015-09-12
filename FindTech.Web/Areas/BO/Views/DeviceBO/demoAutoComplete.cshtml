@@ -1,0 +1,72 @@
+﻿@using FindTech.Entities.Models.Enums
+@using FindTech.Web.Areas.BO.Controllers
+@using FindTech.Web.Areas.BO.Models
+@model DeviceBOViewModel
+@{
+    ViewBag.Title = "Demo";
+    Layout = "~/Areas/BO/Views/Shared/_Layout.cshtml";
+  
+}   
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+     
+    </head>
+
+<body>
+
+    <div id="example">
+        <div class="demo-section k-header">
+            <h4>Choose shipping countries:</h4>
+            <input id="countries" style="width: 100%;" />
+            
+            <div class="demo-hint">Start typing the name of an European country</div>
+            
+            
+        </div>
+
+        <script>
+            
+            $(document).ready(function () {
+                
+
+                var deviceUrl = "/BO/DeviceBO",
+                dataDevice = new kendo.data.DataSource({
+                    transport: {
+                        read: {
+                            url: deviceUrl + "/GetDevices?skip=0&take=1000",
+                            dataType: "json"
+                        },
+                        parameterMap: function (options, operation) {
+                            if (operation !== "read" && options) {
+                                return { models: kendo.stringify(options) };
+                            } else {
+                                return { skip: options.skip, take: options.take, filter: kendo.stringify(options.filter) };
+                            }
+                        }
+                    },
+                    schema: {
+                    data: "devices",
+                    total: "totalCount"
+            },
+                });
+
+                //create AutoComplete UI component
+                $("#countries").kendoAutoComplete({
+                    dataSource: dataDevice,
+                    dataTextField: "DeviceName",
+                    filter: "startswith",
+                    placeholder: "Select country...",
+                    separator: ", "
+                });
+                
+                
+            });
+        </script>
+    </div>
+
+
+</body>
+</html>

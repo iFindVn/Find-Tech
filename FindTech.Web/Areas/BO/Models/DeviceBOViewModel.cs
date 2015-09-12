@@ -24,5 +24,6 @@ namespace FindTech.Web.Areas.BO.Models
         public string Pros { get; set; }
         public string Cons { get; set; }
         //public virtual BrandBOViewModel Brand { get; set; }
+        public string Tags { get; set; }
     }
 }

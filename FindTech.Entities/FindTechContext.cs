@@ -22,6 +22,7 @@ namespace FindTech.Entities
         DbSet<Comment> Comments { get; set; }
         DbSet<Device> Devices { get; set; }
         DbSet<DeviceColor> DeviceColors { get; set; }
+        DbSet<RivalProducts> RivalProducts { get; set; }
         DbSet<Image> Images { get; set; }
         DbSet<Like> Likes { get; set; }
         DbSet<Rating> Ratings { get; set; }

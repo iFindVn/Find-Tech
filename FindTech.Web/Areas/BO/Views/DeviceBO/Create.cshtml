@@ -87,6 +87,11 @@
                                         <label for="lbDescription">Description</label>
                                         <textarea class="form-control" id="txtDescription" name="Description" placeholder="Description">@Model.Description</textarea>
                                     </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="tags">Tags</label>
+                                        <input type="text" class="form-control" maxlength="100" id="tags" name="Tags" data-role="tagsinput" placeholder="Input Tags" value="@Model.Tags">
+                                    </div>
                                 </div>
                             </div>
 
@@ -403,6 +408,43 @@
                     });
                 };
 
+ 
+
+            $('#dpAnounced').kendoDateTimePicker({
+                format: "dd-MMM-yy h:mm:ss tt"
+            });
+
+            $("#boxSize").kendoDropDownList({
+                //optionLabel: "Select Box Size",
+                dataTextField: "text",
+                dataValueField: "value",
+                dataSource: [
+                  { text: "Box1", value: "1" },
+                  { text: "Box2", value: "2" },
+                  { text: "Box3", value: "3" }
+                ],
+                change: onChangeBoxSize
+            });
+
+            $('#submit').click(function () {
+                var checkBoxSize = onChangeBoxSize();
+                var checkBrand = onChangeBrand();
+            });
+
+            $("#txtBrand").kendoDropDownList({
+                optionLabel: "Select Brand",
+                dataTextField: "BrandName",
+                dataValueField: "BrandId",
+                dataSource: {
+                    transport: {
+                        read: {
+                            dataType: "json",
+                            url: "../BrandBO/GetBrands",
+                        }
+                    }
+                }
+            });
+
                 function deleteDeviceColors(form) {
                     if (confirm("Are you sure to delete this content section!")) {
                         var deviceColorsId = form.find('input[name="DeviceColorsId"]').val();
@@ -423,6 +465,7 @@
                         $('#image-box-' + imageId).remove();
                         carousel();
                     });
+
                 };
 
             </script>

@@ -69,6 +69,7 @@ namespace FindTech.Web.App_Start
                 .RegisterType<IRepositoryAsync<ContentSection>, Repository<ContentSection>>()
                 .RegisterType<IContentSectionService, ContentSectionService>()
                 .RegisterType<IDeviceColorsService, DeviceColorsService>()
+                .RegisterType<IRivalProductsService, RivalProductsService>()
                 .RegisterType<IRepositoryAsync<DeviceColor>, Repository<DeviceColor>>()
                 .RegisterType<IRepositoryAsync<Opinion>, Repository<Opinion>>()
                 .RegisterType<IOpinionService, OpinionService>()

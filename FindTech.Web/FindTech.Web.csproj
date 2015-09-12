@@ -214,6 +214,7 @@
     <Compile Include="Areas\BO\Controllers\DeviceBOController.cs" />
     <Compile Include="Areas\BO\Controllers\DeviceColorsBOController.cs" />
     <Compile Include="Areas\BO\Controllers\RatingCriteriaController.cs" />
+    <Compile Include="Areas\BO\Controllers\RivalProductsController.cs" />
     <Compile Include="Areas\BO\Controllers\SpecBOController.cs" />
     <Compile Include="Areas\BO\Controllers\BenchmarkGroupBOController.cs" />
     <Compile Include="Areas\BO\Controllers\SpecDetailBOController.cs" />
@@ -235,6 +236,7 @@
     <Compile Include="Areas\BO\Models\DeviceGridBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\DeviceColorsBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\RatingCriteria.cs" />
+    <Compile Include="Areas\BO\Models\RivalProductsBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\SpecBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\BenchmarkGroupBOViewModel.cs" />
     <Compile Include="Areas\BO\Models\SpecDetailBOViewModel.cs" />
@@ -4483,6 +4485,8 @@
     <Content Include="Areas\BO\UIFramework\angular-1.4.4\errors.json" />
     <Content Include="Areas\BO\UIFramework\angular-1.4.4\version.json" />
     <Content Include="Areas\BO\Views\RatingCriteria\Index.cshtml" />
+    <Content Include="Areas\BO\Views\DeviceBO\DemoAutoComplete.cshtml" />
+    <Content Include="Areas\BO\Views\RivalProductsBO\RivalProductsForm.cshtml" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Article\Detail.cshtml" />
     <None Include="Properties\PublishProfiles\FindTech.pubxml" />
