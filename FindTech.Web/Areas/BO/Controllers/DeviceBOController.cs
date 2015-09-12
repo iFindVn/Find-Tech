@@ -75,6 +75,12 @@ namespace FindTech.Web.Areas.BO.Controllers
             return Json(new { devices = devices.Select(Mapper.Map<DeviceGridBOViewModel>), totalCount = total }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetDevicesForTypeAhead(string query)
+        {
+            var devices = deviceService.Queryable().Where(d => d.DeviceName.ToLower().Contains(query.ToLower()));
+            return Json(devices.Select(d => new {name = d.DeviceName, id = d.DeviceId}), JsonRequestBehavior.AllowGet);
+        }
+
         private StringBuilder BuildingWhereClause(DeviceGridListFiltersBOViewModel deviceGridListFiltersBOViewModel, List<String> Params)
         {
             var query = new StringBuilder();

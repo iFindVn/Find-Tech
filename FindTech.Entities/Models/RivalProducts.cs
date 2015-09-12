@@ -7,7 +7,7 @@ using Repository.Pattern.Ef6;
 
 namespace FindTech.Entities.Models
 {
-    class RivalProducts : Entity
+    public class RivalProducts : Entity
     {
         [Key]
         [Column(Order = 1)]

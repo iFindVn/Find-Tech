@@ -89,6 +89,11 @@
                                         <label for="lbDescription">Description</label>
                                         <textarea class="form-control" id="txtDescription" name="Description" placeholder="Description">@Model.Description</textarea>
                                     </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="tags">Tags</label>
+                                        <input type="text" class="form-control" maxlength="100" id="tags" name="Tags" data-role="tagsinput" placeholder="Input Tags" value="@Model.Tags">
+                                    </div>
 
                                 </div>
                             </div>
@@ -128,6 +133,43 @@
                 $("#imgAvatar").attr('src', imageUrl);
                 $("#hiddenAvatar").val(imageUrl);
             });
+
+            var tags = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                remote: '/DeviceBO/GetDevicesForTypeAhead?query=%QUERY'
+            });
+            
+            tags.initialize();
+            
+            $('#tags').tagsinput({
+                typeaheadjs: {
+                    name: 'tags',
+                    displayKey: 'name',
+                    valueKey: 'id',
+                    source: tags.ttAdapter()
+                }
+            });
+
+            $('#tags').on('itemRemoved', function (event) {
+                checkValidateTags();
+            });
+            $('#tags').on('itemAdded', function (event) {
+                checkValidateTags();
+            });
+
+            function checkValidateTags() {
+                if ($('#tags').val() == '') {
+                    $('#tags').parent().removeClass('has-success').addClass("has-error-tags");
+                    $('#tags').parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-ok').addClass('glyphicon glyphicon-remove');
+                    return false;
+                } else {
+                    $('#tags').parent().removeClass('has-error-tags').addClass("has-success");
+                    $('#tags').parent().find('.form-control-feedback').removeClass('glyphicon glyphicon-remove').addClass('glyphicon glyphicon-ok');
+                    return true;
+                }
+            };
+
 
             $('#rootwizard').bootstrapWizard({
                 onTabShow: function (tab, navigation, index) {
@@ -235,10 +277,7 @@
                 var checkBrand = onChangeBrand();
             });
 
-            
-
-
-            
+ 
 
             $('#dpAnounced').kendoDateTimePicker({
                 format: "dd-MMM-yy h:mm:ss tt"
@@ -260,11 +299,6 @@
                 var checkBoxSize = onChangeBoxSize();
                 var checkBrand = onChangeBrand();
             });
-
-            
-
-
-            
 
             $("#txtBrand").kendoDropDownList({
                 optionLabel: "Select Brand",
@@ -368,7 +402,7 @@
                 carousel();
             });
         };
-                        
+                           
         </script>
 
 
