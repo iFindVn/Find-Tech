@@ -1,0 +1,16 @@
+﻿.device-rating-number {
+    display: block;
+    float: left;
+    width: 30px;
+    height: 22px;
+    line-height: 20px;
+    text-align: center;
+    text-indent: 6px;
+    font-size: 16px;
+    color: #fff;
+    background: url(//s-cdn.phonearena.com/images/icons.png?9) no-repeat 100% -739px;
+}
+
+.form-horizontal .control-label {
+    padding-top:0px;
+}

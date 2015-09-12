@@ -1,0 +1,1 @@
+﻿var app = angular.module('FindTechAppBO', ['FindTech.BO.Device', 'kendo.directives', 'FindTech.Service']);

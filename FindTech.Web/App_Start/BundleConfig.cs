@@ -97,7 +97,8 @@ namespace FindTech.Web
                     "~/Areas/BO/UIFramework/KendoUI/js/jquery.min.js",
                     "~/Areas/BO/UIFramework/KendoUI/js/angular.min.js",
                     "~/Areas/BO/UIFramework/KendoUI/js/kendo.all.min.js",
-                    "~/Areas/BO/UIFramework/KendoUI/js/jquery.bootstrap.wizard.js"));
+                    "~/Areas/BO/UIFramework/KendoUI/js/jquery.bootstrap.wizard.js",
+                    "~/Areas/BO/UIFramework/KendoUI/js/kendo.angular.min.js"));
 
             bundles.Add(new ScriptBundle("~/bo/validation/js").Include(
                     "~/Areas/BO/UIFramework/Validation/js/formValidation.js",
@@ -195,6 +196,15 @@ namespace FindTech.Web
                     "~/UIFramework/Progressive/js/angular-isotope.js",
                     "~/UIFramework/Progressive/js/angular-ladda.min.js")
                     .IncludeDirectory("~/app", "*.js", true));
+
+            bundles.Add(new Bundle("~/bo/angularjs")
+                .Include("~/Areas/BO/UIFramework/angular-slider/angular-slider.js")
+                .IncludeDirectory("~/Areas/BO/Javascript", "*.js", true));
+            
+            bundles.Add(new StyleBundle("~/bo/style").Include(
+                    "~/Areas/BO/Style/Device.css"));
+            bundles.Add(new StyleBundle("~/bo/angularstyle").Include(
+                "~/Areas/BO/UIFramework/angular-slider/angular-slider.css"));
             
 
             // Set EnableOptimizations to false for debugging. For more information,
